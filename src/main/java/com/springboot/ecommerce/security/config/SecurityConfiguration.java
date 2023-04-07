@@ -1,6 +1,9 @@
 package com.springboot.ecommerce.security.config;
 
 
+import com.springboot.ecommerce.security.loginError.CustomAuthenticationFailureHandler;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +14,9 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
@@ -26,6 +31,7 @@ public class SecurityConfiguration {
                 .formLogin()
                     .loginPage("/login").permitAll()
                     .defaultSuccessUrl("/home", true)
+                    .failureHandler(customAuthenticationFailureHandler)
                     .usernameParameter("email")
                     .passwordParameter("password")
 

@@ -1,5 +1,8 @@
 package com.springboot.ecommerce.security.registration;
 
+import com.springboot.ecommerce.exception.EmailAlreadyTakenException;
+import com.springboot.ecommerce.exception.EmailNotValidException;
+import com.springboot.ecommerce.exception.NotFoundException;
 import com.springboot.ecommerce.security.jwt.JwtService;
 import com.springboot.ecommerce.security.registration.emailRegistration.EmailSender;
 import com.springboot.ecommerce.security.registration.emailRegistration.EmailService;
@@ -28,10 +31,12 @@ public class RegistrationService {
     public String register(RegistrationRequest request){
         boolean isEmailValid = emailValidator.test(request.getEmail());
         if (!isEmailValid)
-            throw new IllegalStateException("email not valid");
+            throw new EmailNotValidException(); // exception tu dinh nghia
+
         boolean userExists = userService.findByEmailUser(request.getEmail()).isPresent();
-        if (userExists)
-            throw new IllegalStateException("email already taken");
+        if (userExists) {
+            throw new EmailAlreadyTakenException();
+        }
 
         var user = User.builder()
                 .firstName(request.getFirstName())
