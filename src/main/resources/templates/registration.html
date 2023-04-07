@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+</head>
+<body>
+<div class="container">
+  <form class="registration" th:action="@{registration/register}" method="post" th:object="${request}">
+    <div class="group_firstname">
+      <label for="firstname">First Name</label>
+      <input id="firstname" type="text" th:field="*{firstName}"><br>
+    </div>
+
+    <div class="group_lastname">
+      <label for="lastname">Last Name</label>
+      <input id="lastname" type="text" th:field="*{lastName}"><br>
+    </div>
+
+    <div class="group_firstname">
+      <label for="email">Email</label>
+      <input id="email" type="email" th:field="*{email}"><br>
+      <div class="email-already-taken-exception" th:if="${emailAlreadyTakenException}">
+        <span th:text="${emailAlreadyTakenException}" style="color: red"></span>
+      </div>
+      <div class="email-not-valid-exception" th:if="${emailNotValidException}">
+        <span th:text="${emailNotValidException}" style="color: red"></span>
+      </div>
+    </div>
+
+    <div class="group_firstname">
+      <label for="password">Password</label>
+      <input id="password" type="password" th:field="*{password}"><br>
+    </div>
+
+    <div class="group_userRole">
+      <label for="role">Role</label>
+      <select id="role" th:field="*{userRole}">
+        <option th:each="role: ${roleList}" th:value="${role}" th:text="${role}"/>
+      </select>
+    </div>
+
+    <input type="submit">
+  </form>
+
+</div>
+</body>
+</html>

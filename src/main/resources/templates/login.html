@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In</title>
+</head>
+<body>
+<div class="container">
+  <div class="group_form_login">
+    <form th:action="@{/login}" method="post" class="login">
+
+        <div class="loginError" th:if="${param.error}">
+            <p style="color: rgba(255,37,91,0.8)">Invalid username or password</p>
+        </div>
+
+        <div class="group_username">
+            <label for="username">Your Email</label>
+            <input id="username" name="email" type="email" placeholder="yourEmail@gmail.com" required autofocus>
+        </div>
+
+        <div class="group-password">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required>
+        </div>
+
+        <div class="group-remember-me">
+            <label for="remember-me">Remember me ?</label>
+            <input type="checkbox" id="remember-me" name="remember-me">
+        </div>
+
+        <input type="submit" value="Sign In">
+    </form>
+  </div>
+</div>
+</body>
+</html>
