@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Category</title>
+</head>
+<body>
+<div class="container">
+    <div class="form-add-category">
+        <form method="post" th:action="@{/category-management/save-category}" th:object="${category}">
+            <div class="group-title">
+                <label for="title">Title Category</label>
+                <input id="title" th:field="*{title}" type="text" required><br>
+            </div>
+            <div class="group-metaTitle">
+                <label for="meta-title">Meta Title</label>
+                <input id="meta-title" th:field="*{metaTitle}" type="text"><br>
+            </div>
+            <div class="group-slug">
+                <label for="slug">Slug Category</label>
+                <input id="slug" th:field="*{slug}" required type="text"><br>
+            </div>
+            <div class="group-content">
+                <label for="content">Content</label>
+                <input id="content" th:field="*{content}" type="text">
+            </div>
+            <div class="group-parent-category">
+                <label for="parent-category">Parent Category</label>
+                <select id="parent-category" th:field="*{categoryParent}">
+                    <option value="">-- None --</option>
+<!--                    <th:block th:each="category : ${categories}">-->
+<!--                        <option th:value="${category.getId()}" th:text="${category.getTitle()}"></option>-->
+<!--                    </th:block>-->
+                    <option th:each="category : ${categories}"
+                            th:value="${category.getId()}"
+                            th:text="${category.getTitle()}"></option>
+                </select>
+            </div>
+
+            <input type="submit" value="Save New Category">
+        </form>
+    </div>
+</div>
+</body>
+</html>

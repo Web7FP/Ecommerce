@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.springboot.ecommerce.user.UserRole.USER;
-import static com.springboot.ecommerce.user.UserRole.VENDOR;
+import static com.springboot.ecommerce.user.UserRole.*;
 
 @Controller
 @RequestMapping("/registration")
@@ -26,7 +25,7 @@ public class RegistrationController {
     public String getSignUpPage(Model model){
         RegistrationRequest request = new RegistrationRequest();
         model.addAttribute("request", request);
-        List<UserRole> roleList = Arrays.asList(USER,VENDOR);
+        List<UserRole> roleList = Arrays.asList(USER,VENDOR, ADMIN);
         model.addAttribute("roleList", roleList);
         return  "registration";
     }

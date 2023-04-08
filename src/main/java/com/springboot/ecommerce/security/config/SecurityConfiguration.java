@@ -2,6 +2,7 @@ package com.springboot.ecommerce.security.config;
 
 
 import com.springboot.ecommerce.security.loginError.CustomAuthenticationFailureHandler;
+import com.springboot.ecommerce.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +26,9 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/home", "/registration/**").permitAll()
+                .requestMatchers("/category-management/**").hasRole(UserRole.ADMIN.name())
                 .anyRequest().authenticated()
+
 
                 .and()
                 .formLogin()
