@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Management</title>
+</head>
+<body>
+<div class="container">
+    <div class="update-product-form">
+        <form method="post" th:action="@{/product-management/save-product}" th:object="${product}">
+            <input type="hidden" th:field="*{id}">
+            <div class="group-title">
+                <label for="title">Title Product</label>
+                <input type="text" id="title" th:field="*{title}" required><br><br>
+            </div>
+            <div class="group-meta-title">
+                <label for="meta-title">Meta Title</label>
+                <input type="text" id="meta-title" th:field="*{metaTitle}"><br><br>
+            </div>
+            <div class="group-slug">
+                <label for="slug">Slug </label>
+                <input type="text" id="slug" th:field="*{slug}" required><br><br>
+            </div>
+            <div class="group-summary">
+                <label for="summary">Summary</label>
+                <input type="text" id="summary" th:field="*{summary}"><br><br>
+            </div>
+            <div class="group-sku">
+                <label for="sku">SKU</label>
+                <input type="text" id="sku" th:field="*{sku}" required><br><br>
+            </div>
+            <div class="group-shop-available">
+                <label for="shop-available">Shop</label>
+                <input type="checkbox" id="shop-available" th:field="*{shop}" th:checked="${true}"><br><br>
+            </div>
+            <div class="group-price">
+                <label for="price">Price</label>
+                <input type="number" id="price" th:field="*{price}" required><br><br>
+            </div>
+            <div class="group-discount">
+                <label for="discount">Discount</label>
+                <input type="number" id="discount" th:field="*{discount}" required><br><br>
+            </div>
+            <div class="group-quantity">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" th:field="*{quantity}" required><br><br>
+            </div>
+            <div class="group-created-at">
+                <label for="created-at">Created Time</label>
+                <input type="datetime-local"  id="created-at" th:field="*{createdAt}" required><br><br>
+            </div>
+            <div class="group-updated-at">
+                <label for="updated-at">Updated Time</label>
+                <input type="datetime-local"  id="updated-at" th:field="*{updatedAt}"><br><br>
+            </div>
+            <div class="group-published-at">
+                <label for="published-at">Publish at</label>
+                <input type="datetime-local"  id="published-at" th:field="*{publishedAt}"><br><br>
+            </div>
+            <div class="group-starts-at">
+                <label for="starts-at">Starts at</label>
+                <input type="datetime-local"  id="starts-at" th:field="*{startsAt}"><br><br>
+            </div>
+            <div class="group-ends-at">
+                <label for="ends-at">Ends at</label>
+                <input type="datetime-local"  id="ends-at" th:field="*{endsAt}"><br><br>
+            </div>
+            <div class="group-content">
+                <label for="content">Content</label>
+                <input type="text"  id="content" th:field="*{content}"><br><br><br><br>
+            </div>
+
+            <div class="group-category">
+                <label for="category-product">Category List</label>
+                <th:block th:each="category : ${categoriesList}">
+                    <div>
+                        <input type="checkbox" id="category-product"
+                               th:field="*{categories}"
+                               th:value="${category.id}"
+                               th:text="${category.title}">
+                    </div>
+                </th:block>
+            </div>
+            <br><br>
+
+            <div class="group-tag">
+                <label for="product-tag">Product Tag List</label>
+                <th:block th:each="tag : ${productTags}">
+                    <div>
+                        <input type="checkbox" id="product-tag"
+                               th:field="*{tags}"
+                               th:value="${tag.id}"
+                               th:text="${tag.title}">
+                    </div>
+                </th:block>
+            </div>
+            <br><br>
+
+
+            <div class="group-product-meta">
+                <label for="product-meta">Product Meta List: </label>
+                <div id="product-meta">
+                    <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
+                        <label for="key-product-meta" th:text="'Key product meta '+ ${metaStatus.count}"></label>
+                        <p id="key-product-meta" th:text="*{productMetas[__${metaStatus.index}__].keyProductMeta}"></p>
+                        <label for="content-product-meta" th:text="'Content ' + ${metaStatus.count}"></label>
+                        <p id="content-product-meta" th:text="*{productMetas[__${metaStatus.index}__].content}"></p><br><br>
+<!--                        <button type="button" onclick="removeProductMeta(this)">Delete</button>-->
+                    </div>
+                </div>
+<!--                <button type="button" onclick="addProductMeta()">Add New Product Meta Form</button>-->
+            </div>
+
+            <input type="submit" value="Update product">
+        </form>
+
+        <a th:href="@{/product-management/product-meta-management/{id}(id=${product.id})}">Product Meta Management</a><br><br>
+
+        <a th:href="@{/product-management/products-list}">Back to Product management</a><br>
+
+    </div>
+</div>
+</body>
+</html>

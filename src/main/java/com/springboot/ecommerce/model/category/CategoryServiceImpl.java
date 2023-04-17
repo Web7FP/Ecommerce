@@ -1,23 +1,53 @@
 package com.springboot.ecommerce.model.category;
 
 
+import com.springboot.ecommerce.model.product.Product;
+import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository categoryRepository;
+    private final ProductServiceImpl productService;
 
     @Override
-    public Category saveCategory(Category category) {
-        return categoryRepository.save(category);
+    public void saveCategory(Category category) {
+        categoryRepository.save(category);
     }
 
     @Override
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public Category getCategoryById(Long id) {
+        Optional<Category> optionalCategory = categoryRepository.findById(id);
+        if (optionalCategory.isPresent()){
+            return optionalCategory.get();
+        } else {
+            throw new IllegalStateException("Category not found for id: " + id);
+        }
+    }
+
+    @Override
+    public void deleteCategory(Long id) {
+        List<Product> productList = productService.findAllByCategory(id);
+        Category category = categoryRepository.findById(id).orElse(null);
+        for (Product product : productList) {
+            product.getCategories().remove(category);
+            productService.saveProduct(product);
+        }
+        categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Category> getAllCategoriesExcept(Long id) {
+        return categoryRepository.getAllCategoriesExceptId(id);
     }
 }

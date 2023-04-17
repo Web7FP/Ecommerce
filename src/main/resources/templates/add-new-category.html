@@ -28,9 +28,6 @@
                 <label for="parent-category">Parent Category</label>
                 <select id="parent-category" th:field="*{categoryParent}">
                     <option value="">-- None --</option>
-<!--                    <th:block th:each="category : ${categories}">-->
-<!--                        <option th:value="${category.getId()}" th:text="${category.getTitle()}"></option>-->
-<!--                    </th:block>-->
                     <option th:each="category : ${categories}"
                             th:value="${category.getId()}"
                             th:text="${category.getTitle()}"></option>

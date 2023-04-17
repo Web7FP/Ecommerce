@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Management</title>
+    <style>
+        table {border-collapse: collapse;width: 100%;}
+        th, td {text-align: left;padding: 8px;}
+        tr:nth-child(even) {background-color: #D6EEEE;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Products Management</h1>
+    <a th:href="@{/product-management/add-new-product.html}">Add new Product</a><br>
+
+    <div class="group-sorting">
+        <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a><br>
+        <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=slug&sortDir=' + ${reverseSortDir}}">Sort Slug</a><br>
+        <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=discount&sortDir=' + ${reverseSortDir}}">Sort Discount</a><br><br>
+    </div>
+
+    <table class="list-products-management">
+        <thead style="background-color: aquamarine">
+            <tr>
+                <td>Title</td>
+                <td>Slug</td>
+                <td>Sku</td>
+                <td>Price</td>
+                <td>Discount</td>
+                <td>Created At</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${listProducts}">
+                <td th:text="${product.title}"></td>
+                <td th:text="${product.slug}"></td>
+                <td th:text="${product.sku}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.discount}"></td>
+                <td th:text="${product.createdAt}"></td>
+                <td>
+                    <a th:href="@{/product-management/update-product-form/{id}(id=${product.id})}">Update</a>
+                    <a th:href="@{/product-management/delete-product/{id}(id=${product.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${totalPages > 1}">
+        <div>
+            <div class="total-rows">
+                <p th:text="'Total rows: ' + ${totalItems}"></p>
+            </div>
+            <div>
+                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:if="${currentPage != i}" th:href="@{'/product-management/products-list/page/' + ${i} +
+                    '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="${i}"></a>
+                    <span th:unless="${currentPage != i}" th:text="${i}"></span>
+                </span>
+            </div>
+            <div>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/product-management/products-list/page/' + ${currentPage + 1}
+                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                <span th:unless="${currentPage < totalPages}">Next</span>
+            </div>
+            <div>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/product-management/products-list/page/' + ${totalPages}+
+                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                <span th:unless="${currentPage < totalPages}">Last</span>
+            </div>
+        </div>
+    </div>
+    <a th:href="@{/home}">Back to Home page</a>
+
+</div>
+</body>
+</html>

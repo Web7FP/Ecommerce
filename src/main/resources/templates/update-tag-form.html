@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Tag form</title>
+</head>
+<body>
+<div class="container">
+    <h1> Update Tag Form</h1>
+    <form method="post" th:action="@{/tag-management/save-product-tag}" th:object="${tag}">
+        <input type="hidden" th:field="*{id}">
+        <div class="group-title">
+            <label for="title">Title Tag</label>
+            <input id="title" th:field="*{title}" required type="text" autofocus><br><br>
+        </div>
+        <div class="meta-title">
+            <label for="meta-title">Meta Title</label>
+            <input id="meta-title" th:field="*{metaTitle}" type="text"><br><br>
+        </div>
+        <div class="slug">
+            <label for="slug">Slug</label>
+            <input id="slug" th:field="*{slug}" required type="text"><br><br>
+        </div>
+        <div class="content">
+            <label for="content">Content</label>
+            <input type="text" th:field="*{content}" id="content"><br><br>
+        </div>
+
+        <input type="submit" value="Update tag">
+    </form>
+</div>
+</body>
+</html>

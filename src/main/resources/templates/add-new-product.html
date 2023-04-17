@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new product</title>
+    <script type="text/javascript" src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-add-new-product">
+        <form method="post" th:action="@{/product-management/save-product}" th:object="${product}">
+            <div class="group-title">
+                <label for="title">Title Product</label>
+                <input type="text" id="title" th:field="*{title}" required><br><br>
+            </div>
+            <div class="group-meta-title">
+                <label for="meta-title">Meta Title</label>
+                <input type="text" id="meta-title" th:field="*{metaTitle}"><br><br>
+            </div>
+            <div class="group-slug">
+                <label for="slug">Slug </label>
+                <input type="text" id="slug" th:field="*{slug}" required><br><br>
+            </div>
+            <div class="group-summary">
+                <label for="summary">Summary</label>
+                <input type="text" id="summary" th:field="*{summary}"><br><br>
+            </div>
+            <div class="group-sku">
+                <label for="sku">SKU</label>
+                <input type="text" id="sku" th:field="*{sku}" required><br><br>
+            </div>
+            <div class="group-shop-available">
+                <label for="shop-available">Shop</label>
+                <input type="checkbox" id="shop-available" th:field="*{shop}" th:checked="${true}"><br><br>
+            </div>
+            <div class="group-price">
+                <label for="price">Price</label>
+                <input type="number" id="price" th:field="*{price}" required><br><br>
+            </div>
+            <div class="group-discount">
+                <label for="discount">Discount</label>
+                <input type="number" id="discount" th:field="*{discount}" required><br><br>
+            </div>
+            <div class="group-quantity">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" th:field="*{quantity}" required><br><br>
+            </div>
+            <div class="group-created-at">
+                <label for="created-at">Created Time</label>
+                <input type="datetime-local"  id="created-at" th:field="*{createdAt}" required><br><br>
+            </div>
+            <div class="group-updated-at">
+                <label for="updated-at">Updated Time</label>
+                <input type="datetime-local"  id="updated-at" th:field="*{updatedAt}"><br><br>
+            </div>
+            <div class="group-published-at">
+                <label for="published-at">Publish at</label>
+                <input type="datetime-local"  id="published-at" th:field="*{publishedAt}"><br><br>
+            </div>
+            <div class="group-starts-at">
+                <label for="starts-at">Starts at</label>
+                <input type="datetime-local"  id="starts-at" th:field="*{startsAt}"><br><br>
+            </div>
+            <div class="group-ends-at">
+                <label for="ends-at">Ends at</label>
+                <input type="datetime-local"  id="ends-at" th:field="*{endsAt}"><br><br>
+            </div>
+            <div class="group-content">
+                <label for="content">Content</label>
+                <input type="text"  id="content" th:field="*{content}"><br><br><br><br>
+            </div>
+
+<!--            <div class="group-category">-->
+<!--                <label for="category-product">Category List</label>-->
+<!--                <select multiple="multiple" id="category-product" th:field="*{categories}">-->
+<!--                    <option th:each="category : ${categories}"-->
+<!--                            th:value="${category.getId()}"-->
+<!--                            th:text="${category.getTitle()}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div><br><br><br>-->
+
+<!--            <div class="group-product-tag">-->
+<!--                <label for="product-tag">Product Tag List</label>-->
+<!--                <select multiple="multiple" id="product-tag" th:field="*{tags}" class="chosen-select">-->
+<!--                    <option th:each="tag : ${productTags}"-->
+<!--                            th:value="${tag.getId()}"-->
+<!--                            th:text="${tag.getTitle()}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div><br><br><br>-->
+
+            <div class="group-category">
+                <label for="category-product">Category List</label>
+                <th:block th:each="category : ${categoriesList}">
+                    <div>
+                        <input type="checkbox" id="category-product"
+                               th:field="*{categories}"
+                               th:value="${category.id}"
+                               th:text="${category.title}">
+                    </div>
+                </th:block>
+            </div>
+            <br><br>
+
+            <div class="group-tag">
+                <label for="product-tag">Product Tag List</label>
+                <th:block th:each="tag : ${productTags}">
+                    <div>
+                        <input type="checkbox" id="product-tag"
+                               th:field="*{tags}"
+                               th:value="${tag.id}"
+                               th:text="${tag.title}">
+                    </div>
+                </th:block>
+            </div>
+            <br><br>
+
+
+
+
+
+
+
+
+            <div class="group-product-meta">
+                <label for="product-meta">Product Meta List: </label>
+                <div id="product-meta">
+                    <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
+                        <label for="key-product-meta" th:text="'Key product meta '+ ${metaStatus.count}"></label>
+                        <input id="key-product-meta" th:field="*{productMetas[__${metaStatus.index}__].keyProductMeta}" type="text" required>
+                        <label for="content-product-meta" th:text="'Content ' + ${metaStatus.count}"></label>
+                        <textarea id="content-product-meta" th:field="*{productMetas[__${metaStatus.index}__].content}" rows="3"></textarea><br><br>
+                        <button type="button" onclick="removeProductMeta(this)">Delete</button>
+                    </div>
+                </div>
+                <button type="button" onclick="addProductMeta()" th:href="@{/home}">Add New Product Meta Form</button>
+            </div>
+            <script>
+                function addProductMeta(){
+                    var productMetasDiv = document.getElementById("product-meta");
+                    var index = productMetasDiv.children.length;
+                    var newProductMetaDiv = document.createElement("div");
+                    newProductMetaDiv.classList.add("form-group-product-meta")
+                    newProductMetaDiv.innerHTML =
+                        '<label for="key-product-meta">Key Product Meta ' + (index + 1) + ' :</label>' +
+                        '<input type="text" name="productMetas[' + index + '].keyProductMeta"  required id="key-product-meta"/><br><br>' +
+                        '<label for="content-product-meta">Content ' + (index + 1) + ':</label>' +
+                        '<textarea name="productMetas[' + index + '].content" rows="3" id="content-product-meta"></textarea><br><br>' +
+                        '<button type="button" onclick="removeProductMeta(this)">Delete</button>';
+                    productMetasDiv.appendChild(newProductMetaDiv);
+                }
+
+                function removeProductMeta(button){
+                    var productMetaDiv = button.parentElement;
+                    var productMetasDiv = document.getElementById("product-meta");
+                    productMetasDiv.removeChild(productMetaDiv);
+                    updateProductMetaIndex();
+                }
+
+                function updateProductMetaIndex() {
+                    var productMetasDiv = document.getElementById("product-meta");
+                    var productMetaList = productMetasDiv.querySelectorAll(".form-group-product-meta");
+                    for (var i = 0; i < productMetaList.length; i++) {
+                        var keyProductMeta = productMetaList[i].querySelector("input[type='text']");
+                        var contentProductMeta = productMetaList[i].querySelector("textarea");
+                        var keyProductMetaLabel = productMetaList[i].querySelector("label[for='key-product-meta']");
+                        var contentProductMetaLabel = productMetaList[i].querySelector("label[for='content-product-meta']");
+
+                        keyProductMeta.name = "productMetas[" + i + "].keyProductMeta";
+                        keyProductMeta.id = "key-product-meta-" + i;
+                        contentProductMeta.name = "productMetas[" + i + "].content";
+                        contentProductMeta.id = "content-product-meta-" + i;
+                        keyProductMetaLabel.innerHTML = "Key product meta " + (i + 1) + ":";
+                        contentProductMetaLabel.innerHTML = "Content " + (i + 1) + ":";
+                    }
+                }
+
+            </script>
+
+            <input type="submit" value="Add new product">
+        </form>
+
+        <a th:href="@{/product-management/products-list}">Back to Product management</a><br>
+
+    </div>
+</div>
+</body>
+</html>

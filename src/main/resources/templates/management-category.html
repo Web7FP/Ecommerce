@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category management</title>
+    <style>
+        table {border-collapse: collapse;width: 100%;}
+        th, td {text-align: left;padding: 8px;}
+        tr:nth-child(even) {background-color: #D6EEEE;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Categories List</h1>
+    <a th:href="@{/category-management/add-new-category.html}">Add new category</a><br>
+    <table class="categories-list-management">
+        <thead>
+            <tr></tr>
+        </thead>
+        <tbody>
+            <tr th:each="category : ${categoriesList}">
+                <td th:text="${category.title}"></td>
+                <td th:text="${category.content}"></td>
+                <td th:text="${category.slug}"></td>
+                <th:block th:if="${category.categoryParent} != null">
+                    <td th:text="${category.categoryParent.title}"></td>
+                </th:block>
+                <td>
+                    <a th:href="@{/category-management/delete-category/{id}(id=${category.id})}">Delete</a>
+                    <a th:href="@{/category-management/update-category-form/{id}(id=${category.id})}">Update</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/home}">Back to Home page</a>
+</div>
+</body>
+</html>

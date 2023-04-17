@@ -1,4 +1,4 @@
-package com.springboot.ecommerce.model.category;
+package com.springboot.ecommerce.model.tag;
 
 
 import com.springboot.ecommerce.model.product.Product;
@@ -6,25 +6,26 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Category {
-
+public class Tag {
     @Id
     @SequenceGenerator(
-            name = "category_sequence",
-            sequenceName = "category_sequence",
+            name = "tag_sequence",
+            sequenceName = "tag_sequence",
             allocationSize = 5,
             initialValue = 1
     )
     @GeneratedValue(
-            generator = "category_sequence",
+            generator = "tag_sequence",
             strategy = GenerationType.SEQUENCE
     )
     private Long id;
@@ -42,16 +43,6 @@ public class Category {
     @Lob
     private String content;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.DETACH
-    )
-    @JoinColumn(
-            name = "parentId",
-            referencedColumnName = "id")
-    private Category categoryParent;
-
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "tags")
     private List<Product> products = new ArrayList<>();
-
 }

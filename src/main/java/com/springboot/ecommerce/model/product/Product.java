@@ -1,0 +1,112 @@
+package com.springboot.ecommerce.model.product;
+
+import com.springboot.ecommerce.model.category.Category;
+import com.springboot.ecommerce.model.productMeta.ProductMeta;
+import com.springboot.ecommerce.model.tag.Tag;
+import com.springboot.ecommerce.user.User;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Product {
+    @Id
+    @SequenceGenerator(
+            name = "product_sequence",
+            sequenceName = "product_sequence",
+            allocationSize = 5,
+            initialValue = 1
+    )
+    @GeneratedValue(
+            generator = "product_sequence",
+            strategy = GenerationType.SEQUENCE
+    )
+    private Long id;
+
+    @ManyToOne(
+            cascade = CascadeType.DETACH,
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Column(nullable = false)
+    private String title;
+
+    private String metaTitle;
+    @Column(nullable = false)
+    private String slug;
+
+    @Lob
+    private String summary;
+
+    @Column(nullable = false)
+    private String sku;
+
+    @Column(nullable = false)
+    private BigDecimal price;
+
+    @Column(nullable = false)
+    private BigDecimal discount;
+
+    @Column(nullable = false)
+    private Long quantity;
+
+    @Column(nullable = false)
+    private boolean shop;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+
+    private LocalDateTime updatedAt;
+
+    private LocalDateTime publishedAt;
+
+    private LocalDateTime startsAt;
+
+    private LocalDateTime endsAt;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductMeta> productMetas = new ArrayList<>();
+
+
+    @ManyToMany(
+            cascade = CascadeType.DETACH,
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "product_tag",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags = new ArrayList<>();
+
+    @ManyToMany(
+            cascade = CascadeType.DETACH,
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories = new ArrayList<>();
+
+
+}

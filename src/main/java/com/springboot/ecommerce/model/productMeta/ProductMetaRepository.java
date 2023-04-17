@@ -1,4 +1,4 @@
-package com.springboot.ecommerce.model.category;
+package com.springboot.ecommerce.model.productMeta;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,12 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface ProductMetaRepository extends JpaRepository<ProductMeta, Long> {
 
     @Transactional
-    @Query("select c " +
-            "from Category as c " +
-            "where c.id <> ?1")
-    List<Category> getAllCategoriesExceptId(Long id);
-
+    @Query("select pm " +
+            "from ProductMeta as pm " +
+            "where pm.product.id = ?1")
+    List<ProductMeta> findByProductId(Long id);
 }

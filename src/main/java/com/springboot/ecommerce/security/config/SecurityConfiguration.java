@@ -25,8 +25,10 @@ public class SecurityConfiguration {
         httpSecurity
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/home", "/registration/**").permitAll()
-                .requestMatchers("/category-management/**").hasRole(UserRole.ADMIN.name())
+                    .requestMatchers("/home", "/registration/**").permitAll()
+                    .requestMatchers("/category-management/**").hasRole(UserRole.ADMIN.name())
+                    .requestMatchers("/tag-management/**").hasRole(UserRole.ADMIN.name())
+                    .requestMatchers("/product-management/**").hasAnyRole(UserRole.VENDOR.name(),UserRole.ADMIN.name())
                 .anyRequest().authenticated()
 
 

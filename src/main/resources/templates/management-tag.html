@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tag Management</title>
+    <style>
+        table {border-collapse: collapse;width: 100%;}
+        th, td {text-align: left;padding: 8px;}
+        tr:nth-child(even) {background-color: #D6EEEE;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Tag Management</h1>
+    <a th:href="@{/tag-management/add-new-tag.html}">Add new tag</a><br>
+    <table class="tag-management-list">
+        <thead>
+            <tr></tr>
+        </thead>
+        <tbody>
+            <tr th:each="tag : ${tagList}">
+                <td th:text="${tag.title}"></td>
+                <td th:text="${tag.slug}"></td>
+                <td th:text="${tag.metaTitle}"></td>
+                <td th:text="${tag.content}"></td>
+                <td>
+                    <a th:href="@{/tag-management/delete-tag/{id}(id=${tag.id})}">Delete</a>
+                    <a th:href="@{/tag-management/update-tag-form/{id}(id=${tag.id})}">Update</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/home}">Back to Home page</a>
+</div>
+</body>
+</html>
