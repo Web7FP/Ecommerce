@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product detail</title>
+</head>
+<body>
+<div class="container">
+  <h1 th:text="${product.title}"></h1><br>
+  <p th:text="'Price: ' + ${product.price}"></p><br>
+  <p th:text="'Discoutn: '+ ${product.discount}"></p><br><br>
+
+    <a th:href="@{/cart/add-product-to-cart/{productId}(productId=${product.id})}">Add to Cart</a>
+  <a th:href="@{/home}">Back to Home page</a>
+</div>
+</body>
+</html>

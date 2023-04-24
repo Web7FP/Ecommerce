@@ -3,6 +3,7 @@ package com.springboot.ecommerce.exception.controller;
 
 import com.springboot.ecommerce.exception.EmailAlreadyTakenException;
 import com.springboot.ecommerce.exception.EmailNotValidException;
+import com.springboot.ecommerce.exception.EmptyCartException;
 import com.springboot.ecommerce.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -32,5 +33,11 @@ public class ExceptionController {
     public RedirectView emailAlreadyTakenExceptionHandler(RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("emailAlreadyTakenException","Email already taken");
         return new RedirectView("/registration");
+    }
+
+    @ExceptionHandler({EmptyCartException.class})
+    public String emptyCartTakenExceptionHandler(Model model){
+        model.addAttribute("emptyCartException", "Your cart is empty");
+        return "cart";
     }
 }

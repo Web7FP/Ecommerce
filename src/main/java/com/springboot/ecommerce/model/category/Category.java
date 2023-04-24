@@ -1,10 +1,14 @@
 package com.springboot.ecommerce.model.category;
 
 
+import com.springboot.ecommerce.model.auditListener.AuditListener;
+import com.springboot.ecommerce.model.auditListener.BasicEntity;
 import com.springboot.ecommerce.model.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Category {
+@EntityListeners(AuditListener.class)
+@DynamicUpdate
+public class Category extends BasicEntity {
 
     @Id
     @SequenceGenerator(
@@ -53,5 +59,11 @@ public class Category {
 
     @ManyToMany(mappedBy = "categories")
     private List<Product> products = new ArrayList<>();
+
+
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 
 }

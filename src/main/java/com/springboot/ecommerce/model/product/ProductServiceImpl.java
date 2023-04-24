@@ -80,4 +80,9 @@ public class ProductServiceImpl implements ProductService{
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.productRepository.findAll(pageable);
     }
+
+    @Override
+    public Product findBySlugProduct(String slugProduct) {
+        return productRepository.findBySlugProduct(slugProduct);
+    }
 }
