@@ -1,9 +1,14 @@
 package com.springboot.ecommerce.model.productMeta;
 
 
+import com.springboot.ecommerce.model.auditListener.AuditListener;
+import com.springboot.ecommerce.model.auditListener.BasicEntity;
 import com.springboot.ecommerce.model.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -11,7 +16,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class ProductMeta {
+@DynamicUpdate
+@EntityListeners(AuditListener.class)
+public class ProductMeta extends BasicEntity {
     @Id
     @SequenceGenerator(
             name = "productMetas_sequence",
@@ -37,4 +44,9 @@ public class ProductMeta {
 
     @Lob
     private String content;
+
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }

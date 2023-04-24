@@ -21,4 +21,6 @@ public interface ProductService {
     void saveProduct(Product product);
 
     Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+
+    Product findBySlugProduct (String slugProduct);
 }

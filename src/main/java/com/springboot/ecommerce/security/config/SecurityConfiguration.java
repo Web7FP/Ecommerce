@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,17 +26,18 @@ public class SecurityConfiguration {
         httpSecurity
                 .csrf().disable()
                 .authorizeHttpRequests()
-                    .requestMatchers("/home", "/registration/**").permitAll()
-                    .requestMatchers("/category-management/**").hasRole(UserRole.ADMIN.name())
-                    .requestMatchers("/tag-management/**").hasRole(UserRole.ADMIN.name())
+                    .requestMatchers("/home/**", "/registration/**", "/product/**").permitAll()
+                    .requestMatchers("/category-management/**", "/tag-management/**").hasRole(UserRole.ADMIN.name())
                     .requestMatchers("/product-management/**").hasAnyRole(UserRole.VENDOR.name(),UserRole.ADMIN.name())
+                    .requestMatchers("/cart/**", "/setCartSession", "/account/**", "/order/**")
+                        .hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name(), UserRole.VENDOR.name())
                 .anyRequest().authenticated()
 
 
                 .and()
                 .formLogin()
                     .loginPage("/login").permitAll()
-                    .defaultSuccessUrl("/home", true)
+                    .defaultSuccessUrl("/setCartSession", true)
                     .failureHandler(customAuthenticationFailureHandler)
                     .usernameParameter("email")
                     .passwordParameter("password")
@@ -44,7 +46,15 @@ public class SecurityConfiguration {
                 .rememberMe()
                     .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(7))
                     .key("367639792442264528482B4D6251655468576D5A7134743777217A25432A462D")
-                    .rememberMeParameter("remember-me");
+                    .rememberMeParameter("remember-me")
+
+                .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .clearAuthentication(true)
+                    .deleteCookies("SESSION", "remember-me")
+                    .logoutSuccessUrl("/login");
 
         return httpSecurity.build();
 

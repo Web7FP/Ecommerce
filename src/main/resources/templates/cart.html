@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <style>
+        table {border-collapse: collapse;width: 100%;}
+        th, td {text-align: left;padding: 8px;}
+        tr:nth-child(even) {background-color: #D6EEEE;}
+        thead {background-color: aquamarine;}
+    </style>
+</head>
+<body>
+<h1>Cart</h1>
+<div class="container">
+
+    <div class="empty-cart-exception" th:if="${emptyCartException}">
+        <p th:text="${emptyCartException}" style="color: red"></p>
+    </div>
+
+    <div class="shopping-cart" th:unless="${emptyCartException}">
+        <table>
+            <thead>
+            <tr></tr>
+            </thead>
+            <tbody>
+            <tr th:each="cartItem : ${cart.cartItems}">
+
+                <th:block th:with="product=${cartItem.product}" >
+                    <td th:text="${product.title}"></td>
+                    <td th:text="${product.price}"></td>
+                </th:block>
+
+                <td>
+                    <a th:href="@{/cart/delete-cart-item/{cartItemId}(cartItemId=${cartItem.id})}">
+                        <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt="deleted">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a th:href="@{order/checkout/payment}">Order</a>
+
+    </div>
+
+
+    <a th:href="@{/home}">Continue Shopping</a><br><br>
+
+</div>
+</body>
+</html>

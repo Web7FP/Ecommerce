@@ -1,22 +1,20 @@
 package com.springboot.ecommerce.user;
 
 
+import com.springboot.ecommerce.model.cart.Cart;
+import com.springboot.ecommerce.model.order.Order;
 import com.springboot.ecommerce.model.product.Product;
+import com.springboot.ecommerce.model.transaction.Transaction;
+import com.springboot.ecommerce.model.userMeta.UserMeta;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -55,6 +53,18 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private Set<Product> products = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Cart> carts = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user")
+    private UserMeta userMeta;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Transaction> transactions = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

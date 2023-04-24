@@ -3,13 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
+    <style>
+        table {border-collapse: collapse;width: 100%;}
+        th, td {text-align: left;padding: 8px;}
+        tr:nth-child(even) {background-color: #D6EEEE;}
+        thead {background-color: aquamarine;}
+    </style>
 </head>
 <body>
-This is Home page<br>
 
 <a th:href="@{/category-management/categories-list}">Category management</a><br>
 <a th:href="@{/tag-management/tags-list}">Tag management</a><br>
 <a th:href="@{/product-management/products-list}">Product management</a><br>
+
+<div class="product-container">
+
+    <div class="group-sorting">
+        <a th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a><br>
+        <a th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Sort Discount</a><br><br>
+    </div>
+
+    <div class="list-products">
+        <table>
+            <thead>
+            <tr>
+                <td>Product's name</td>
+                <td>Price</td>
+                <td>Action</td>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product : ${listProducts}">
+                    <td th:text="${product.title}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td>
+                        <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="group-pagination">
+        <div class="total-products">
+            <p th:text="'Total products: ' + ${totalItems}"></p>
+        </div>
+        <div>
+                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:if="${currentPage != i}" th:href="@{'/home/product-list/page/' + ${i} +
+                    '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="${i}"></a>
+                    <span th:unless="${currentPage != i}" th:text="${i}"></span>
+                </span>
+        </div>
+        <div>
+            <a th:if="${currentPage < totalPages}" th:href="@{'/home/product-list/page/' + ${currentPage + 1}
+                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+            <span th:unless="${currentPage < totalPages}">Next</span>
+        </div>
+        <div>
+            <a th:if="${currentPage < totalPages}" th:href="@{'/home/product-list/page/' + ${totalPages}+
+                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+            <span th:unless="${currentPage < totalPages}">Last</span>
+        </div>
+    </div><br><br><br>
+
+    <a th:href="@{/cart}" style="color: red">
+        <img class="cart-icon"
+             src="https://salt.tikicdn.com/ts/upload/51/e2/92/8ca7e2cc5ede8c09e34d1beb50267f4f.png"
+             alt="header_header_img_Cart" style="max-width: 100%; width: 24px; height: 24px;">
+    </a><br><br>
+
+    <a th:href="@{/account/edit}" style="color: red">My account</a><br><br>
+
+
+
+
+    <div class="group-logout">
+        <form class="logout" method="get" action="/logout">
+            <button type="submit">Logout</button><br><br>
+        </form>
+    </div>
+
+</div>
 
 </body>
 </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My account</title>
+</head>
+<body>
+<div class="container">
+    <div class="edit-account-information">
+        <form method="post" th:action="@{/account/save-user-meta}" th:object="${userMeta}">
+            <th:block th:if="*{id != null}">
+                <input type="hidden" th:field="*{id}">
+            </th:block>
+            <div class="group-first-name">
+                <label for="first-name">First name:</label>
+                <input type="text" id="first-name" th:field="*{firstName}"><br><br>
+            </div>
+            <div class="group-middle-name">
+                <label for="middle-name">Middle name:</label>
+                <input type="text" id="middle-name" th:field="*{middleName}"><br><br>
+            </div>
+            <div class="group-last-name">
+                <label for="last-name">Last name:</label>
+                <input type="text" id="last-name" th:field="*{lastName}"><br><br>
+            </div>
+            <div class="birthday">
+                <label for="birthday">Birthday: </label>
+                <input type="datetime-local" th:field="*{birthday}" id="birthday"><br><br>
+            </div>
+            <div class="group-mobile">
+                <label for="mobile">Mobile: </label>
+                <input type="text" id="mobile" th:field="*{mobile}"><br><br>
+            </div>
+            <div class="group-nickname">
+                <label for="nickname">Nick name:</label>
+                <input type="text" id="nickname" th:field="*{nickname}"><br><br>
+            </div>
+            <div class="group-address">
+                <label for="address">Address: </label>
+                <input type="text" id="address" th:field="*{address}"><br><br>
+            </div>
+
+            <div class="group-gender">
+                <label for="gender">Gender: </label>
+                <select id="gender" th:field="*{userMetaGender}">
+                    <option th:each="gender : ${genderList}" th:value="${gender}" th:text="${gender}"/>
+                </select><br><br>
+            </div>
+
+            <input type="submit" value="SAVE">
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -44,13 +44,13 @@ public class ProductController {
         Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Product> listProducts = page.getContent();
 
-        model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("listProducts", listProducts);
+        model.addAttribute("currentPage", pageNo);
         return "management-product";
 
     }

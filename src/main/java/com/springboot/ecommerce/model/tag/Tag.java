@@ -1,14 +1,16 @@
 package com.springboot.ecommerce.model.tag;
 
 
+import com.springboot.ecommerce.model.auditListener.AuditListener;
+import com.springboot.ecommerce.model.auditListener.BasicEntity;
 import com.springboot.ecommerce.model.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -16,7 +18,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Tag {
+@DynamicUpdate
+@EntityListeners(AuditListener.class)
+public class Tag extends BasicEntity {
     @Id
     @SequenceGenerator(
             name = "tag_sequence",
@@ -45,4 +49,9 @@ public class Tag {
 
     @ManyToMany(mappedBy = "tags")
     private List<Product> products = new ArrayList<>();
+
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }

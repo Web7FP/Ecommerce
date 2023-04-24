@@ -1,18 +1,22 @@
 package com.springboot.ecommerce.model.product;
 
+import com.fasterxml.jackson.annotation.*;
+import com.springboot.ecommerce.model.cartItem.CartItem;
 import com.springboot.ecommerce.model.category.Category;
+import com.springboot.ecommerce.model.auditListener.AuditListener;
+import com.springboot.ecommerce.model.auditListener.BasicEntity;
+import com.springboot.ecommerce.model.orderItem.OrderItem;
 import com.springboot.ecommerce.model.productMeta.ProductMeta;
 import com.springboot.ecommerce.model.tag.Tag;
 import com.springboot.ecommerce.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -20,7 +24,13 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Product {
+@EntityListeners(AuditListener.class)
+@DynamicUpdate
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "cartItems"})
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class Product extends BasicEntity {
     @Id
     @SequenceGenerator(
             name = "product_sequence",
@@ -39,6 +49,7 @@ public class Product {
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @Column(nullable = false)
@@ -66,9 +77,8 @@ public class Product {
     @Column(nullable = false)
     private boolean shop;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
 
     private LocalDateTime updatedAt;
 
@@ -83,6 +93,7 @@ public class Product {
     private String content;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<ProductMeta> productMetas = new ArrayList<>();
 
 
@@ -95,6 +106,7 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
+    @JsonIgnore
     private List<Tag> tags = new ArrayList<>();
 
     @ManyToMany(
@@ -106,7 +118,15 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+    @JsonIgnore
     private List<Category> categories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product")
+    private List<CartItem> cartItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    private List<OrderItem> orderItems = new ArrayList<>();
 
 
 }
