@@ -72,7 +72,7 @@ public class ProductController {
     }
 
     @GetMapping("delete-product/{id}")
-    public String deleteProduct(@PathVariable(value = "id") Long id){
+    public String deleteProduct(@PathVariable(value = "id") Integer id){
         productService.deleteProduct(id);
         return "redirect:/product-management/products-list";
 
@@ -80,7 +80,7 @@ public class ProductController {
 
 
     @GetMapping("update-product-form/{id}")
-    public String updateProduct(@PathVariable("id") Long id, Model model){
+    public String updateProduct(@PathVariable("id") Integer id, Model model){
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("categoriesList", categoryService.getAllCategories());
         model.addAttribute("productTags", tagService.getAllProductTags());
@@ -88,7 +88,7 @@ public class ProductController {
     }
 
     @GetMapping("product-meta-management/{id}")
-    public String viewProductMetaList(@PathVariable("id") Long productId, Model model){
+    public String viewProductMetaList(@PathVariable("id") Integer productId, Model model){
         model.addAttribute("product", productService.getProductById(productId));
         model.addAttribute("productMetaList", productMetaService.getAllByProduct(productId));
         return "management-product-meta";
@@ -122,7 +122,7 @@ public class ProductController {
     }
 
     @GetMapping("add-new-product-meta/productId={productId}")
-    public String getAddNewProductMetaView(@PathVariable("productId") Long productId, Model model){
+    public String getAddNewProductMetaView(@PathVariable("productId") Integer productId, Model model){
         ProductMeta productMeta = new ProductMeta();
         productMeta.setProduct(productService.getProductById(productId));
         model.addAttribute("productMeta", productMeta);

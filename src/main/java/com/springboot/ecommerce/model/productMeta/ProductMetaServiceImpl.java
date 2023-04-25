@@ -21,12 +21,12 @@ public class ProductMetaServiceImpl implements ProductMetaService {
 
 
     @Override
-    public List<ProductMeta> getAllByProduct(Long productId) {
+    public List<ProductMeta> getAllByProduct(Integer productId) {
         return productMetaRepository.findByProductId(productId);
     }
 
     @Override
-    public void deleteByProduct(Long productId) {
+    public void deleteByProduct(Integer productId) {
         List<ProductMeta> productMetas = this.getAllByProduct(productId);
         for (ProductMeta productMeta : productMetas){
             productMetaRepository.deleteById(productMeta.getId());

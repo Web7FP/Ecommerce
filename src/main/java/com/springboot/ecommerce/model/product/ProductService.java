@@ -8,13 +8,13 @@ public interface ProductService {
     void saveNewProduct(Product product);
     List<Product> getALlProducts();
 
-    void deleteProduct(Long id);
+    void deleteProduct(Integer id);
 
     List<Product> findAllByTag(Long id);
 
     List<Product> findAllByCategory(Long id);
 
-    Product getProductById(Long id);
+    Product getProductById(Integer id);
 
     Product getProductByProductMeta(Long productMetaId);
 

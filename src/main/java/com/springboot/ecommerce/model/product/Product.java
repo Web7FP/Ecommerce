@@ -28,7 +28,8 @@ import java.util.List;
 @DynamicUpdate
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "cartItems"})
 @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
+        scope = Product.class,
+        generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "id")
 public class Product extends BasicEntity {
     @Id
@@ -42,7 +43,7 @@ public class Product extends BasicEntity {
             generator = "product_sequence",
             strategy = GenerationType.SEQUENCE
     )
-    private Long id;
+    private Integer id;
 
     @ManyToOne(
             cascade = CascadeType.DETACH,

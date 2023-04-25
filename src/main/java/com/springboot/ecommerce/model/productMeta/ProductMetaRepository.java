@@ -14,5 +14,5 @@ public interface ProductMetaRepository extends JpaRepository<ProductMeta, Long> 
     @Query("select pm " +
             "from ProductMeta as pm " +
             "where pm.product.id = ?1")
-    List<ProductMeta> findByProductId(Long id);
+    List<ProductMeta> findByProductId(Integer id);
 }

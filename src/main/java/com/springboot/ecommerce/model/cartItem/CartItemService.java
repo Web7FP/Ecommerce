@@ -5,12 +5,12 @@ import com.springboot.ecommerce.model.product.Product;
 import com.springboot.ecommerce.user.User;
 
 public interface CartItemService {
-    CartItem getCartItemByProductAndCart(Long productId, Long cartId);
+    CartItem getCartItemByProductAndCart(Integer productId, Long cartId);
 
     void saveCartItem (CartItem cartItem);
 
-    Cart deleteCartItem(Long cartItemId, User currentUser);
+    Cart deleteCartItem(Integer cartItemId, User currentUser);
 
-    CartItem getCartItemById(Long cartItemId);
+    CartItem getCartItemById(Integer cartItemId);
 
 }

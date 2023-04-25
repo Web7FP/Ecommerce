@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void deleteProduct(Long id) {
+    public void deleteProduct(Integer id) {
         productMetaService.deleteByProduct(id);
         productRepository.deleteById(id);
     }
@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product getProductById(Long id) {
+    public Product getProductById(Integer id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isPresent()){
             return optionalProduct.get();

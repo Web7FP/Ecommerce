@@ -44,7 +44,7 @@ public class CartController {
     }
 
     @GetMapping("add-product-to-cart/{productId}")
-    public String addProductToCart(@PathVariable("productId") Long productId,
+    public String addProductToCart(@PathVariable("productId") Integer productId,
                                    @AuthenticationPrincipal UserDetails user,
                                    HttpSession session){
         User currentUser = userService.findByEmail(user.getUsername());
@@ -76,7 +76,7 @@ public class CartController {
 
 
     @GetMapping("delete-cart-item/{cartItemId}")
-    public String deleteCartItem(@PathVariable("cartItemId") Long cartItemId,
+    public String deleteCartItem(@PathVariable("cartItemId") Integer cartItemId,
                                  @AuthenticationPrincipal UserDetails user,
                                  HttpSession session){
         User currentUser = userService.findByEmail(user.getUsername());

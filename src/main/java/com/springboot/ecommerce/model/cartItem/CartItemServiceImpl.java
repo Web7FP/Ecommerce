@@ -21,7 +21,7 @@ public class CartItemServiceImpl implements CartItemService{
 
 
     @Override
-    public CartItem getCartItemByProductAndCart(Long productId, Long cartId) {
+    public CartItem getCartItemByProductAndCart(Integer productId, Long cartId) {
         return cartItemRepository.findByProductAndCart(productId, cartId);
     }
 
@@ -31,7 +31,7 @@ public class CartItemServiceImpl implements CartItemService{
     }
 
     @Override
-    public Cart deleteCartItem(Long cartItemId, User currentUser) {
+    public Cart deleteCartItem(Integer cartItemId, User currentUser) {
         CartItem cartItem = this.getCartItemById(cartItemId);
         Product product = cartItem.getProduct();
         Cart activeCart = cartItem.getCart();
@@ -45,7 +45,7 @@ public class CartItemServiceImpl implements CartItemService{
     }
 
     @Override
-    public CartItem getCartItemById(Long cartItemId) {
+    public CartItem getCartItemById(Integer cartItemId) {
         Optional<CartItem> optionalCartItem = cartItemRepository.findById(cartItemId);
         if (optionalCartItem.isPresent()){
             return optionalCartItem.get();

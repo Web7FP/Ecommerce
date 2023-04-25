@@ -22,7 +22,8 @@ import java.time.LocalDateTime;
 @DynamicUpdate
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "cart"})
 @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
+        scope = CartItem.class,
+        generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "id")
 public class CartItem extends BasicEntity {
     @Id
@@ -36,7 +37,7 @@ public class CartItem extends BasicEntity {
             generator = "cart_item_sequence",
             strategy = GenerationType.SEQUENCE
     )
-    private Long id;
+    private Integer id;
 
     private String sku;
     private BigDecimal price;
