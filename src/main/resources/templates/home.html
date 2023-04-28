@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
@@ -14,15 +12,9 @@
 </head>
 <body>
 
-<th:block sec:authorize="hasRole(T(com.springboot.ecommerce.user.UserRole.ADMIN).name())">
-        <div class="management">
-            <a th:href="@{/category-management/categories-list}">Category management</a><br>
-            <a th:href="@{/tag-management/tags-list}">Tag management</a><br>
-            <a th:href="@{/product-management/products-list}">Product management</a><br>
-        </div>
-</th:block>
-
-
+<a th:href="@{/category-management/categories-list}">Category management</a><br>
+<a th:href="@{/tag-management/tags-list}">Tag management</a><br>
+<a th:href="@{/product-management/products-list}">Product management</a><br>
 
 <div class="product-container">
 

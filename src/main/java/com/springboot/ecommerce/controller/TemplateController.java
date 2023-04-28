@@ -36,8 +36,6 @@ public class TemplateController {
 
     @GetMapping("/home")
     public String getHomePage(Model model){
-//        User currentUser = userService.findByEmail(user.getUsername());
-//        model.addAttribute("currentUser", currentUser);
         return findPaginatedProduct(1, "title", "asc",model);
     }
 
