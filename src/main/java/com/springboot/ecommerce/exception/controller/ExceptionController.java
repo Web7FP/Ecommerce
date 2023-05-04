@@ -16,12 +16,6 @@ import org.springframework.web.servlet.view.RedirectView;
 @ControllerAdvice
 public class ExceptionController {
 
-    @ExceptionHandler({NotFoundException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String notFoundExceptionHandler(Model model){
-        model.addAttribute("test","hello :))");
-        return "notFoundException";
-    }
 
     @ExceptionHandler(EmailNotValidException.class)
     public RedirectView emailNotValidExceptionHandler(RedirectAttributes redirectAttributes){

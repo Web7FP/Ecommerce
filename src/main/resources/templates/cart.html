@@ -30,7 +30,6 @@
                     <td th:text="${product.title}"></td>
                     <td th:text="${product.price}"></td>
                 </th:block>
-
                 <td>
                     <a th:href="@{/cart/delete-cart-item/{cartItemId}(cartItemId=${cartItem.getId()})}">
                         <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt="deleted">

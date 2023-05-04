@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class UserMeta {
+public class UserMeta implements Serializable {
     @SequenceGenerator(
             name = "user_meta_sequence",
             sequenceName = "user_meta_sequence",
@@ -32,7 +34,7 @@ public class UserMeta {
     private String middleName;
     private String lastName;
 
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     private String mobile;
     private String nickname;
 

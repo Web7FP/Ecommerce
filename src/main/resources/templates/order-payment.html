@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Information</title>
+</head>
+<body>
+<div class="container">
+    <div class="cart-item-list">
+        <th:block th:if="${order != null}">
+            <table>
+                <thead></thead>
+                <tbody>
+                <tr th:each="orderItem : ${order.getOrderItems()}">
+                    <th:block th:with="product=${orderItem.product}">
+                        <td th:text="${product.title}"></td>
+                        <td th:text="${product.price}"></td>
+                        <td th:text="${orderItem.price}"></td>
+                        <td th:text="${orderItem.quantity}"></td>
+                    </th:block>
+                </tr>
+                </tbody>
+            </table>
+        </th:block>
+        <th:block th:unless="${order != null}">
+            <table>
+                <thead></thead>
+                <tbody>
+                <tr th:each="cartItem : ${cart.cartItems}">
+                    <th:block th:with="product=${cartItem.product}">
+                        <td th:text="${product.title}"></td>
+                        <td th:text="${product.price}"></td>
+                        <td th:text="${cartItem.price}"></td>
+                        <td th:text="${cartItem.quantity}"></td>
+                    </th:block>
+                </tr>
+                </tbody>
+            </table>
+        </th:block>
+    </div>
+
+    <div class="user-meta">
+        <table th:object="${userMeta}">
+            <tr>
+                <td th:text="'Your name: ' + *{firstName} + ' '
+                + *{middleName} + ' ' + *{lastName}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Address: ' + *{address}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Mobile: ' + *{mobile}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="transaction">
+        <form method="post" th:object="${transaction}"
+              th:action="@{/order/processing}">
+            <div class="transaction-mode">
+                <label for="transaction-mode">Transaction mode: </label>
+                <select id="transaction-mode" th:field="*{mode}">
+                    <option th:each="mode : ${transactionModes}"
+                            th:text="${mode}" th:value="${mode}">
+                    </option>
+                </select>
+                <br><br>
+            </div>
+            <div class="transaction-type">
+                <label for="transaction-type">Transaction type:</label>
+                <select id="transaction-type" th:field="*{type}">
+                    <option th:each="type : ${transactionTypes}"
+                            th:text="${type}" th:value="${type}">
+                    </option>
+                </select>
+                <br><br>
+            </div>
+
+            <input type="submit" value="ORDER">
+        </form>
+    </div>
+</div>
+</body>
+</html>

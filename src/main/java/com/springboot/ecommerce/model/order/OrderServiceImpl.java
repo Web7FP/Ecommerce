@@ -1,20 +1,41 @@
 package com.springboot.ecommerce.model.order;
 
 import com.springboot.ecommerce.model.orderItem.OrderItem;
+import com.springboot.ecommerce.model.transaction.Transaction;
+import com.springboot.ecommerce.model.transaction.TransactionServiceImpl;
+import com.springboot.ecommerce.model.userMeta.UserMeta;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
     private final OrderRepository orderRepository;
+    private final TransactionServiceImpl transactionService;
+
 
 
     @Override
-    public void saveOrder(Order order, List<OrderItem> orderItems) {
+    public void saveOrder(Order order,
+                          List<OrderItem> orderItems,
+                          UserMeta userMeta,
+                          Transaction transaction) {
+        order.setAddress(userMeta.getAddress());
+        order.setMobile(userMeta.getMobile());
+        order.setFirstName(userMeta.getFirstName());
+        order.setMiddleName(userMeta.getMiddleName());
+        order.setLastName(userMeta.getLastName());
+        order.setTransaction(transaction);
         order.setOrderItems(orderItems);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void saveOrder(Order order, Transaction transaction) {
+        order.setTransaction(transaction);
         orderRepository.save(order);
     }
 
@@ -71,5 +92,38 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public List<Order> getAllOrderByCurrentUser(Long currentUserId) {
         return orderRepository.getAllOrderByCurrentUser(currentUserId);
+    }
+
+
+    @Override
+    public void setCompletedOrder(Order order) {
+        Transaction transaction = order.getTransaction();
+        order.setStatus(OrderStatus.COMPLETED);
+        orderRepository.save(order);
+        transactionService.setSuccessTransaction(transaction);
+    }
+
+    @Override
+    public void setCancelledOrder(Order order) {
+        Transaction transaction = order.getTransaction();
+        order.setStatus(OrderStatus.CANCELLED);
+        orderRepository.save(order);
+        transactionService.setCancelledTransaction(transaction);
+    }
+
+    @Override
+    public void setDeliveredOrder(Order order) {
+        order.setStatus(OrderStatus.DELIVERED);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public Order getOrderById(Long orderId) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        if (optionalOrder.isPresent()){
+            return optionalOrder.get();
+        } else {
+            throw new IllegalStateException("Order not found for id: " + orderId);
+        }
     }
 }

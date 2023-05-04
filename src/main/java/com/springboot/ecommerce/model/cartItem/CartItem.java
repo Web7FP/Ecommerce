@@ -23,8 +23,7 @@ import java.time.LocalDateTime;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "cart"})
 @JsonIdentityInfo(
         scope = CartItem.class,
-        generator = ObjectIdGenerators.IntSequenceGenerator.class,
-        property = "id")
+        generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class CartItem extends BasicEntity {
     @Id
     @SequenceGenerator(

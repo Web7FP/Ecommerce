@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Management order</title>
+</head>
+<body>
+<div class="container">
+    <div class="group-all-order-list">
+        <p>All order:</p><br><br>
+        <th:block th:each="order : ${allOrderList}">
+            <div th:class="'order-list-' + ${order.getId()}">
+                <table>
+                    <tr th:each="orderItem : ${order.getOrderItems()}">
+                        <th:block th:with="product=${orderItem.getProduct()}">
+                            <td th:text="${product.getTitle()}"></td>
+                            <td th:text="${product.getPrice()}"></td>
+                        </th:block>
+                        <td th:text="${orderItem.getQuantity()}"></td>
+                        <td th:text="${orderItem.getPrice()}"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p th:text="${order.getStatus()}"></p>
+                        </td>
+                        <td>
+                            <form th:action="@{/order-management/order-detail/{orderId}(orderId=${order.id})}">
+                                <button type="submit">Detail</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>

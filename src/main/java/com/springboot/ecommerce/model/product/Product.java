@@ -29,8 +29,7 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "cartItems"})
 @JsonIdentityInfo(
         scope = Product.class,
-        generator = ObjectIdGenerators.IntSequenceGenerator.class,
-        property = "id")
+        generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Product extends BasicEntity {
     @Id
     @SequenceGenerator(
@@ -128,6 +127,5 @@ public class Product extends BasicEntity {
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<OrderItem> orderItems = new ArrayList<>();
-
 
 }

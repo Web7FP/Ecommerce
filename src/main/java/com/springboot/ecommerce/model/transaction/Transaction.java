@@ -11,6 +11,9 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 
+import static com.springboot.ecommerce.model.transaction.TransactionStatus.*;
+
+
 @Getter
 @Setter
 @Builder
@@ -35,7 +38,7 @@ public class Transaction extends BasicEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private TransactionStatus status;
+    private TransactionStatus status = PENDING;
 
     @Enumerated(EnumType.STRING)
     private TransactionMode mode;
@@ -55,7 +58,7 @@ public class Transaction extends BasicEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(
+    @OneToOne(
             cascade = CascadeType.DETACH,
             fetch = FetchType.LAZY
     )

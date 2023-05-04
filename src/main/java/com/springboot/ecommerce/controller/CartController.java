@@ -11,14 +11,13 @@ import com.springboot.ecommerce.user.User;
 import com.springboot.ecommerce.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -33,7 +32,11 @@ public class CartController {
 
     @GetMapping("")
     public String viewCartPage(Model model,
-                               HttpSession session){
+                               HttpSession session,
+                               @AuthenticationPrincipal Authentication authentication){
+//        if (authentication == null || authentication instanceof AnonymousAuthenticationToken){
+//            return "redirect:/registration";
+//        }
         Cart activeCart = cartService.getActiveCartBySession(session);
         if (activeCart != null && ! activeCart.getCartItems().isEmpty()){
             model.addAttribute("cart", activeCart);
@@ -41,6 +44,15 @@ public class CartController {
         } else {
             throw new EmptyCartException();
         }
+    }
+
+    @PostMapping("update-quantity-cart-item")
+    public String updateQuantityCartItem(
+            @ModelAttribute("cartItem") CartItem cartItem,
+            HttpSession session){
+        cartItemService.saveCartItem(cartItem);
+        cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
+        return "redirect:/cart";
     }
 
     @GetMapping("add-product-to-cart/{productId}")

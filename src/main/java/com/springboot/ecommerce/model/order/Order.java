@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.springboot.ecommerce.model.order.OrderStatus.*;
+
 
 @Getter
 @Setter
@@ -56,7 +58,7 @@ public class Order extends BasicEntity {
 
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status ;
+    private OrderStatus status = PROCESSING;
 
     @ManyToOne(
             cascade = CascadeType.DETACH,
@@ -68,6 +70,6 @@ public class Order extends BasicEntity {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order")
-    private List<Transaction> transactions = new ArrayList<>();
+    @OneToOne(mappedBy = "order")
+    private Transaction transaction;
 }
