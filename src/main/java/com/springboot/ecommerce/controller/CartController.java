@@ -46,17 +46,9 @@ public class CartController {
         }
     }
 
-    @PostMapping("update-quantity-cart-item")
-    public String updateQuantityCartItem(
-            @ModelAttribute("cartItem") CartItem cartItem,
-            HttpSession session){
-        cartItemService.saveCartItem(cartItem);
-        cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
-        return "redirect:/cart";
-    }
-
-    @GetMapping("add-product-to-cart/{productId}")
+    @GetMapping("add-product-to-cart/{productId}/{quantity}")
     public String addProductToCart(@PathVariable("productId") Integer productId,
+                                   @PathVariable("quantity") Long quantity,
                                    @AuthenticationPrincipal UserDetails user,
                                    HttpSession session){
         User currentUser = userService.findByEmail(user.getUsername());
@@ -97,6 +89,15 @@ public class CartController {
         return "redirect:/cart";
     }
 
+    @PostMapping("update-quantity-cart-item/{cartItemId}/{quantity}")
+    @ResponseBody
+    public void  updateQuantityCartItem(@PathVariable("cartItemId") Integer cartItemId,
+                                       @PathVariable("quantity") Long quantity,
+                                         HttpSession session){
+        cartItemService.updateQuantityCartItem(cartItemId, quantity);
+        CartItem cartItem = cartItemService.getCartItemById(cartItemId);
+        cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
+    }
 
 
 

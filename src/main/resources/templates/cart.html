@@ -9,6 +9,28 @@
         tr:nth-child(even) {background-color: #D6EEEE;}
         thead {background-color: aquamarine;}
     </style>
+
+    <style>
+        input[type='number']::-webkit-inner-spin-button,
+        input[type='number']::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .custom-number-input input:focus {
+            outline: none !important;
+        }
+
+        .custom-number-input button:focus {
+            outline: none !important;
+        }
+    </style>
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
+
 </head>
 <body>
 <h1>Cart</h1>
@@ -30,6 +52,81 @@
                     <td th:text="${product.title}"></td>
                     <td th:text="${product.price}"></td>
                 </th:block>
+                <td>
+                    <th:block>
+                        <div class="custom-number-input h-10 w-32">
+
+                            <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                                <button data-action="decrement" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                                    <span class="m-auto text-2xl font-thin">−</span>
+                                </button>
+                                <input type="number"
+                                       id="custom-input-number"
+                                       name="custom-input-number"
+                                       th:data-cart-item-id="${cartItem.getId()}"
+                                       th:value="${cartItem.getQuantity()}"
+                                       min="1">
+                                <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                                    <span class="m-auto text-2xl font-thin">+</span>
+                                </button>
+                            </div>
+
+
+                            <script>
+                                function decrement(e) {
+                                    const btn = e.target.parentNode.parentElement.querySelector(
+                                        'button[data-action="decrement"]'
+                                    );
+                                    const target = btn.nextElementSibling;
+                                    let value = Number(target.value);
+                                    value--;
+                                    target.value = value;
+                                    updateQuantity(target.getAttribute("data-cart-item-id"), value);
+                                }
+
+                                function increment(e) {
+                                    const btn = e.target.parentNode.parentElement.querySelector(
+                                        'button[data-action="decrement"]'
+                                    );
+                                    const target = btn.nextElementSibling;
+                                    let value = Number(target.value);
+                                    value++;
+                                    target.value = value;
+                                    updateQuantity(target.getAttribute("data-cart-item-id"), value);
+                                }
+
+                                function updateQuantity(cartItemId, quantity){
+                                    $.ajax({
+                                        type:"POST",
+                                        url:"/cart/update-quantity-cart-item/" + cartItemId + "/" + quantity,
+                                        success: function (response){
+                                            console.log(response);
+                                        },
+                                        error: function (xhr, status, error){
+                                            console.log(error);
+                                        }
+                                    })
+                                }
+
+                                const decrementButtons = document.querySelectorAll(
+                                    `button[data-action="decrement"]`
+                                );
+
+                                const incrementButtons = document.querySelectorAll(
+                                    `button[data-action="increment"]`
+                                );
+
+                                decrementButtons.forEach(btn => {
+                                    btn.addEventListener("click", decrement);
+                                });
+
+                                incrementButtons.forEach(btn => {
+                                    btn.addEventListener("click", increment);
+                                });
+                            </script>
+                        </div>
+                    </th:block>
+                </td>
                 <td>
                     <a th:href="@{/cart/delete-cart-item/{cartItemId}(cartItemId=${cartItem.getId()})}">
                         <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt="deleted">

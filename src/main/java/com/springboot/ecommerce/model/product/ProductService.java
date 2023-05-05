@@ -14,6 +14,8 @@ public interface ProductService {
 
     List<Product> findAllByCategory(Long id);
 
+    List<Product> findAllByCategoryAndTag(Long categoryId, Long tagId);
+
     Product getProductById(Integer id);
 
     Product getProductByProductMeta(Long productMetaId);

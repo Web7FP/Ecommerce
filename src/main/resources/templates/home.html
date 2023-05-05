@@ -9,6 +9,11 @@
         tr:nth-child(even) {background-color: #D6EEEE;}
         thead {background-color: aquamarine;}
     </style>
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -74,18 +79,18 @@
              alt="header_header_img_Cart" style="max-width: 100%; width: 24px; height: 24px;">
     </a><br><br>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#buttonCart").on("click", function (e){
-                alert('Add to Cart');
-            });
-        });
-    </script>
 
     <a th:href="@{/account/edit}" style="color: red">My account</a><br><br>
 
 
-
+    <button id="buttonAdd2Cart">Test</button>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#buttonAdd2Cart").on("click", function (e){
+                alert('Test :))')
+            })
+        })
+    </script>
 
     <div class="group-logout">
         <form class="logout" method="get" action="/logout">

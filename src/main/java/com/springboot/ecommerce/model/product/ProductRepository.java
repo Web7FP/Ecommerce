@@ -13,10 +13,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findAllByCategories_Id(Long id);
 
+    List<Product> findAllByCategories_IdAndTags_Id(Long categoryId, Long tagId);
+
     Product findByProductMetas_Id(Long productMetaId);
 
     @Query("select p " +
             "from Product as p " +
             "where p.slug = :slugProduct")
     Product findBySlugProduct(String slugProduct);
+
+
 }

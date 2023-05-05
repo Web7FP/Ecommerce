@@ -53,4 +53,10 @@ public class CartItemServiceImpl implements CartItemService{
             throw new IllegalStateException("Cart Item not found for id: " + cartItemId);
         }
     }
+
+
+    @Override
+    public void updateQuantityCartItem(Integer cartItemId, Long quantity) {
+        cartItemRepository.updateQuantity(cartItemId, quantity);
+    }
 }

@@ -13,4 +13,6 @@ public interface CartItemService {
 
     CartItem getCartItemById(Integer cartItemId);
 
+    void updateQuantityCartItem(Integer cartItemId, Long quantity);
+
 }

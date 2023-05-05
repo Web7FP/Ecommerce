@@ -85,4 +85,10 @@ public class ProductServiceImpl implements ProductService{
     public Product findBySlugProduct(String slugProduct) {
         return productRepository.findBySlugProduct(slugProduct);
     }
+
+
+    @Override
+    public List<Product> findAllByCategoryAndTag(Long categoryId, Long tagId) {
+        return productRepository.findAllByCategories_IdAndTags_Id(categoryId, tagId);
+    }
 }

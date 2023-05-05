@@ -2,7 +2,9 @@ package com.springboot.ecommerce.model.cartItem;
 
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.product.Product;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +18,13 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
             "where c.id = :cartId and p.id = :productId"
     )
     CartItem findByProductAndCart(Integer productId, Long cartId);
+
+
+    @Query("update CartItem as ct " +
+            "set ct.quantity=?2 " +
+            "where ct.id=?1")
+    @Modifying
+    @Transactional
+    void updateQuantity(Integer cartItemId, Long quantity);
 
 }
