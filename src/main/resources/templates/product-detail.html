@@ -7,6 +7,7 @@
 <body>
 <div class="container">
   <h1 th:text="${product.title}"></h1><br>
+    <img th:src="${product.getImageLink()}" th:alt="${product.title}" style="height: 100px; width: 100px">
   <p th:text="'Price: ' + ${product.price}"></p><br>
   <p th:text="'Discoutn: '+ ${product.discount}"></p><br><br>
 
