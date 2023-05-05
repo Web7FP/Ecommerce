@@ -41,7 +41,7 @@ public class CartItem extends BasicEntity {
     private String sku;
     private BigDecimal price;
     private BigDecimal discount;
-    private Long quantity;
+    private Long quantity = 1L;
     private boolean active;
 
     @Column(updatable = false)
