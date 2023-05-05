@@ -46,9 +46,8 @@ public class CartController {
         }
     }
 
-    @GetMapping("add-product-to-cart/{productId}/{quantity}")
+    @GetMapping("add-product-to-cart/{productId}")
     public String addProductToCart(@PathVariable("productId") Integer productId,
-                                   @PathVariable("quantity") Long quantity,
                                    @AuthenticationPrincipal UserDetails user,
                                    HttpSession session){
         User currentUser = userService.findByEmail(user.getUsername());
