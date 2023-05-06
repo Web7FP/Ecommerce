@@ -6,6 +6,7 @@ import com.springboot.ecommerce.model.cart.CartServiceImpl;
 import com.springboot.ecommerce.model.product.Product;
 import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import com.springboot.ecommerce.user.User;
+import com.springboot.ecommerce.user.UserRole;
 import com.springboot.ecommerce.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +29,21 @@ public class TemplateController {
 
     @GetMapping("/setCartSession")
     public String setCartSession(@AuthenticationPrincipal UserDetails user, HttpSession session){
+
         User currentUser = userService.findByEmail(user.getUsername());
-        Cart activeCart = cartService.getActiveCartByUser(currentUser.getId());
-        cartService.setActiveCartSessionAttribute(session, activeCart);
-        return "redirect:/home";
+        if (currentUser.getUserRole().equals(UserRole.ADMIN)) {
+            return "redirect:/admin";
+        } else {
+            Cart activeCart = cartService.getActiveCartByUser(currentUser.getId());
+            cartService.setActiveCartSessionAttribute(session, activeCart);
+            return "redirect:/home";
+        }
+
+    }
+
+    @GetMapping("/admin")
+    public String adminPage(){
+        return "admin";
     }
 
     @GetMapping("/home")

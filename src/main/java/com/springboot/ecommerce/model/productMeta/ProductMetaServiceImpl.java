@@ -45,6 +45,9 @@ public class ProductMetaServiceImpl implements ProductMetaService {
 
     @Override
     public void deleteProductMeta(Long productMetaId) {
-        productMetaRepository.deleteById(productMetaId);
+        ProductMeta productMeta = this.getProductMetaById(productMetaId);
+        productMeta.setProduct(null);
+        this.saveProductMeta(productMeta);
+        productMetaRepository.delete(productMeta);
     }
 }

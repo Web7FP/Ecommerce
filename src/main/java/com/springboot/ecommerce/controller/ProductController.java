@@ -60,7 +60,7 @@ public class ProductController {
         model.addAttribute("product", new Product());
         model.addAttribute("categoriesList", categoryService.getAllCategories());
         model.addAttribute("productTags", tagService.getAllProductTags());
-        return "add-new-product";
+        return "update-product-form";
     }
 
     @PostMapping("save-product")
@@ -111,32 +111,30 @@ public class ProductController {
         return "update-product-meta-form";
     }
 
-    @PostMapping("update-product-meta")
-    public String updateProductMeta(@ModelAttribute("productMeta") ProductMeta productMeta,
-                                  RedirectAttributes redirectAttributes){
-        Product product = productService.getProductByProductMeta(productMeta.getId());
-        productMeta.setProduct(product);
-        productMetaService.saveProductMeta(productMeta);
-        redirectAttributes.addAttribute("productId", product.getId());
-        return "redirect:/product-management/product-meta-management/{productId}";
-    }
 
     @GetMapping("add-new-product-meta/productId={productId}")
     public String getAddNewProductMetaView(@PathVariable("productId") Integer productId, Model model){
         ProductMeta productMeta = new ProductMeta();
         productMeta.setProduct(productService.getProductById(productId));
         model.addAttribute("productMeta", productMeta);
-        return "add-new-product-meta";
+        return "update-product-meta-form";
     }
 
-    @PostMapping("save-new-product-meta")
+    @PostMapping("save-product-meta")
     public String saveNewProductMeta(@ModelAttribute("productMeta") ProductMeta productMeta,
                                      RedirectAttributes redirectAttributes){
-        Product product = productMeta.getProduct();
-        product.getProductMetas().add(productMeta);
-        productService.saveProduct(product);
+        if (productMeta.getId() == null){
+            Product product = productMeta.getProduct();
+            product.getProductMetas().add(productMeta);
+            productService.saveProduct(product);
+            redirectAttributes.addAttribute("productId", product.getId());
+
+        } else {
+            Product product = productService.getProductByProductMeta(productMeta.getId());
+            productMeta.setProduct(product);
+            redirectAttributes.addAttribute("productId", product.getId());
+        }
         productMetaService.saveProductMeta(productMeta);
-        redirectAttributes.addAttribute("productId", product.getId());
         return "redirect:/product-management/product-meta-management/{productId}";
     }
 

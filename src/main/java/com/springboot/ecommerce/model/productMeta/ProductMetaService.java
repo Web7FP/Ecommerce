@@ -13,4 +13,5 @@ public interface ProductMetaService {
     void deleteProductMeta(Long productMetaId);
 
     ProductMeta getProductMetaById(Long id);
+
 }

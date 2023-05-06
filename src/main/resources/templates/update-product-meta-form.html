@@ -7,8 +7,13 @@
 <body>
 <div class="container">
   <h1>Update product meta</h1>
-  <form method="post" th:action="@{/product-management/update-product-meta}" th:object="${productMeta}">
-      <input type="hidden" th:field="*{id}">
+  <form method="post" th:action="@{/product-management/save-product-meta}" th:object="${productMeta}">
+      <th:block th:if="*{id != null}">
+          <input type="hidden" th:field="*{id}">
+      </th:block>
+      <th:block th:unless="*{id != null}">
+          <input type="hidden" th:field="*{product}" th:value="*{product}">
+      </th:block>
       <div class="group-key-product-meta">
           <label for="key-product-meta">Key : </label>
           <input type="text" id="key-product-meta" th:field="*{keyProductMeta}" autofocus><br><br>

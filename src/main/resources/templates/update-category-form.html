@@ -8,7 +8,9 @@
 <div class="container">
     <div class="form-update-category">
         <form method="post" th:action="@{/category-management/save-category}" th:object="${category}">
-            <input type="hidden" th:field="*{id}">
+            <th:block th:if="*{id != null}">
+                <input type="hidden" th:field="*{id}">
+            </th:block>
             <div class="group-title">
                 <label for="title">Title Category</label>
                 <input id="title" th:field="*{title}" type="text" required><br><br>

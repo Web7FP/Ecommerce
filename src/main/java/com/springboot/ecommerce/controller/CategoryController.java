@@ -19,7 +19,7 @@ public class CategoryController {
     public String getAddCategory(Model model){
         model.addAttribute("category", new Category());
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "add-new-category";
+        return "update-category-form";
     }
 
     @PostMapping("save-category")

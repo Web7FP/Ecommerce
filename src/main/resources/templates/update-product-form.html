@@ -8,7 +8,9 @@
 <div class="container">
     <div class="update-product-form">
         <form method="post" th:action="@{/product-management/save-product}" th:object="${product}">
-            <input type="hidden" th:field="*{id}">
+            <th:block th:if="*{id != null}">
+                <input type="hidden" th:field="*{id}">
+            </th:block>
             <div class="group-title">
                 <label for="title">Title Product</label>
                 <input type="text" id="title" th:field="*{title}" required><br><br>
@@ -92,25 +94,87 @@
             </div>
             <br><br>
 
-
-            <div class="group-product-meta">
-                <label for="product-meta">Product Meta List: </label>
-                <div id="product-meta">
-                    <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
-                        <label for="key-product-meta" th:text="'Key product meta '+ ${metaStatus.count}"></label>
-                        <p id="key-product-meta" th:text="*{productMetas[__${metaStatus.index}__].keyProductMeta}"></p>
-                        <label for="content-product-meta" th:text="'Content ' + ${metaStatus.count}"></label>
-                        <p id="content-product-meta" th:text="*{productMetas[__${metaStatus.index}__].content}"></p><br><br>
-<!--                        <button type="button" onclick="removeProductMeta(this)">Delete</button>-->
+            <th:block th:if="*{id != null}">
+                <div class="group-product-meta">
+                    <label for="product-meta">Product Meta List: </label>
+                    <div id="product-meta">
+                        <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
+                            <label for="key-product-meta" th:text="'Key product meta '+ ${metaStatus.count}"></label>
+                            <p id="key-product-meta" th:text="*{productMetas[__${metaStatus.index}__].keyProductMeta}"></p>
+                            <label for="content-product-meta" th:text="'Content ' + ${metaStatus.count}"></label>
+                            <p id="content-product-meta" th:text="*{productMetas[__${metaStatus.index}__].content}"></p><br><br>
+                        </div>
                     </div>
                 </div>
-<!--                <button type="button" onclick="addProductMeta()">Add New Product Meta Form</button>-->
-            </div>
 
-            <input type="submit" value="Update product">
+                <input type="submit" value="Update product">
+
+            </th:block>
+
+            <th:block th:unless="*{id != null}">
+                <div class="group-product-meta">
+                    <label for="product-meta-new">Product Meta List: </label>
+                    <div id="product-meta-new">
+                        <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
+                            <label for="key-product-meta-new" th:text="'Key product meta '+ ${metaStatus.count}"></label>
+                            <input id="key-product-meta-new" th:field="*{productMetas[__${metaStatus.index}__].keyProductMeta}" type="text" required>
+                            <label for="content-product-meta-new" th:text="'Content ' + ${metaStatus.count}"></label>
+                            <textarea id="content-product-meta-new" th:field="*{productMetas[__${metaStatus.index}__].content}" rows="3"></textarea><br><br>
+                            <button type="button" onclick="removeProductMeta(this)">Delete</button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="addProductMeta()">Add New Product Meta Form</button>
+                </div>
+                <script>
+                    function addProductMeta(){
+                        var productMetasDiv = document.getElementById("product-meta-new");
+                        var index = productMetasDiv.children.length;
+                        var newProductMetaDiv = document.createElement("div");
+                        newProductMetaDiv.classList.add("form-group-product-meta")
+                        newProductMetaDiv.innerHTML =
+                            '<label for="key-product-meta-new">Key Product Meta ' + (index + 1) + ' :</label>' +
+                            '<input type="text" name="productMetas[' + index + '].keyProductMeta"  required id="key-product-meta-new"/><br><br>' +
+                            '<label for="content-product-meta-new">Content ' + (index + 1) + ':</label>' +
+                            '<textarea name="productMetas[' + index + '].content" rows="3" id="content-product-meta-new"></textarea><br><br>' +
+                            '<button type="button" onclick="removeProductMeta(this)">Delete</button>';
+                        productMetasDiv.appendChild(newProductMetaDiv);
+                    }
+
+                    function removeProductMeta(button){
+                        var productMetaDiv = button.parentElement;
+                        var productMetasDiv = document.getElementById("product-meta-new");
+                        productMetasDiv.removeChild(productMetaDiv);
+                        updateProductMetaIndex();
+                    }
+
+                    function updateProductMetaIndex() {
+                        var productMetasDiv = document.getElementById("product-meta-new");
+                        var productMetaList = productMetasDiv.querySelectorAll(".form-group-product-meta");
+                        for (var i = 0; i < productMetaList.length; i++) {
+                            var keyProductMeta = productMetaList[i].querySelector("input[type='text']");
+                            var contentProductMeta = productMetaList[i].querySelector("textarea");
+                            var keyProductMetaLabel = productMetaList[i].querySelector("label[for='key-product-meta-new']");
+                            var contentProductMetaLabel = productMetaList[i].querySelector("label[for='content-product-meta-new']");
+
+                            keyProductMeta.name = "productMetas[" + i + "].keyProductMeta";
+                            keyProductMeta.id = "key-product-meta-new" + i;
+                            contentProductMeta.name = "productMetas[" + i + "].content";
+                            contentProductMeta.id = "content-product-meta-new" + i;
+                            keyProductMetaLabel.innerHTML = "Key product meta " + (i + 1) + ":";
+                            contentProductMetaLabel.innerHTML = "Content " + (i + 1) + ":";
+                        }
+                    }
+
+                </script>
+
+                <input type="submit" value="Add new product">
+            </th:block>
+
         </form>
 
-        <a th:href="@{/product-management/product-meta-management/{id}(id=${product.id})}">Product Meta Management</a><br><br>
+        <th:block th:if="${product.id != null}">
+            <a th:href="@{/product-management/product-meta-management/{id}(id=${product.id})}">Product Meta Management</a><br><br>
+        </th:block>
 
         <a th:href="@{/product-management/products-list}">Back to Product management</a><br>
 

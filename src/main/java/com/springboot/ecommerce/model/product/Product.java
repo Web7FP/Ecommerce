@@ -52,6 +52,7 @@ public class Product extends BasicEntity {
     @JsonIgnore
     private User user;
 
+    @Lob
     private String imageLink;
 
     @Column(nullable = false)

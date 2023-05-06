@@ -8,7 +8,9 @@
 <div class="container">
     <h1> Update Tag Form</h1>
     <form method="post" th:action="@{/tag-management/save-product-tag}" th:object="${tag}">
-        <input type="hidden" th:field="*{id}">
+        <th:block th:if="*{id != null}">
+            <input type="hidden" th:field="*{id}">
+        </th:block>
         <div class="group-title">
             <label for="title">Title Tag</label>
             <input id="title" th:field="*{title}" required type="text" autofocus><br><br>
@@ -26,7 +28,13 @@
             <input type="text" th:field="*{content}" id="content"><br><br>
         </div>
 
-        <input type="submit" value="Update tag">
+        <th:block th:if="*{id != null}">
+            <input type="submit" value="Update tag">
+
+        </th:block>
+        <th:block th:unless="*{id != null}">
+            <input type="submit" value="Add new Tag">
+        </th:block>
     </form>
 </div>
 </body>

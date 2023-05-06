@@ -16,12 +16,12 @@ public class TagController {
     @GetMapping("add-new-tag.html")
     public String getAddNewProductTag(Model model){
         Tag tag = new Tag();
-        model.addAttribute("productTag", tag);
-        return "add-new-tag";
+        model.addAttribute("tag", tag);
+        return "update-tag-form";
     }
 
     @PostMapping("save-product-tag")
-    public String saveNewProductTag(@ModelAttribute("productTag") Tag tag){
+    public String saveNewProductTag(@ModelAttribute("tag") Tag tag){
         tagService.saveProductTag(tag);
         return "redirect:/tag-management/tags-list";
     }
