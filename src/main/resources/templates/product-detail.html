@@ -3,15 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <title>Product detail</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
   <h1 th:text="${product.title}"></h1><br>
-    <img th:src="${product.getImageLink()}" th:alt="${product.title}" style="height: 100px; width: 100px">
+    <img th:src="${product.getImageLink()}"
+         th:alt="${product.title}"
+         style="height: 100px; width: 100px">
   <p th:text="'Price: ' + ${product.price}"></p><br>
   <p th:text="'Discoutn: '+ ${product.discount}"></p><br><br>
 
-    <a th:href="@{/cart/add-product-to-cart/{productId}(productId=${product.id})}">Add to Cart</a>
+
+
+    <th:block>
+        <div class="custom-number-input h-10 w-32">
+
+            <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                <button data-action="decrement" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                    <span class="m-auto text-2xl font-thin">−</span>
+                </button>
+                <input type="number"
+                       th:id="'quantity' + ${product.id}"
+                       name="custom-input-number"
+                       value="1">
+                <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                    <span class="m-auto text-2xl font-thin">+</span>
+                </button>
+
+                <button id="button-add-product-to-cart">Add Product To Cart</button>
+            </div>
+
+            <th:block th:if="${product.quantity <= 10}">
+                <p th:text="'Only ' + ${product.quantity} + ' left in stock'"></p>
+            </th:block>
+            <script>
+
+                $(document).ready(function () {
+                    $("#button-add-product-to-cart").on("click", function (e) {
+                        addProductToCart();
+                    })
+                })
+
+                function addProductToCart(){
+                    let productId = "[[${product.id}]]";
+                    let quantity  = $("#quantity" + productId).val();
+                    let url = "/cart/add-product-to-cart/" + productId + "/" + quantity;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        success: function (response){
+                            console.log(response);
+                            alert("This product has been added to your cart")
+                        },
+                        error: function (xhr, status, error){
+                            console.log(error);
+                            if (xhr.status === 400){
+                                alert("Quantity exceeded");
+                            } else {
+                                alert("Error: " + xhr.responseText);
+                            }
+                        }
+                    })
+                }
+                function decrement(e) {
+                    const btn = e.target.parentNode.parentElement.querySelector(
+                        'button[data-action="decrement"]'
+                    );
+                    const target = btn.nextElementSibling;
+                    let value = Number(target.value);
+                    if (value > 1){
+                        value--;
+                        target.value = value;
+                    }
+                }
+
+                function increment(e) {
+                    const btn = e.target.parentNode.parentElement.querySelector(
+                        'button[data-action="decrement"]'
+                    );
+                    const target = btn.nextElementSibling;
+                    let value = Number(target.value);
+                    let maxQuantity = [[${product.quantity}]]
+                    if (value < maxQuantity){
+                        value++;
+                        target.value = value;
+                    }
+
+                }
+                const decrementButtons = document.querySelectorAll(
+                    `button[data-action="decrement"]`
+                );
+
+                const incrementButtons = document.querySelectorAll(
+                    `button[data-action="increment"]`
+                );
+
+                decrementButtons.forEach(btn => {
+                    btn.addEventListener("click", decrement);
+                });
+
+                incrementButtons.forEach(btn => {
+                    btn.addEventListener("click", increment);
+                });
+            </script>
+        </div>
+    </th:block>
   <a th:href="@{/home}">Back to Home page</a>
 </div>
 </body>

@@ -1,6 +1,7 @@
 package com.springboot.ecommerce.controller;
 
 import com.springboot.ecommerce.exception.EmptyCartException;
+import com.springboot.ecommerce.exception.QuantityExceededException;
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.cart.CartServiceImpl;
 import com.springboot.ecommerce.model.cartItem.CartItem;
@@ -11,6 +12,7 @@ import com.springboot.ecommerce.user.User;
 import com.springboot.ecommerce.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,11 +34,7 @@ public class CartController {
 
     @GetMapping("")
     public String viewCartPage(Model model,
-                               HttpSession session,
-                               @AuthenticationPrincipal Authentication authentication){
-//        if (authentication == null || authentication instanceof AnonymousAuthenticationToken){
-//            return "redirect:/registration";
-//        }
+                               HttpSession session){
         Cart activeCart = cartService.getActiveCartBySession(session);
         if (activeCart != null && ! activeCart.getCartItems().isEmpty()){
             model.addAttribute("cart", activeCart);
@@ -46,10 +44,12 @@ public class CartController {
         }
     }
 
-    @GetMapping("add-product-to-cart/{productId}")
-    public String addProductToCart(@PathVariable("productId") Integer productId,
-                                   @AuthenticationPrincipal UserDetails user,
-                                   HttpSession session){
+    @PostMapping("add-product-to-cart/{productId}/{quantity}")
+    @ResponseBody
+    public void addProductToCart(@PathVariable("productId") Integer productId,
+                                           @PathVariable("quantity") Long quantity,
+                                           @AuthenticationPrincipal UserDetails user,
+                                           HttpSession session){
         User currentUser = userService.findByEmail(user.getUsername());
         Cart activeCart = cartService.getActiveCartBySession(session);
         Product product = productService.getProductById(productId);
@@ -61,20 +61,27 @@ public class CartController {
             cartService.saveCart(activeCart);
         }
 
-        CartItem cartItem = cartItemService.getCartItemByProductAndCart(product.getId(),
-                activeCart.getId());
+        CartItem cartItem = cartItemService.getCartItemByProductAndCart(product.getId(), activeCart.getId());
         if (cartItem == null){
             cartItem = new CartItem();
             cartItem.setProduct(product);
             cartItem.setCart(activeCart);
+            cartItem.setQuantity(quantity);
             cartItemService.saveCartItem(cartItem);
             activeCart.getCartItems().add(cartItem);
             activeCart.setUser(currentUser);
             cartService.saveCart(activeCart);
+            cartService.setActiveCartSessionAttribute(session, activeCart);
+        } else {
+            Long newQuantityCartItem = cartItem.getQuantity() + quantity;
+            if (newQuantityCartItem <= product.getQuantity()){
+                cartItem.setQuantity(newQuantityCartItem);
+                cartItemService.saveCartItem(cartItem);
+                cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
+            } else {
+                throw new QuantityExceededException();
+            }
         }
-        cartService.saveCart(activeCart);
-        cartService.setActiveCartSessionAttribute(session, activeCart);
-        return "redirect:/cart";
     }
 
 
@@ -97,7 +104,5 @@ public class CartController {
         CartItem cartItem = cartItemService.getCartItemById(cartItemId);
         cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
     }
-
-
 
 }

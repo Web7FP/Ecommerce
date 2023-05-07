@@ -1,11 +1,9 @@
 package com.springboot.ecommerce.exception.controller;
 
 
-import com.springboot.ecommerce.exception.EmailAlreadyTakenException;
-import com.springboot.ecommerce.exception.EmailNotValidException;
-import com.springboot.ecommerce.exception.EmptyCartException;
-import com.springboot.ecommerce.exception.NotFoundException;
+import com.springboot.ecommerce.exception.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,5 +31,10 @@ public class ExceptionController {
     public String emptyCartTakenExceptionHandler(Model model){
         model.addAttribute("emptyCartException", "Your cart is empty");
         return "cart";
+    }
+
+    @ExceptionHandler({QuantityExceededException.class})
+    public ResponseEntity<?> quantityExceededExceptionHandler(){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Quantity exceeded");
     }
 }

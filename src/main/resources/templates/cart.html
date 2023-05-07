@@ -26,8 +26,7 @@
         }
     </style>
 
-    <script
-            src="https://code.jquery.com/jquery-3.6.4.js"
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
             integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
             crossorigin="anonymous"></script>
 
@@ -70,60 +69,6 @@
                                     <span class="m-auto text-2xl font-thin">+</span>
                                 </button>
                             </div>
-
-
-                            <script>
-                                function decrement(e) {
-                                    const btn = e.target.parentNode.parentElement.querySelector(
-                                        'button[data-action="decrement"]'
-                                    );
-                                    const target = btn.nextElementSibling;
-                                    let value = Number(target.value);
-                                    value--;
-                                    target.value = value;
-                                    updateQuantity(target.getAttribute("data-cart-item-id"), value);
-                                }
-
-                                function increment(e) {
-                                    const btn = e.target.parentNode.parentElement.querySelector(
-                                        'button[data-action="decrement"]'
-                                    );
-                                    const target = btn.nextElementSibling;
-                                    let value = Number(target.value);
-                                    value++;
-                                    target.value = value;
-                                    updateQuantity(target.getAttribute("data-cart-item-id"), value);
-                                }
-
-                                function updateQuantity(cartItemId, quantity){
-                                    $.ajax({
-                                        type:"POST",
-                                        url:"/cart/update-quantity-cart-item/" + cartItemId + "/" + quantity,
-                                        success: function (response){
-                                            console.log(response);
-                                        },
-                                        error: function (xhr, status, error){
-                                            console.log(error);
-                                        }
-                                    })
-                                }
-
-                                const decrementButtons = document.querySelectorAll(
-                                    `button[data-action="decrement"]`
-                                );
-
-                                const incrementButtons = document.querySelectorAll(
-                                    `button[data-action="increment"]`
-                                );
-
-                                decrementButtons.forEach(btn => {
-                                    btn.addEventListener("click", decrement);
-                                });
-
-                                incrementButtons.forEach(btn => {
-                                    btn.addEventListener("click", increment);
-                                });
-                            </script>
                         </div>
                     </th:block>
                 </td>
@@ -141,6 +86,58 @@
     </div>
 
 
+    <script>
+        function decrement(e) {
+            const btn = e.target.parentNode.parentElement.querySelector(
+                'button[data-action="decrement"]'
+            );
+            const target = btn.nextElementSibling;
+            let value = Number(target.value);
+            value--;
+            target.value = value;
+            updateQuantity(target.getAttribute("data-cart-item-id"), value);
+        }
+
+        function increment(e) {
+            const btn = e.target.parentNode.parentElement.querySelector(
+                'button[data-action="decrement"]'
+            );
+            const target = btn.nextElementSibling;
+            let value = Number(target.value);
+            value++;
+            target.value = value;
+            updateQuantity(target.getAttribute("data-cart-item-id"), value);
+        }
+
+        function updateQuantity(cartItemId, quantity){
+            $.ajax({
+                type:"POST",
+                url:"/cart/update-quantity-cart-item/" + cartItemId + "/" + quantity,
+                success: function (response){
+                    console.log(response);
+                },
+                error: function (xhr, status, error){
+                    console.log(error);
+                }
+            })
+        }
+
+        const decrementButtons = document.querySelectorAll(
+            `button[data-action="decrement"]`
+        );
+
+        const incrementButtons = document.querySelectorAll(
+            `button[data-action="increment"]`
+        );
+
+        decrementButtons.forEach(btn => {
+            btn.addEventListener("click", decrement);
+        });
+
+        incrementButtons.forEach(btn => {
+            btn.addEventListener("click", increment);
+        });
+    </script>
     <a th:href="@{/home}">Continue Shopping</a><br><br>
 
 </div>

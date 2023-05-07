@@ -1,6 +1,8 @@
 package com.springboot.ecommerce.model.order;
 
 import com.springboot.ecommerce.model.orderItem.OrderItem;
+import com.springboot.ecommerce.model.product.Product;
+import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import com.springboot.ecommerce.model.transaction.Transaction;
 import com.springboot.ecommerce.model.transaction.TransactionServiceImpl;
 import com.springboot.ecommerce.model.userMeta.UserMeta;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService{
     private final OrderRepository orderRepository;
     private final TransactionServiceImpl transactionService;
+    private final ProductServiceImpl productService;
 
 
 
@@ -105,6 +108,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void setCancelledOrder(Order order) {
+        for (OrderItem orderItem : order.getOrderItems()){
+            Product product = orderItem.getProduct();
+            Long newQuantityProduct = product.getQuantity() + orderItem.getQuantity();
+            product.setQuantity(newQuantityProduct);
+            productService.saveProduct(product);
+        }
         Transaction transaction = order.getTransaction();
         order.setStatus(OrderStatus.CANCELLED);
         orderRepository.save(order);
@@ -113,6 +122,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void setDeliveredOrder(Order order) {
+        for (OrderItem orderItem: order.getOrderItems()) {
+            Product product = orderItem.getProduct();
+            Long newQuantityProduct = product.getQuantity() - orderItem.getQuantity();
+            product.setQuantity(newQuantityProduct);
+            productService.saveProduct(product);
+        }
         order.setStatus(OrderStatus.DELIVERED);
         orderRepository.save(order);
     }

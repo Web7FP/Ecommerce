@@ -29,6 +29,7 @@
                 <td>Price</td>
                 <td>Discount</td>
                 <td>Created At</td>
+                <td>Quantity</td>
                 <td>Action</td>
             </tr>
         </thead>
@@ -40,6 +41,7 @@
                 <td th:text="${product.price}"></td>
                 <td th:text="${product.discount}"></td>
                 <td th:text="${product.createdAt}"></td>
+                <td th:text="${product.quantity}"></td>
                 <td>
                     <a th:href="@{/product-management/update-product-form/{id}(id=${product.id})}">Update</a>
                     <a th:href="@{/product-management/delete-product/{id}(id=${product.id})}">Delete</a>
