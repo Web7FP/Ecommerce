@@ -73,6 +73,11 @@
                     </th:block>
                 </td>
                 <td>
+                    <p th:id="'price-cart-item-'+${cartItem.id}"
+                       th:text="${cartItem.quantity}*${cartItem.product.price}"
+                       th:data-price-product="${cartItem.product.price}"></p>
+                </td>
+                <td>
                     <a th:href="@{/cart/delete-cart-item/{cartItemId}(cartItemId=${cartItem.getId()})}">
                         <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt="deleted">
                     </a>
@@ -80,6 +85,15 @@
             </tr>
             </tbody>
         </table>
+
+        <th:block th:with="subTotal=0">
+            <th:block th:each="cartItem : ${cart.cartItems}">
+                <th:block th:with="subTotal=${subTotal + cartItem.price}">
+                    <p id="sub-total-price-cartItem" th:text="${subTotal}"></p>
+                </th:block>
+            </th:block>
+        </th:block>
+
 
         <a th:href="@{order/checkout/payment}">Order</a>
 
@@ -115,12 +129,31 @@
                 url:"/cart/update-quantity-cart-item/" + cartItemId + "/" + quantity,
                 success: function (response){
                     console.log(response);
+                    updatePrice(cartItemId, quantity);
+                    updateSubTotal();
                 },
                 error: function (xhr, status, error){
                     console.log(error);
                 }
             })
         }
+
+        function updatePrice(cartItemId, quantity){
+            let priceSpan = document.getElementById('price-cart-item-'+cartItemId);
+            let priceProduct = Number(priceSpan.getAttribute("data-price-product"));
+            let priceCartItem = priceProduct * quantity;
+            priceSpan.textContent = String(priceCartItem);
+        }
+
+        function updateSubTotal(){
+            let subTotal = 0;
+            let priceSpans = document.querySelectorAll('p[id^="price-cart-item-"]');
+            priceSpans.forEach(priceSpan => {
+                subTotal += Number(priceSpan.textContent)
+            });
+            document.getElementById("sub-total-price-cartItem").textContent = String("SubTotal: "+subTotal);
+        }
+
 
         const decrementButtons = document.querySelectorAll(
             `button[data-action="decrement"]`

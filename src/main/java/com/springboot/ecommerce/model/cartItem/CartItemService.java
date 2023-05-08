@@ -1,7 +1,6 @@
 package com.springboot.ecommerce.model.cartItem;
 
 import com.springboot.ecommerce.model.cart.Cart;
-import com.springboot.ecommerce.model.product.Product;
 import com.springboot.ecommerce.user.User;
 
 public interface CartItemService {

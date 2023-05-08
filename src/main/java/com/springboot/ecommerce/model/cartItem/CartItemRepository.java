@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
 
@@ -18,13 +20,5 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
             "where c.id = :cartId and p.id = :productId"
     )
     CartItem findByProductAndCart(Integer productId, Long cartId);
-
-
-    @Query("update CartItem as ct " +
-            "set ct.quantity=?2 " +
-            "where ct.id=?1")
-    @Modifying
-    @Transactional
-    void updateQuantity(Integer cartItemId, Long quantity);
 
 }

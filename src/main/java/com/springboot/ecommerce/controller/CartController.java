@@ -21,6 +21,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -67,6 +69,9 @@ public class CartController {
             cartItem.setProduct(product);
             cartItem.setCart(activeCart);
             cartItem.setQuantity(quantity);
+            BigDecimal priceCartItem = BigDecimal.valueOf(quantity).multiply(product.getPrice());
+            cartItem.setPrice(priceCartItem);
+            cartItem.setDiscount(product.getDiscount());
             cartItemService.saveCartItem(cartItem);
             activeCart.getCartItems().add(cartItem);
             activeCart.setUser(currentUser);
@@ -100,8 +105,8 @@ public class CartController {
     public void  updateQuantityCartItem(@PathVariable("cartItemId") Integer cartItemId,
                                        @PathVariable("quantity") Long quantity,
                                          HttpSession session){
-        cartItemService.updateQuantityCartItem(cartItemId, quantity);
         CartItem cartItem = cartItemService.getCartItemById(cartItemId);
+        cartItemService.updateQuantityCartItem(cartItemId, quantity);
         cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
     }
 

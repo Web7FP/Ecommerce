@@ -5,10 +5,10 @@ import com.springboot.ecommerce.model.cart.CartServiceImpl;
 import com.springboot.ecommerce.model.product.Product;
 import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import com.springboot.ecommerce.user.User;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 
@@ -57,6 +57,10 @@ public class CartItemServiceImpl implements CartItemService{
 
     @Override
     public void updateQuantityCartItem(Integer cartItemId, Long quantity) {
-        cartItemRepository.updateQuantity(cartItemId, quantity);
+        CartItem cartItem = this.getCartItemById(cartItemId);
+        BigDecimal priceCartItem = BigDecimal.valueOf(quantity).multiply(cartItem.getProduct().getPrice()   );
+        cartItem.setQuantity(quantity);
+        cartItem.setPrice(priceCartItem);
+        this.saveCartItem(cartItem);
     }
 }

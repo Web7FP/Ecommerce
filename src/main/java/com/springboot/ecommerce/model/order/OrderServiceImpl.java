@@ -9,6 +9,8 @@ import com.springboot.ecommerce.model.userMeta.UserMeta;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +28,19 @@ public class OrderServiceImpl implements OrderService{
                           List<OrderItem> orderItems,
                           UserMeta userMeta,
                           Transaction transaction) {
+        BigDecimal subTotal = BigDecimal.valueOf(0);
+        BigDecimal total = BigDecimal.valueOf(0);
+        for (OrderItem orderItem: orderItems) {
+            subTotal = subTotal.add(orderItem.getPrice());
+            BigDecimal discountedPrice = orderItem.getPrice().multiply(
+                    BigDecimal.valueOf(1).subtract(
+                        orderItem.getDiscount().divide
+                            (BigDecimal.valueOf(100), RoundingMode.HALF_UP))
+                    );
+            total = total.add(discountedPrice);
+        }
+        order.setSubTotal(subTotal);
+        order.setTotal(total);
         order.setAddress(userMeta.getAddress());
         order.setMobile(userMeta.getMobile());
         order.setFirstName(userMeta.getFirstName());
@@ -34,6 +49,7 @@ public class OrderServiceImpl implements OrderService{
         order.setTransaction(transaction);
         order.setOrderItems(orderItems);
         orderRepository.save(order);
+
     }
 
     @Override
