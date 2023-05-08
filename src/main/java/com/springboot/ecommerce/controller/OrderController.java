@@ -1,6 +1,7 @@
 package com.springboot.ecommerce.controller;
 
 
+import com.springboot.ecommerce.exception.EmptyUserMetaException;
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.cart.CartServiceImpl;
 import com.springboot.ecommerce.model.cartItem.CartItem;
@@ -57,15 +58,19 @@ public class OrderController {
                                     @AuthenticationPrincipal UserDetails user,
                                     Model model){
         User currentUser = userService.findByEmail(user.getUsername());
-        Cart activeCart = cartService.getActiveCartBySession(session);
-        List<TransactionMode> transactionModes = Arrays.asList(CASH_ON_DELIVERY, CHEQUE, WIRED, DRAFT);
-        List<TransactionType> transactionTypes = Arrays.asList(DEBIT, CREDIT);
-        model.addAttribute("cart",activeCart);
-        model.addAttribute("userMeta",userMetaService.getUserMetaByCurrentUser(currentUser.getId()));
-        model.addAttribute("transaction", new Transaction());
-        model.addAttribute("transactionTypes", transactionTypes);
-        model.addAttribute("transactionModes", transactionModes);
-        return "order-payment";
+        if (currentUser.getUserMeta() == null){
+            throw new EmptyUserMetaException();
+        } else {
+            Cart activeCart = cartService.getActiveCartBySession(session);
+            List<TransactionMode> transactionModes = Arrays.asList(CASH_ON_DELIVERY, CHEQUE, WIRED, DRAFT);
+            List<TransactionType> transactionTypes = Arrays.asList(DEBIT, CREDIT);
+            model.addAttribute("cart",activeCart);
+            model.addAttribute("userMeta",userMetaService.getUserMetaByCurrentUser(currentUser.getId()));
+            model.addAttribute("transaction", new Transaction());
+            model.addAttribute("transactionTypes", transactionTypes);
+            model.addAttribute("transactionModes", transactionModes);
+            return "order-payment";
+        }
     }
 
     @PostMapping("/order/processing")

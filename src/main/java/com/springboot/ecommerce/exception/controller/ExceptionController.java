@@ -36,4 +36,9 @@ public class ExceptionController {
     public ResponseEntity<?> quantityExceededExceptionHandler(){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Quantity exceeded");
     }
+
+    @ExceptionHandler({EmptyUserMetaException.class})
+    public String emptyUserMetaExceptionHandler(){
+        return "account-information";
+    }
 }
