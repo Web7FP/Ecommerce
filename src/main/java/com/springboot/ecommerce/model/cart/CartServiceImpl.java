@@ -3,6 +3,7 @@ package com.springboot.ecommerce.model.cart;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.springboot.ecommerce.model.cartItem.CartItem;
 import com.springboot.ecommerce.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -69,6 +71,16 @@ public class CartServiceImpl implements CartService{
         cart.setUser(currentUser);
         cart.setCartStatus(CartStatus.COMPLETED);
         cartRepository.save(cart);
+    }
+
+    @Override
+    public void updateSubTotal(Cart cart) {
+        BigDecimal subTotal = BigDecimal.valueOf(0);
+        for (CartItem cartItem: cart.getCartItems()){
+            subTotal = subTotal.add(cartItem.getPrice());
+        }
+        cart.setSubTotal(subTotal);
+        this.saveCart(cart);
     }
 
     @Override

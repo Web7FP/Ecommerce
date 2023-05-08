@@ -62,6 +62,7 @@ public class CartItemServiceImpl implements CartItemService{
         cartItem.setQuantity(quantity);
         cartItem.setPrice(priceCartItem);
         this.saveCartItem(cartItem);
+        cartService.updateSubTotal(cartItem.getCart());
     }
 
     @Override
@@ -70,5 +71,6 @@ public class CartItemServiceImpl implements CartItemService{
         cartItem.setQuantity(quantity);
         cartItem.setPrice(priceCartItem);
         this.saveCartItem(cartItem);
+        cartService.updateSubTotal(cartItem.getCart());
     }
 }

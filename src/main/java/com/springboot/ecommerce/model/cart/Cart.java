@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,8 @@ public class Cart extends BasicEntity {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    private BigDecimal subTotal;
 
     @Lob
     @Column(columnDefinition = "TEXT", nullable = true)

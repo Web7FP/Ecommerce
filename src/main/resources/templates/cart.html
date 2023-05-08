@@ -86,14 +86,8 @@
             </tbody>
         </table>
 
-        <th:block th:with="subTotal=0">
-            <th:block th:each="cartItem : ${cart.cartItems}">
-                <th:block th:with="subTotal=${subTotal + cartItem.price}">
-                    <p id="sub-total-price-cartItem" th:text="'SubTotal: '+${subTotal}"></p>
-                </th:block>
-            </th:block>
-        </th:block>
 
+        <p id="sub-total-price-cartItem" th:text="'SubTotal: ' + ${cart.subTotal}"></p>
 
         <a th:href="@{order/checkout/payment}">Order</a>
 

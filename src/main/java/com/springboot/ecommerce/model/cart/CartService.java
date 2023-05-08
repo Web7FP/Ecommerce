@@ -20,5 +20,7 @@ public interface CartService {
 
     void setActiveCartSessionAttribute(HttpSession session, Cart activeCart);
 
+    void updateSubTotal(Cart cart);
+
 
 }
