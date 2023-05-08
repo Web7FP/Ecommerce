@@ -64,7 +64,7 @@
                                        name="custom-input-number"
                                        th:data-cart-item-id="${cartItem.getId()}"
                                        th:value="${cartItem.getQuantity()}"
-                                       min="1">
+                                       th:max="${cartItem.product.quantity}">
                                 <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
                                     <span class="m-auto text-2xl font-thin">+</span>
                                 </button>
@@ -89,7 +89,7 @@
         <th:block th:with="subTotal=0">
             <th:block th:each="cartItem : ${cart.cartItems}">
                 <th:block th:with="subTotal=${subTotal + cartItem.price}">
-                    <p id="sub-total-price-cartItem" th:text="${subTotal}"></p>
+                    <p id="sub-total-price-cartItem" th:text="'SubTotal: '+${subTotal}"></p>
                 </th:block>
             </th:block>
         </th:block>
@@ -107,9 +107,11 @@
             );
             const target = btn.nextElementSibling;
             let value = Number(target.value);
-            value--;
-            target.value = value;
-            updateQuantity(target.getAttribute("data-cart-item-id"), value);
+            if (value > 1){
+                value--;
+                target.value = value;
+                updateQuantity(target.getAttribute("data-cart-item-id"), value);
+            }
         }
 
         function increment(e) {

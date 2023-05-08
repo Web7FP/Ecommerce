@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeHttpRequests()
                     .requestMatchers("/home/**", "/registration/**", "/product/**", "/css/**", "/js/**", "/fonts/**", "/images/**").permitAll()
-                    .requestMatchers("/category-management/**", "/tag-management/**", "/order-management/**").hasRole(UserRole.ADMIN.name())
+                    .requestMatchers("/category-management/**", "/tag-management/**", "/order-management/**", "/admin").hasRole(UserRole.ADMIN.name())
                     .requestMatchers("/product-management/**").hasAnyRole(UserRole.VENDOR.name(),UserRole.ADMIN.name())
                     .requestMatchers("/cart/**", "/setCartSession", "/account/**", "/order/**")
                         .hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name(), UserRole.VENDOR.name())

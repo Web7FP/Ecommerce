@@ -77,17 +77,8 @@
     </a><br><br>
 
 
+    <a th:href="@{/order/history}">Order history</a><br><br>
     <a th:href="@{/account/edit}" style="color: red">My account</a><br><br>
-
-
-    <button id="buttonAdd2Cart">Test</button>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#buttonAdd2Cart").on("click", function (e){
-                alert('Test :))')
-            })
-        })
-    </script>
 
     <div class="group-logout">
         <form class="logout" method="get" action="/logout">

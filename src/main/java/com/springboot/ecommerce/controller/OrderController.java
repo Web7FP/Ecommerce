@@ -126,7 +126,6 @@ public class OrderController {
                 activeCart.getCartItems().add(newCartItem);
                 cartItemService.saveCartItem(newCartItem);
                 cartService.saveCart(activeCart);
-
             }
 
         }
