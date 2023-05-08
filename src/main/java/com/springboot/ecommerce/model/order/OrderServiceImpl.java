@@ -124,11 +124,13 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void setCancelledOrder(Order order) {
-        for (OrderItem orderItem : order.getOrderItems()){
-            Product product = orderItem.getProduct();
-            Long newQuantityProduct = product.getQuantity() + orderItem.getQuantity();
-            product.setQuantity(newQuantityProduct);
-            productService.saveProduct(product);
+        if (!order.getStatus().equals(OrderStatus.PROCESSING)){
+            for (OrderItem orderItem : order.getOrderItems()){
+                Product product = orderItem.getProduct();
+                Long newQuantityProduct = product.getQuantity() + orderItem.getQuantity();
+                product.setQuantity(newQuantityProduct);
+                productService.saveProduct(product);
+            }
         }
         Transaction transaction = order.getTransaction();
         order.setStatus(OrderStatus.CANCELLED);

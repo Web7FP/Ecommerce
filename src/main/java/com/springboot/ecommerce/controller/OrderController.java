@@ -101,7 +101,6 @@ public class OrderController {
             cartService.saveCart(activeCart);
         }
         List<OrderItem> orderItems = order.getOrderItems();
-        List<CartItem> cartItems = new ArrayList<>();
         for (OrderItem orderItem: orderItems) {
             CartItem existingCartItem = cartItemService
                     .getCartItemByProductAndCart(

@@ -75,6 +75,7 @@ public class CartController {
             cartItemService.saveCartItem(cartItem);
             activeCart.getCartItems().add(cartItem);
             activeCart.setUser(currentUser);
+            cartService.updateSubTotal(activeCart);
             cartService.saveCart(activeCart);
             cartService.setActiveCartSessionAttribute(session, activeCart);
         } else {
@@ -82,6 +83,7 @@ public class CartController {
             if (newQuantityCartItem <= product.getQuantity()){
                 cartItem.setQuantity(newQuantityCartItem);
                 cartItemService.saveCartItem(cartItem);
+                cartService.updateSubTotal(cartItem.getCart());
                 cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
             } else {
                 throw new QuantityExceededException();
@@ -96,6 +98,7 @@ public class CartController {
                                  HttpSession session){
         User currentUser = userService.findByEmail(user.getUsername());
         Cart activeCart = cartItemService.deleteCartItem(cartItemId, currentUser);
+        cartService.updateSubTotal(activeCart);
         cartService.setActiveCartSessionAttribute(session, activeCart);
         return "redirect:/cart";
     }
