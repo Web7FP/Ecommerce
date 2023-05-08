@@ -3,13 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <style>
+        /* Add CSS styles for the admin panel */
+        /* Example: */
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            text-align: center; /* Add this line to center the h1 element */
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #3e8e41;
+        }
+
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+    </style>
 </head>
 <body>
-
-<a th:href="@{/category-management/categories-list}">Category management</a><br>
-<a th:href="@{/tag-management/tags-list}">Tag management</a><br>
-<a th:href="@{/product-management/products-list}">Product management</a><br>
-<a th:href="@{/order-management}">Order management</a>
-
+    <h1>Admin Panel</h1>
+    <div>
+        <a class="button" th:href="@{/category-management/categories-list}">Category management</a><br>
+        <a class="button" th:href="@{/tag-management/tags-list}">Tag management</a><br>
+        <a class="button" th:href="@{/product-management/products-list}">Product management</a><br>
+        <a class="button" th:href="@{/order-management}">Order management</a>
+    </div>
 </body>
 </html>
