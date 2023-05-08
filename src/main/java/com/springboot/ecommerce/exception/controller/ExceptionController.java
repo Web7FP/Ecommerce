@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -38,7 +39,7 @@ public class ExceptionController {
     }
 
     @ExceptionHandler({EmptyUserMetaException.class})
-    public String emptyUserMetaExceptionHandler(){
-        return "account-information";
+    public String  emptyUserMetaExceptionHandler(){
+        return "redirect:/account/edit";
     }
 }
