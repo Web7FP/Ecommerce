@@ -49,9 +49,9 @@ public class CartController {
     @PostMapping("add-product-to-cart/{productId}/{quantity}")
     @ResponseBody
     public void addProductToCart(@PathVariable("productId") Integer productId,
-                                           @PathVariable("quantity") Long quantity,
-                                           @AuthenticationPrincipal UserDetails user,
-                                           HttpSession session){
+                                 @PathVariable("quantity") Long quantity,
+                                 @AuthenticationPrincipal UserDetails user,
+                                 HttpSession session){
         User currentUser = userService.findByEmail(user.getUsername());
         Cart activeCart = cartService.getActiveCartBySession(session);
         Product product = productService.getProductById(productId);

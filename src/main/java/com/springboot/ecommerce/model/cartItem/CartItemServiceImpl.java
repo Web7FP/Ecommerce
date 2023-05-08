@@ -58,7 +58,15 @@ public class CartItemServiceImpl implements CartItemService{
     @Override
     public void updateQuantityCartItem(Integer cartItemId, Long quantity) {
         CartItem cartItem = this.getCartItemById(cartItemId);
-        BigDecimal priceCartItem = BigDecimal.valueOf(quantity).multiply(cartItem.getProduct().getPrice()   );
+        BigDecimal priceCartItem = BigDecimal.valueOf(quantity).multiply(cartItem.getProduct().getPrice());
+        cartItem.setQuantity(quantity);
+        cartItem.setPrice(priceCartItem);
+        this.saveCartItem(cartItem);
+    }
+
+    @Override
+    public void updateQuantityCartItem(CartItem cartItem, Long quantity) {
+        BigDecimal priceCartItem = BigDecimal.valueOf(quantity).multiply(cartItem.getProduct().getPrice());
         cartItem.setQuantity(quantity);
         cartItem.setPrice(priceCartItem);
         this.saveCartItem(cartItem);

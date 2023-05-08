@@ -92,7 +92,6 @@ public class OrderController {
 
     @GetMapping("/order/buy-again/{orderId}")
     public String buyAgainOrder(@PathVariable("orderId") Long orderId,
-                                Model model,
                                 HttpSession session){
         Order order = orderService.getOrderById(orderId);
         Cart activeCart = cartService.getActiveCartBySession(session);
@@ -104,17 +103,33 @@ public class OrderController {
         List<OrderItem> orderItems = order.getOrderItems();
         List<CartItem> cartItems = new ArrayList<>();
         for (OrderItem orderItem: orderItems) {
-            CartItem cartItem = new CartItem();
-            cartItem.setProduct(orderItem.getProduct());
-            cartItem.setPrice(orderItem.getPrice());
-            cartItem.setDiscount(orderItem.getDiscount());
-            cartItem.setQuantity(orderItem.getQuantity());
-            cartItem.setCart(activeCart);
-            cartItems.add(cartItem);
-            cartItemService.saveCartItem(cartItem);
+            CartItem existingCartItem = cartItemService
+                    .getCartItemByProductAndCart(
+                            orderItem.getProduct().getId(),
+                            activeCart.getId()
+                    );
+            if (existingCartItem != null){
+                Long newQuantityCartItem = existingCartItem.getQuantity() + orderItem.getQuantity();
+                cartItemService.updateQuantityCartItem(
+                        existingCartItem,
+                        newQuantityCartItem
+                );
+                activeCart = existingCartItem.getCart();
+                cartService.saveCart(activeCart);
+            } else {
+                CartItem newCartItem = new CartItem();
+                newCartItem.setProduct(orderItem.getProduct());
+                newCartItem.setPrice(orderItem.getPrice());
+                newCartItem.setDiscount(orderItem.getDiscount());
+                newCartItem.setQuantity(orderItem.getQuantity());
+                newCartItem.setCart(activeCart);
+                activeCart.getCartItems().add(newCartItem);
+                cartItemService.saveCartItem(newCartItem);
+                cartService.saveCart(activeCart);
+
+            }
+
         }
-        activeCart.getCartItems().addAll(cartItems);
-        cartService.saveCart(activeCart);
         cartService.setActiveCartSessionAttribute(session, activeCart);
         return "redirect:/cart";
     }

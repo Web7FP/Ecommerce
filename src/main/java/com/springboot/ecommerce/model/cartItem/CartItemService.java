@@ -14,4 +14,6 @@ public interface CartItemService {
 
     void updateQuantityCartItem(Integer cartItemId, Long quantity);
 
+    void updateQuantityCartItem(CartItem cartItem, Long quantity);
+
 }
