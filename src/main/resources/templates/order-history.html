@@ -4,11 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        /* CSS styles go here */
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        .group-all-order-list, .group-processing-order-list,
+        .group-delivered-order-list, .group-completed-order-list,
+        .group-cancelled-order-list {
+            margin-bottom: 40px;
+        }
+        h2 {
+            margin-top: 50px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+        }
+        td, th {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <div class="group-all-order-list">
-        <p>All order:</p><br><br>
+        <h2>All order:</h2><br><br>
         <th:block th:each="order : ${allOrderList}">
             <div th:class="'order-list-' + ${order.getId()}">
                 <table>
@@ -26,7 +73,7 @@
     </div>
 
     <div class="group-processing-order-list">
-        <p>Processing orders: </p><br><br>
+        <h2>Processing orders: </h2><br><br>
         <th:block th:each="order : ${processingOrderList}">
             <div th:class="'order-list-' + ${order.getId()}">
                 <table>
@@ -52,7 +99,7 @@
     </div>
 
     <div class="group-delivered-order-list">
-        <p>Delivered orders: </p><br><br>
+        <h2>Delivered orders: </h2><br><br>
         <th:block th:each="order : ${deliveredOrderList}">
             <div th:class="'order-list-' + ${order.getId()}">
                 <table>
@@ -77,7 +124,7 @@
     </div>
 
     <div class="group-completed-order-list">
-        <p>Completed orders: </p><br><br>
+        <h2>Completed orders: </h2><br><br>
         <th:block th:each="order : ${completedOrderList}">
             <div th:class="'order-list-' + ${order.getId()}">
                 <table>
@@ -95,7 +142,7 @@
     </div>
 
     <div class="group-cancelled-order-list">
-        <p>Cancelled orders: </p><br><br>
+        <h2>Cancelled orders: </h2><br><br>
         <th:block th:each="order : ${cancelledOrderList}">
             <div th:class="'order-list-' + ${order.getId()}">
                 <table>

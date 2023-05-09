@@ -1,43 +1,106 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Order detail</title>
+    <style>
+        /* Thiết lập kích thước và định dạng cho các phần tử */
+        .container {
+            width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .group-user-information,
+        .group-order-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        td {
+            border-bottom: 1px solid #ddd;
+        }
+        .transaction {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f8f8f8;
+        }
+
+        .transaction p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .transaction p:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+    </style>
 </head>
+
 <body>
 <div class="container">
-  <div class="group-user-information">
-      <th:block th:with="userMeta=${order.getUser().getUserMeta()}">
-          <table th:object="${userMeta}">
-              <tr>
-                  <td th:text="'User id: ' + ${order.getUser().getId()}"></td>
-              </tr>
-              <tr>
-                  <td th:text="'Your name: ' + *{firstName} + ' '
-                + *{middleName} + ' ' + *{lastName}"></td>
-              </tr>
-              <tr>
-                  <td th:text="'Address: ' + *{address}"></td>
-              </tr>
-              <tr>
-                  <td th:text="'Mobile: ' + *{mobile}"></td>
-              </tr>
-          </table>
-      </th:block>
-  </div>
-  <div class="group-order-item">
-      <table>
-          <tr th:each="orderItem : ${order.getOrderItems()}">
-              <th:block th:with="product=${orderItem.product}">
-                  <td th:text="${product.title}"></td>
-                  <td th:text="${product.price}"></td>
-                  <td th:text="${orderItem.price}"></td>
-                  <td th:text="${orderItem.quantity}"></td>
-              </th:block>
-          </tr>
-      </table>
-  </div>
+    <div class="group-user-information">
+        <th:block th:with="userMeta=${order.getUser().getUserMeta()}">
+            <table th:object="${userMeta}">
+                <tr>
+                    <th>User id:</th>
+                    <td th:text="${order.getUser().getId()}"></td>
+                </tr>
+                <tr>
+                    <th>Your name:</th>
+                    <td th:text="' ' + *{firstName} + ' ' + *{middleName} + ' ' + *{lastName}"></td>
+                </tr>
+                <tr>
+                    <th>Address:</th>
+                    <td th:text="${userMeta.address}"></td>
+                </tr>
+                <tr>
+                    <th>Mobile:</th>
+                    <td th:text="${userMeta.mobile}"></td>
+                </tr>
+            </table>
+        </th:block>
+    </div>
+    <div class="group-order-item">
+        <table>
+            <tr>
+                <th>Product name</th>
+                <th>Price</th>
+                <th>Item price</th>
+                <th>Quantity</th>
+            </tr>
+            <tr th:each="orderItem : ${order.getOrderItems()}" th:with="product=${orderItem.product}">
+                <td th:text="${product.title}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${orderItem.price}"></td>
+                <td th:text="${orderItem.quantity}"></td>
+            </tr>
+        </table>
+    </div>
 
     <div class="transaction">
         <p th:text="'Transaction mode: ' + ${transaction.getMode()}"></p><br>
