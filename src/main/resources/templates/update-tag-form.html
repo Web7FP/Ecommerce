@@ -3,37 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Tag form</title>
+    <style>
+        /* Style for form container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Style for form header */
+        .header {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Style for form fields */
+        .form-field {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-field label {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .form-field input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 1.1em;
+        }
+
+        .form-field input[type="submit"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #0099ff;
+            color: #ffffff;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        .form-field input[type="submit"]:hover {
+            background-color: #0077cc;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <h1> Update Tag Form</h1>
+    <h1 class="header">Update Tag Form</h1>
     <form method="post" th:action="@{/tag-management/save-product-tag}" th:object="${tag}">
         <th:block th:if="*{id != null}">
             <input type="hidden" th:field="*{id}">
         </th:block>
-        <div class="group-title">
+        <div class="form-field">
             <label for="title">Title Tag</label>
-            <input id="title" th:field="*{title}" required type="text" autofocus><br><br>
+            <input id="title" th:field="*{title}" required type="text" autofocus>
         </div>
-        <div class="meta-title">
+        <div class="form-field">
             <label for="meta-title">Meta Title</label>
-            <input id="meta-title" th:field="*{metaTitle}" type="text"><br><br>
+            <input id="meta-title" th:field="*{metaTitle}" type="text">
         </div>
-        <div class="slug">
+        <div class="form-field">
             <label for="slug">Slug</label>
-            <input id="slug" th:field="*{slug}" required type="text"><br><br>
+            <input id="slug" th:field="*{slug}" required type="text">
         </div>
-        <div class="content">
+        <div class="form-field">
             <label for="content">Content</label>
-            <input type="text" th:field="*{content}" id="content"><br><br>
+            <input type="text" th:field="*{content}" id="content">
         </div>
 
         <th:block th:if="*{id != null}">
-            <input type="submit" value="Update tag">
-
+            <div class="form-field">
+                <input type="submit" value="Update Tag">
+            </div>
         </th:block>
         <th:block th:unless="*{id != null}">
-            <input type="submit" value="Add new Tag">
+            <div class="form-field">
+                <input type="submit" value="Add new Tag">
+            </div>
         </th:block>
     </form>
 </div>

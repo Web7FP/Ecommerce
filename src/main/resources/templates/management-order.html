@@ -1,39 +1,123 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Management order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #444;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 0 20px;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        td:last-child {
+            font-weight: bold;
+        }
+
+        tr:nth-child(2n) {
+            background-color: #f9f9f9;
+        }
+
+        .order-list {
+            margin-bottom: 40px;
+        }
+
+        .order-list h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 10px;
+        }
+
+        .order-list p {
+            margin: 0;
+        }
+
+        .order-list a {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #2196f3;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .order-list a:hover {
+            background-color: #0e91d1;
+        }
+    </style>
 </head>
+
 <body>
 <div class="container">
     <div class="group-all-order-list">
-        <p>All order:</p><br><br>
-        <th:block th:each="order : ${allOrderList}">
-            <div th:class="'order-list-' + ${order.getId()}">
-                <table>
-                    <tr th:each="orderItem : ${order.getOrderItems()}">
-                        <th:block th:with="product=${orderItem.getProduct()}">
-                            <td th:text="${product.getTitle()}"></td>
-                            <td th:text="${product.getPrice()}"></td>
-                        </th:block>
-                        <td th:text="${orderItem.getQuantity()}"></td>
-                        <td th:text="${orderItem.getPrice()}"></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p th:text="${order.getStatus()}"></p>
-                        </td>
-                        <td>
-                            <form th:action="@{/order-management/order-detail/{orderId}(orderId=${order.id})}">
-                                <button type="submit">Detail</button>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </th:block>
+        <h1>All Orders</h1>
+        <div class="order-list" th:each="order : ${allOrderList}">
+            <h2>Order <span th:text="${order.getId()}"></span></h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="orderItem : ${order.getOrderItems()}">
+                    <td th:text="${orderItem.getProduct().getTitle()}"></td>
+                    <td th:text="${orderItem.getProduct().getPrice()}"></td>
+                    <td th:text="${orderItem.getQuantity()}"></td>
+                    <td th:text="${orderItem.getPrice()}"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3">Status: <span th:text="${order.getStatus()}"></span></td>
+                    <td>
+                        <a th:href="@{/order-management/order-detail/{orderId}(orderId=${order.id})}">Detail</a>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 </div>
 </body>
+
 </html>
