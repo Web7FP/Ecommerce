@@ -110,10 +110,15 @@
 
     <div class="order-status">
         <p th:text="'Order status: ' + ${order.getStatus()}"></p>
-        <th:block th:if="${order.getStatus().equals(T(com.springboot.ecommerce.model.order.OrderStatus).PROCESSING)}">
-            <form th:action="@{/order-management/update-delivered-order/{orderId}(orderId=${order.id})}">
-                <button type="submit">Update Delivered Order</button>
-            </form>
+        <th:block th:if="${quantityExceededOrderException}">
+            <p th:text="${quantityExceededOrderException}"></p>
+        </th:block>
+        <th:block th:unless="${quantityExceededOrderException}">
+            <th:block th:if="${order.getStatus().equals(T(com.springboot.ecommerce.model.order.OrderStatus).PROCESSING)}">
+                <form th:action="@{/order-management/update-delivered-order/{orderId}(orderId=${order.id})}">
+                    <button type="submit">Update Delivered Order</button>
+                </form>
+            </th:block>
         </th:block>
         <th:block th:if="${order.getStatus().equals(T(com.springboot.ecommerce.model.order.OrderStatus).PROCESSING)} or
                             ${order.getStatus().equals(T(com.springboot.ecommerce.model.order.OrderStatus).DELIVERED)}">

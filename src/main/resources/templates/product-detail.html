@@ -17,9 +17,15 @@
   <p th:text="'Price: ' + ${product.price}"></p><br>
   <p th:text="'Discoutn: '+ ${product.discount}"></p><br><br>
 
+    <th:block th:if="${product.shop == false}">
+        <p>Product no longer available</p>
+    </th:block>
 
+    <th:block th:unless="${product.quantity > 0}">
+        <p>Out of stock</p>
+    </th:block>
 
-    <th:block>
+    <th:block th:if="${product.quantity > 0 and product.shop==true}">
         <div class="custom-number-input h-10 w-32">
 
             <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">

@@ -16,4 +16,5 @@ public interface CartItemService {
 
     void updateQuantityCartItem(CartItem cartItem, Long quantity);
 
+    void deleteCartItemByProduct(Integer productId);
 }

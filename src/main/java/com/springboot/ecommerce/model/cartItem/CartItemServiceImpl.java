@@ -45,6 +45,19 @@ public class CartItemServiceImpl implements CartItemService{
     }
 
     @Override
+    public void deleteCartItemByProduct(Integer productId) {
+        Product product = productService.getProductById(productId);
+        for (CartItem cartItem : product.getCartItems()) {
+            product.getCartItems().remove(cartItem);
+            productService.saveProduct(product);
+            Cart activeCart = cartItem.getCart();
+            activeCart.getCartItems().remove(cartItem);
+            cartService.saveCart(activeCart);
+            cartItemRepository.delete(cartItem);
+        }
+    }
+
+    @Override
     public CartItem getCartItemById(Integer cartItemId) {
         Optional<CartItem> optionalCartItem = cartItemRepository.findById(cartItemId);
         if (optionalCartItem.isPresent()){
