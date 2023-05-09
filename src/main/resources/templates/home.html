@@ -25,8 +25,18 @@
         }
 
         .sort-buttons {
-            float: right;
+            float: left;
+            margin-left: 10px;
             margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .sort-buttons:hover {
+            background-color: #3e8e41;
         }
 
         .shopping-cart {
@@ -125,6 +135,10 @@
         .next-button:hover, .last-button:hover {
             background-color: #3e8e41;
         }
+
+        .button{
+            margin-bottom: 30px;
+        }
     </style>
 
     <script
@@ -134,7 +148,7 @@
 </head>
 <body>
 <div class="navigation">
-    <a class="active" href="#">Home</a>
+    <a class="active" href="/home">Home</a>
     <a href="#">Products</a>
     <a href="#">Contact</a>
     <a href="#">About</a>
@@ -149,16 +163,19 @@
     <label for="sort-discount">Discount:</label>
     <input type="checkbox" id="sort-discount">
 </div>
-<a href="#" class="shopping-cart">Shopping Cart</a>
-<a href="#" class="order-history">Order History</a>
-<a href="#" class="my-account">My Account</a>
-<a href="#" class="logout">Logout</a>
+<a th:href="@{/cart}" class="shopping-cart">
+    <img class="cart-icon"
+         src="https://salt.tikicdn.com/ts/upload/51/e2/92/8ca7e2cc5ede8c09e34d1beb50267f4f.png"
+         alt="header_header_img_Cart" style="max-width: 100%; width: 24px; height: 24px;"></a>
+<a th:href="@{/order/history}" class="order-history">Order History</a>
+<a th:href="@{/account/edit}" class="my-account">My Account</a>
+<a href="/logout" class="logout">Logout</a>
 
 <div class="product-container">
 
     <div class="group-sorting">
-        <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a><br>
-        <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Sort Discount</a><br><br>
+        <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a>
+        <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Sort Discount</a>
     </div>
 
     <div class="list-products">
@@ -184,21 +201,10 @@
             </tbody>
         </table>
         <div class="pagination">
-            <a href="#" class="last-button">Last</a>
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#" class="next-button">Next</a>
-            <p>Total Items: <span id="total-items">50</span></p>
+            <p th:text="'Total products: ' + ${totalItems}"></p>
         </div>
     </div>
 
-    <div class="group-pagination">
-        <div class="total-products">
-            <p th:text="'Total products: ' + ${totalItems}"></p>
-        </div>
         <div>
                 <span th:each="i : ${#numbers.sequence(1, totalPages)}">
                     <a th:if="${currentPage != i}" th:href="@{'/home/product-list/page/' + ${i} +
@@ -206,35 +212,18 @@
                     <span th:unless="${currentPage != i}" th:text="${i}"></span>
                 </span>
         </div>
-        <div>
-            <a class="next-button" th:if="${currentPage < totalPages}" th:href="@{'/home/product-list/page/' + ${currentPage + 1}
-                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
-            <span th:unless="${currentPage < totalPages}">Next</span>
-        </div>
-        <div>
-            <a class="last-button" th:if="${currentPage < totalPages}" th:href="@{'/home/product-list/page/' + ${totalPages}+
-                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
-            <span th:unless="${currentPage < totalPages}">Last</span>
-        </div>
-    </div><br><br><br>
-
-    <a class="shopping-cart" th:href="@{/cart}" style="color: red" id="buttonCart">
-        <img class="cart-icon"
-             src="https://salt.tikicdn.com/ts/upload/51/e2/92/8ca7e2cc5ede8c09e34d1beb50267f4f.png"
-             alt="header_header_img_Cart" style="max-width: 100%; width: 24px; height: 24px;">
-    </a><br><br>
-
-
-    <a class="order-history" th:href="@{/order/history}">Order history</a><br><br>
-    <a class="my-account" th:href="@{/account/edit}" style="color: red">My account</a><br><br>
-
-    <div class="group-logout">
-        <form class="logout" method="get" action="/logout">
-            <button type="submit">Logout</button><br><br>
-        </form>
-    </div>
-
 </div>
+<div class="button">
+    <a th:if="${currentPage < totalPages}" th:href="@{'/home/product-list/page/' + ${currentPage + 1}
+                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+    <span class="next-button" th:unless="${currentPage < totalPages}">Next</span>
+</div>
+<div  class="button">
+    <a th:if="${currentPage < totalPages}" th:href="@{'/home/product-list/page/' + ${totalPages}+
+                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+    <span class="last-button" th:unless="${currentPage < totalPages}">Last</span>
+</div>
+<br><br><br>
 
 </body>
 </html>
