@@ -44,7 +44,10 @@
                 <td th:text="${product.quantity}"></td>
                 <td>
                     <a th:href="@{/product-management/update-product-form/{id}(id=${product.id})}">Update</a>
-                    <a th:href="@{/product-management/delete-product/{id}(id=${product.id})}">Delete</a>
+                    <th:block th:if="${product.getOrderItems().isEmpty() or product.getCartItems().isEmpty()}">
+                        <a th:href="@{/product-management/delete-product/{id}(id=${product.id})}">Delete</a>
+                    </th:block>
+
                 </td>
             </tr>
         </tbody>

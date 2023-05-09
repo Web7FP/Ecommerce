@@ -10,6 +10,8 @@ import com.springboot.ecommerce.model.order.Order;
 import com.springboot.ecommerce.model.order.OrderServiceImpl;
 import com.springboot.ecommerce.model.orderItem.OrderItem;
 import com.springboot.ecommerce.model.orderItem.OrderItemServiceImpl;
+import com.springboot.ecommerce.model.product.Product;
+import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import com.springboot.ecommerce.model.transaction.Transaction;
 import com.springboot.ecommerce.model.transaction.TransactionMode;
 import com.springboot.ecommerce.model.transaction.TransactionServiceImpl;
@@ -31,7 +33,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class OrderController {
     private final UserMetaServiceImpl userMetaService;
     private final TransactionServiceImpl transactionService;
     private final CartItemServiceImpl cartItemService;
-
+    private final ProductServiceImpl productService;
 
 
     @GetMapping("/order/checkout/payment")
@@ -62,6 +63,26 @@ public class OrderController {
             throw new EmptyUserMetaException();
         } else {
             Cart activeCart = cartService.getActiveCartBySession(session);
+            int counterChange = 0;
+            for (CartItem cartItem: activeCart.getCartItems()){
+                Product product = productService.getProductById(cartItem.getProduct().getId());
+                cartItem.setProduct(product);
+                cartItem.setCart(activeCart);
+                cartItemService.saveCartItem(cartItem);
+                if (cartItem.getProduct().getQuantity() < cartItem.getQuantity() && cartItem.getProduct().getQuantity() > 0){
+                    cartItem.setQuantity(1L);
+                    cartItemService.saveCartItem(cartItem);
+                    cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
+                    counterChange ++;
+                } else if (cartItem.getProduct().getQuantity() == 0){
+                    cartService.setActiveCartSessionAttribute(session,
+                            cartItemService.deleteCartItem(cartItem.getId(), currentUser));
+                    counterChange ++;
+                }
+            }
+            if (counterChange != 0){
+                return "redirect:/cart";
+            }
             List<TransactionMode> transactionModes = Arrays.asList(CASH_ON_DELIVERY, CHEQUE, WIRED, DRAFT);
             List<TransactionType> transactionTypes = Arrays.asList(DEBIT, CREDIT);
             model.addAttribute("cart",activeCart);
@@ -107,31 +128,43 @@ public class OrderController {
         }
         List<OrderItem> orderItems = order.getOrderItems();
         for (OrderItem orderItem: orderItems) {
-            CartItem existingCartItem = cartItemService
-                    .getCartItemByProductAndCart(
-                            orderItem.getProduct().getId(),
-                            activeCart.getId()
-                    );
-            if (existingCartItem != null){
-                Long newQuantityCartItem = existingCartItem.getQuantity() + orderItem.getQuantity();
-                cartItemService.updateQuantityCartItem(
-                        existingCartItem,
-                        newQuantityCartItem
-                );
-                activeCart = existingCartItem.getCart();
-                cartService.saveCart(activeCart);
-            } else {
-                CartItem newCartItem = new CartItem();
-                newCartItem.setProduct(orderItem.getProduct());
-                newCartItem.setPrice(orderItem.getPrice());
-                newCartItem.setDiscount(orderItem.getDiscount());
-                newCartItem.setQuantity(orderItem.getQuantity());
-                newCartItem.setCart(activeCart);
-                activeCart.getCartItems().add(newCartItem);
-                cartItemService.saveCartItem(newCartItem);
-                cartService.saveCart(activeCart);
+            if (orderItem.getProduct().getQuantity() != 0) {
+                CartItem existingCartItem = cartItemService
+                        .getCartItemByProductAndCart(
+                                orderItem.getProduct().getId(),
+                                activeCart.getId()
+                        );
+                if (existingCartItem != null) {
+                    Long newQuantityCartItem = existingCartItem.getQuantity() + orderItem.getQuantity();
+                    if (newQuantityCartItem > existingCartItem.getProduct().getQuantity()) {
+                        cartItemService.updateQuantityCartItem(
+                                existingCartItem,
+                                1L
+                        );
+                    } else {
+                        cartItemService.updateQuantityCartItem(
+                                existingCartItem,
+                                newQuantityCartItem
+                        );
+                    }
+                    activeCart = existingCartItem.getCart();
+                    cartService.saveCart(activeCart);
+                } else {
+                    CartItem newCartItem = new CartItem();
+                    newCartItem.setProduct(orderItem.getProduct());
+                    newCartItem.setPrice(orderItem.getPrice());
+                    newCartItem.setDiscount(orderItem.getDiscount());
+                    if (orderItem.getProduct().getQuantity() < orderItem.getQuantity()) {
+                        newCartItem.setQuantity(1L);
+                    } else {
+                        newCartItem.setQuantity(orderItem.getQuantity());
+                    }
+                    newCartItem.setCart(activeCart);
+                    activeCart.getCartItems().add(newCartItem);
+                    cartItemService.saveCartItem(newCartItem);
+                    cartService.saveCart(activeCart);
+                }
             }
-
         }
         cartService.setActiveCartSessionAttribute(session, activeCart);
         return "redirect:/cart";

@@ -25,4 +25,5 @@ public interface ProductService {
     Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 
     Product findBySlugProduct (String slugProduct);
+
 }
