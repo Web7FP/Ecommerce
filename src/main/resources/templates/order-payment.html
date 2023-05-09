@@ -8,22 +8,6 @@
 <body>
 <div class="container">
     <div class="cart-item-list">
-        <th:block th:if="${order != null}">
-            <table>
-                <thead></thead>
-                <tbody>
-                <tr th:each="orderItem : ${order.getOrderItems()}">
-                    <th:block th:with="product=${orderItem.product}">
-                        <td th:text="${product.title}"></td>
-                        <td th:text="${product.price}"></td>
-                        <td th:text="${orderItem.price}"></td>
-                        <td th:text="${orderItem.quantity}"></td>
-                    </th:block>
-                </tr>
-                </tbody>
-            </table>
-        </th:block>
-        <th:block th:unless="${order != null}">
             <table>
                 <thead></thead>
                 <tbody>
@@ -37,7 +21,6 @@
                 </tr>
                 </tbody>
             </table>
-        </th:block>
     </div>
 
     <div class="user-meta">
