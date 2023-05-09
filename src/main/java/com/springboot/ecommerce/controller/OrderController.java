@@ -2,6 +2,8 @@ package com.springboot.ecommerce.controller;
 
 
 import com.springboot.ecommerce.exception.EmptyUserMetaException;
+import com.springboot.ecommerce.exception.QuantityExceededException;
+import com.springboot.ecommerce.exception.QuantityExceededOrderException;
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.cart.CartServiceImpl;
 import com.springboot.ecommerce.model.cartItem.CartItem;
@@ -193,6 +195,12 @@ public class OrderController {
     public String updateDeliveredOrder(@PathVariable("orderId") Long orderId,
                                        RedirectAttributes redirectAttributes){
         Order order = orderService.getOrderById(orderId);
+        for (OrderItem orderItem : order.getOrderItems()){
+            Product product = orderItem.getProduct();
+            if (orderItem.getQuantity() > product.getQuantity()){
+                throw new QuantityExceededOrderException(orderId);
+            }
+        }
         orderService.setDeliveredOrder(order);
         redirectAttributes.addAttribute("orderId", orderId);
         return "redirect:/order-management/order-detail/{orderId}";
