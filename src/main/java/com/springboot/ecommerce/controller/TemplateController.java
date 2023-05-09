@@ -72,7 +72,7 @@ public class TemplateController {
             @RequestParam("sortDir") String sortDir,
             Model model
     ){
-        int pageSize = 8;
+        int pageSize = 5;
         Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);
         model.addAttribute("listProducts", page.getContent());
         model.addAttribute("currentPage", pageNo);

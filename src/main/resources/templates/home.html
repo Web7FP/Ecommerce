@@ -183,11 +183,11 @@
             <thead>
             <tr>
                 <th>Title</th>
-                <th>Description</th>
+<!--                <th>Description</th>-->
                 <th>Price</th>
-                <th>Discount</th>
-                <th>Quantity</th>
-                <th>Add to Cart</th>
+<!--                <th>Discount</th>-->
+<!--                <th>Quantity</th>-->
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -214,14 +214,13 @@
         </div>
 </div>
 <div class="button">
-    <a th:if="${currentPage < totalPages}" th:href="@{'/home/product-list/page/' + ${currentPage + 1}
-                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
-    <span class="next-button" th:unless="${currentPage < totalPages}">Next</span>
+    <br><br><br>
+    <a th:if="${currentPage < totalPages }" th:href="@{'/home/product-list/page/' + ${currentPage + 1}
+                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="next-button">Next</a>
 </div>
 <div  class="button">
-    <a th:if="${currentPage < totalPages}" th:href="@{'/home/product-list/page/' + ${totalPages}+
-                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
-    <span class="last-button" th:unless="${currentPage < totalPages}">Last</span>
+    <a th:if="${currentPage <= totalPages and currentPage > 1}" th:href="@{'/home/product-list/page/' + ${currentPage - 1}+
+                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="last-button">Last</a>
 </div>
 <br><br><br>
 

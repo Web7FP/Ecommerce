@@ -66,18 +66,17 @@
                 </span>
             </div>
             <div>
-                <a th:if="${currentPage < totalPages}" th:href="@{'/product-management/products-list/page/' + ${currentPage + 1}
+                <a th:if="${currentPage < totalPages }" th:href="@{'/product-management/products-list/page/' + ${currentPage + 1}
                 + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
-                <span th:unless="${currentPage < totalPages}">Next</span>
             </div>
             <div>
-                <a th:if="${currentPage < totalPages}" th:href="@{'/product-management/products-list/page/' + ${totalPages}+
+                <a th:if="${currentPage <= totalPages and currentPage > 1}" th:href="@{'/product-management/products-list/page/' + ${totalPages - 1}+
                 '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
-                <span th:unless="${currentPage < totalPages}">Last</span>
             </div>
         </div>
     </div>
-    <a th:href="@{/home}">Back to Home page</a>
+
+    <a th:href="@{/admin}">Back to Admin Panel</a>
 
 </div>
 </body>
