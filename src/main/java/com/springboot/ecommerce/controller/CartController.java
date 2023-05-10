@@ -105,12 +105,11 @@ public class CartController {
 
     @PostMapping("update-quantity-cart-item/{cartItemId}/{quantity}")
     @ResponseBody
-    public void  updateQuantityCartItem(@PathVariable("cartItemId") Integer cartItemId,
-                                       @PathVariable("quantity") Long quantity,
-                                         HttpSession session){
-        CartItem cartItem = cartItemService.getCartItemById(cartItemId);
-        cartItemService.updateQuantityCartItem(cartItemId, quantity);
-        cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
+    public void  updateQuantityCartItem(
+            @PathVariable("cartItemId") Integer cartItemId,
+            @PathVariable("quantity") Long quantity,
+            HttpSession session){
+        cartItemService.updateQuantityCartItem(cartItemId, quantity, session);
     }
 
 }

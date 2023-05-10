@@ -26,7 +26,7 @@ public class SecurityConfiguration {
         httpSecurity
                 .csrf().disable()
                 .authorizeHttpRequests()
-                    .requestMatchers("/home/**", "/registration/**", "/product/**", "/css/**", "/js/**", "/fonts/**", "/images/**").permitAll()
+                    .requestMatchers("/home/**", "/registration/**", "/product/**", "/css/**", "/js/**", "/fonts/**", "/images/**", "/img/**").permitAll()
                     .requestMatchers("/category-management/**", "/tag-management/**", "/order-management/**", "/admin").hasRole(UserRole.ADMIN.name())
                     .requestMatchers("/product-management/**").hasAnyRole(UserRole.VENDOR.name(),UserRole.ADMIN.name())
                     .requestMatchers("/cart/**", "/setCartSession", "/account/**", "/order/**")

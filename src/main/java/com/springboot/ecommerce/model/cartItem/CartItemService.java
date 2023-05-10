@@ -2,6 +2,7 @@ package com.springboot.ecommerce.model.cartItem;
 
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.user.User;
+import jakarta.servlet.http.HttpSession;
 
 public interface CartItemService {
     CartItem getCartItemByProductAndCart(Integer productId, Long cartId);
@@ -12,7 +13,7 @@ public interface CartItemService {
 
     CartItem getCartItemById(Integer cartItemId);
 
-    void updateQuantityCartItem(Integer cartItemId, Long quantity);
+    void updateQuantityCartItem(Integer cartItemId, Long quantity, HttpSession session);
 
     void updateQuantityCartItem(CartItem cartItem, Long quantity);
 
