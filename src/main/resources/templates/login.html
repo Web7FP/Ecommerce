@@ -3,7 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign In</title>
-<!--    <link rel="stylesheet" th:href="@{/css/testStyles.css}">-->
+    <style>
+        body {
+            background-color: #F7F7F7;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            background-color: #FFFFFF;
+            border: 1px solid #DDDDDD;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 50px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            display: block;
+            padding: 10px;
+            border: 1px solid #DDDDDD;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        input[type="checkbox"] {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3E8E41;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
