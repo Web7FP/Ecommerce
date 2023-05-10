@@ -26,7 +26,7 @@
                     <td th:text="${category.categoryParent.title}"></td>
                 </th:block>
                 <td>
-                    <a th:href="@{/category-management/delete-category/{id}(id=${category.id})}">Delete</a>
+<!--                    <a th:href="@{/category-management/delete-category/{id}(id=${category.id})}">Delete</a>-->
                     <a th:href="@{/category-management/update-category-form/{id}(id=${category.id})}">Update</a>
                 </td>
             </tr>
