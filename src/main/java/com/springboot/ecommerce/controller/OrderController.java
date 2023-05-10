@@ -2,7 +2,6 @@ package com.springboot.ecommerce.controller;
 
 
 import com.springboot.ecommerce.exception.EmptyUserMetaException;
-import com.springboot.ecommerce.exception.QuantityExceededException;
 import com.springboot.ecommerce.exception.QuantityExceededOrderException;
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.cart.CartServiceImpl;
@@ -74,6 +73,7 @@ public class OrderController {
                 if (cartItem.getProduct().getQuantity() < cartItem.getQuantity() && cartItem.getProduct().getQuantity() > 0){
                     cartItem.setQuantity(1L);
                     cartItemService.saveCartItem(cartItem);
+                    cartItemService.updateQuantityCartItem(cartItem, cartItem.getQuantity());
                     cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
                     counterChange ++;
                 } else if (cartItem.getProduct().getQuantity() == 0){
@@ -83,6 +83,10 @@ public class OrderController {
                 }
             }
             if (counterChange != 0){
+                activeCart = cartService.getActiveCartBySession(session);
+                activeCart.setUser(currentUser);
+                cartService.updateSubTotal(activeCart);
+                cartService.setActiveCartSessionAttribute(session, activeCart);
                 return "redirect:/cart";
             }
             List<TransactionMode> transactionModes = Arrays.asList(CASH_ON_DELIVERY, CHEQUE, WIRED, DRAFT);
