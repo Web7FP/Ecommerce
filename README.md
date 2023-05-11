@@ -1,4 +1,4 @@
-# Web Team 7 :V
+# Web Team 7 
 
 ## Database schema
 
