@@ -1,5 +1,6 @@
 package com.springboot.ecommerce.model.cartItem;
 
+import com.springboot.ecommerce.exception.QuantityExceededCartException;
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.cart.CartServiceImpl;
 import com.springboot.ecommerce.model.product.Product;
@@ -87,5 +88,45 @@ public class CartItemServiceImpl implements CartItemService{
         cartItem.setPrice(priceCartItem);
         this.saveCartItem(cartItem);
         cartService.updateSubTotal(cartItem.getCart());
+    }
+
+    @Override
+    public void cartItemInitializer(CartItem cartItem, Cart activeCart,
+                                    Product product, Long quantity,
+                                    User currenttUser, HttpSession session) {
+        cartItem = new CartItem();
+        cartItem.setProduct(product);
+        cartItem.setCart(activeCart);
+        cartItem.setQuantity(quantity);
+        cartItem.setPrice(
+                BigDecimal.valueOf(quantity)
+                        .multiply(product.getPrice())
+        );
+        cartItem.setDiscount(product.getDiscount());
+        this.saveCartItem(cartItem);
+
+        activeCart.setUser(currenttUser);
+        activeCart.getCartItems().add(cartItem);
+        cartService.updateSubTotal(activeCart);
+
+        cartService.setActiveCartSessionAttribute(session, activeCart);
+    }
+
+
+    @Override
+    public void updateExistingCartItemWhenAddProductToCart(CartItem existingCartItem,
+                                                           Long quantity, Product product,
+                                                           HttpSession session) {
+        Long newQuantityCartItem = existingCartItem.getQuantity() + quantity;
+
+        if (newQuantityCartItem <= product.getQuantity()){
+            existingCartItem.setQuantity(newQuantityCartItem);
+            this.saveCartItem(existingCartItem);
+
+            cartService.updateSubTotal(existingCartItem.getCart());
+            cartService.setActiveCartSessionAttribute(session, existingCartItem.getCart());
+        } else {
+            throw new QuantityExceededCartException();
+        }
     }
 }

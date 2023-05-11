@@ -1,7 +1,7 @@
 package com.springboot.ecommerce.controller;
 
 import com.springboot.ecommerce.exception.EmptyCartException;
-import com.springboot.ecommerce.exception.QuantityExceededException;
+import com.springboot.ecommerce.exception.QuantityExceededCartException;
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.cart.CartServiceImpl;
 import com.springboot.ecommerce.model.cartItem.CartItem;
@@ -12,9 +12,6 @@ import com.springboot.ecommerce.user.User;
 import com.springboot.ecommerce.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -86,7 +83,7 @@ public class CartController {
                 cartService.updateSubTotal(cartItem.getCart());
                 cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
             } else {
-                throw new QuantityExceededException();
+                throw new QuantityExceededCartException();
             }
         }
     }

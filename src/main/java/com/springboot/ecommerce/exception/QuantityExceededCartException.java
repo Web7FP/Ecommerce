@@ -4,9 +4,9 @@ package com.springboot.ecommerce.exception;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class QuantityExceededException extends RuntimeException{
+public class QuantityExceededCartException extends RuntimeException{
 
-    public QuantityExceededException(String message) {
+    public QuantityExceededCartException(String message) {
         super(message);
     }
 }

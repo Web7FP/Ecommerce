@@ -32,7 +32,7 @@ public class ExceptionController {
         return "cart";
     }
 
-    @ExceptionHandler({QuantityExceededException.class})
+    @ExceptionHandler({QuantityExceededCartException.class})
     public ResponseEntity<?> quantityExceededExceptionHandler(){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Quantity exceeded");
     }
