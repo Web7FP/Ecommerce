@@ -11,5 +11,7 @@ public interface CategoryService {
 
     Category getCategoryById(Long id);
 
-    List<Category> getAllCategoriesExcept(Long id);
+    List<Category> getAllCategoriesExcept(Long categoryId);
+
+    List<Long> getAllSubCategoriesOf(Long categoryParentId);
 }

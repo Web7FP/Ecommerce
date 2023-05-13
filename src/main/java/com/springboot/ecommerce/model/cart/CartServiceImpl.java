@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.springboot.ecommerce.model.cartItem.CartItem;
 import com.springboot.ecommerce.user.User;
+import com.springboot.ecommerce.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.List;
 public class CartServiceImpl implements CartService{
 
     private final CartRepository cartRepository;
+    private final UserService userService;
+
 
     @Override
     public Cart getActiveCartBySession(HttpSession session) {
@@ -63,6 +66,16 @@ public class CartServiceImpl implements CartService{
     public Cart getActiveCartByUser(Long userId) {
         return cartRepository.getActiveCartByUser(userId);
     }
+
+    @Override
+    public void initNewActiveCart(Cart activeCart, User currentUser) {
+        activeCart.setUser(currentUser);
+        this.saveCart(activeCart);
+
+        currentUser.getCarts().add(activeCart);
+        userService.saveUser(currentUser);
+    }
+
 
     @Override
     public void setCompletedStatusCart(Cart cart, User currentUser) {

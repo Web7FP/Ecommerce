@@ -47,7 +47,14 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public List<Category> getAllCategoriesExcept(Long id) {
-        return categoryRepository.getAllCategoriesExceptId(id);
+    public List<Category> getAllCategoriesExcept(Long categoryId) {
+        List<Long> subCategories = this.getAllSubCategoriesOf(categoryId);
+        subCategories.add(categoryId);
+        return categoryRepository.getAllCategoriesExceptId(subCategories);
+    }
+
+    @Override
+    public List<Long> getAllSubCategoriesOf(Long categoryParentId) {
+        return categoryRepository.getAllSubCategoriesOf(categoryParentId);
     }
 }

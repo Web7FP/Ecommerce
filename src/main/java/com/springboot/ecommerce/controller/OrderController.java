@@ -2,22 +2,13 @@ package com.springboot.ecommerce.controller;
 
 
 import com.springboot.ecommerce.exception.EmptyUserMetaException;
-import com.springboot.ecommerce.exception.QuantityExceededOrderException;
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.cart.CartServiceImpl;
-import com.springboot.ecommerce.model.cartItem.CartItem;
-import com.springboot.ecommerce.model.cartItem.CartItemServiceImpl;
 import com.springboot.ecommerce.model.order.Order;
 import com.springboot.ecommerce.model.order.OrderServiceImpl;
-import com.springboot.ecommerce.model.orderItem.OrderItem;
-import com.springboot.ecommerce.model.orderItem.OrderItemServiceImpl;
-import com.springboot.ecommerce.model.product.Product;
-import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import com.springboot.ecommerce.model.transaction.Transaction;
 import com.springboot.ecommerce.model.transaction.TransactionMode;
-import com.springboot.ecommerce.model.transaction.TransactionServiceImpl;
 import com.springboot.ecommerce.model.transaction.TransactionType;
-import com.springboot.ecommerce.model.userMeta.UserMeta;
 import com.springboot.ecommerce.model.userMeta.UserMetaServiceImpl;
 import com.springboot.ecommerce.user.User;
 import com.springboot.ecommerce.user.UserRole;
@@ -46,13 +37,10 @@ import static com.springboot.ecommerce.model.transaction.TransactionType.*;
 public class OrderController {
 
     private final CartServiceImpl cartService;
-    private final OrderItemServiceImpl orderItemService;
     private final UserService userService;
     private final OrderServiceImpl orderService;
     private final UserMetaServiceImpl userMetaService;
-    private final TransactionServiceImpl transactionService;
-    private final CartItemServiceImpl cartItemService;
-    private final ProductServiceImpl productService;
+
 
 
     @GetMapping("/order/checkout/payment")
@@ -63,32 +51,11 @@ public class OrderController {
         if (currentUser.getUserMeta() == null){
             throw new EmptyUserMetaException();
         } else {
-            Cart activeCart = cartService.getActiveCartBySession(session);
-            int counterChange = 0;
-            for (CartItem cartItem: activeCart.getCartItems()){
-                Product product = productService.getProductById(cartItem.getProduct().getId());
-                cartItem.setProduct(product);
-                cartItem.setCart(activeCart);
-                cartItemService.saveCartItem(cartItem);
-                if (cartItem.getProduct().getQuantity() < cartItem.getQuantity() && cartItem.getProduct().getQuantity() > 0){
-                    cartItem.setQuantity(1L);
-                    cartItemService.saveCartItem(cartItem);
-                    cartItemService.updateQuantityCartItem(cartItem, cartItem.getQuantity());
-                    cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
-                    counterChange ++;
-                } else if (cartItem.getProduct().getQuantity() == 0){
-                    cartService.setActiveCartSessionAttribute(session,
-                            cartItemService.deleteCartItem(cartItem.getId(), currentUser));
-                    counterChange ++;
-                }
-            }
-            if (counterChange != 0){
-                activeCart = cartService.getActiveCartBySession(session);
-                activeCart.setUser(currentUser);
-                cartService.updateSubTotal(activeCart);
-                cartService.setActiveCartSessionAttribute(session, activeCart);
+            int countChangeInCartBeforeOrder = orderService.checkCartBeforeOrder(currentUser, session);
+            if (countChangeInCartBeforeOrder != 0){
                 return "redirect:/cart";
             }
+            Cart activeCart = cartService.getActiveCartBySession(session);
             List<TransactionMode> transactionModes = Arrays.asList(CASH_ON_DELIVERY, CHEQUE, WIRED, DRAFT);
             List<TransactionType> transactionTypes = Arrays.asList(DEBIT, CREDIT);
             model.addAttribute("cart",activeCart);
@@ -101,78 +68,18 @@ public class OrderController {
     }
 
     @PostMapping("/order/processing")
-    public String processingOrder(
-            HttpSession session,
-            @ModelAttribute("transaction") Transaction transaction,
-            @AuthenticationPrincipal UserDetails user){
+    public String processingOrder(HttpSession session,
+                                  @ModelAttribute("transaction") Transaction transaction,
+                                  @AuthenticationPrincipal UserDetails user){
             User currentUser = userService.findByEmail(user.getUsername());
-            Cart activeCart = cartService.getActiveCartBySession(session);
-            UserMeta userMeta = userMetaService.getUserMetaByCurrentUser(currentUser.getId());
-            Order processingOrder = new Order();
-            processingOrder.setUser(currentUser);
-            orderService.saveOrder(processingOrder);
-            transaction.setOrder(processingOrder);
-            transaction.setUser(currentUser);
-            transactionService.saveTransaction(transaction);
-            List<OrderItem> orderItems = orderItemService.setOrderItemByCartItem(
-                    activeCart.getCartItems(), processingOrder);
-            orderService.saveOrder(processingOrder, orderItems, userMeta, transaction);
-            cartService.setCompletedStatusCart(activeCart, currentUser);
-            session.removeAttribute("cart");
+            orderService.processingNewOrder(transaction, currentUser, session);
         return "redirect:/order/history";
     }
 
     @GetMapping("/order/buy-again/{orderId}")
     public String buyAgainOrder(@PathVariable("orderId") Long orderId,
                                 HttpSession session){
-        Order order = orderService.getOrderById(orderId);
-        Cart activeCart = cartService.getActiveCartBySession(session);
-        if (activeCart == null) {
-            activeCart = new Cart();
-            activeCart.setUser(order.getUser());
-            cartService.saveCart(activeCart);
-        }
-        List<OrderItem> orderItems = order.getOrderItems();
-        for (OrderItem orderItem: orderItems) {
-            if (orderItem.getProduct().getQuantity() != 0) {
-                CartItem existingCartItem = cartItemService
-                        .getCartItemByProductAndCart(
-                                orderItem.getProduct().getId(),
-                                activeCart.getId()
-                        );
-                if (existingCartItem != null) {
-                    Long newQuantityCartItem = existingCartItem.getQuantity() + orderItem.getQuantity();
-                    if (newQuantityCartItem > existingCartItem.getProduct().getQuantity()) {
-                        cartItemService.updateQuantityCartItem(
-                                existingCartItem,
-                                1L
-                        );
-                    } else {
-                        cartItemService.updateQuantityCartItem(
-                                existingCartItem,
-                                newQuantityCartItem
-                        );
-                    }
-                    activeCart = existingCartItem.getCart();
-                    cartService.saveCart(activeCart);
-                } else {
-                    CartItem newCartItem = new CartItem();
-                    newCartItem.setProduct(orderItem.getProduct());
-                    newCartItem.setPrice(orderItem.getPrice());
-                    newCartItem.setDiscount(orderItem.getDiscount());
-                    if (orderItem.getProduct().getQuantity() < orderItem.getQuantity()) {
-                        newCartItem.setQuantity(1L);
-                    } else {
-                        newCartItem.setQuantity(orderItem.getQuantity());
-                    }
-                    newCartItem.setCart(activeCart);
-                    activeCart.getCartItems().add(newCartItem);
-                    cartItemService.saveCartItem(newCartItem);
-                    cartService.saveCart(activeCart);
-                }
-            }
-        }
-        cartService.setActiveCartSessionAttribute(session, activeCart);
+        orderService.buyAgainHandler(orderId, session);
         return "redirect:/cart";
     }
 
@@ -198,14 +105,7 @@ public class OrderController {
     @GetMapping("/order-management/update-delivered-order/{orderId}")
     public String updateDeliveredOrder(@PathVariable("orderId") Long orderId,
                                        RedirectAttributes redirectAttributes){
-        Order order = orderService.getOrderById(orderId);
-        for (OrderItem orderItem : order.getOrderItems()){
-            Product product = orderItem.getProduct();
-            if (orderItem.getQuantity() > product.getQuantity()){
-                throw new QuantityExceededOrderException(orderId);
-            }
-        }
-        orderService.setDeliveredOrder(order);
+        orderService.setDeliveredOrder(orderId);
         redirectAttributes.addAttribute("orderId", orderId);
         return "redirect:/order-management/order-detail/{orderId}";
     }
@@ -215,8 +115,7 @@ public class OrderController {
                                         RedirectAttributes redirectAttributes,
                                        @AuthenticationPrincipal UserDetails user) {
         User currentUser = userService.findByEmail(user.getUsername());
-        Order order = orderService.getOrderById(orderId);
-        orderService.setCancelledOrder(order);
+        orderService.setCancelledOrder(orderId);
         if (currentUser.getUserRole().equals(UserRole.ADMIN)){
             redirectAttributes.addAttribute("orderId", orderId);
             return "redirect:/order-management/order-detail/{orderId}";
@@ -229,8 +128,7 @@ public class OrderController {
     @GetMapping("/order-management/update-completed-order/{orderId}")
     public String updateCompletedOrder(@PathVariable("orderId") Long orderId,
                                        RedirectAttributes redirectAttributes){
-        Order order = orderService.getOrderById(orderId);
-        orderService.setCompletedOrder(order);
+        orderService.setCompletedOrder(orderId);
         redirectAttributes.addAttribute("orderId", orderId);
         return "redirect:/order-management/order-detail/{orderId}";
     }

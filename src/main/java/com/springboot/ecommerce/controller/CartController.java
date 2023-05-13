@@ -1,7 +1,6 @@
 package com.springboot.ecommerce.controller;
 
 import com.springboot.ecommerce.exception.EmptyCartException;
-import com.springboot.ecommerce.exception.QuantityExceededCartException;
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.cart.CartServiceImpl;
 import com.springboot.ecommerce.model.cartItem.CartItem;
@@ -17,8 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
 
 
 @Controller
@@ -55,36 +52,23 @@ public class CartController {
 
         if (activeCart == null){
             activeCart = new Cart();
-            activeCart.setUser(currentUser);
-            currentUser.getCarts().add(activeCart);
-            cartService.saveCart(activeCart);
+            cartService.initNewActiveCart(activeCart, currentUser);
+
         }
 
-        CartItem cartItem = cartItemService.getCartItemByProductAndCart(product.getId(), activeCart.getId());
+        CartItem cartItem = cartItemService.getCartItemByProductAndCart(
+                product.getId(), activeCart.getId()
+        );
         if (cartItem == null){
             cartItem = new CartItem();
-            cartItem.setProduct(product);
-            cartItem.setCart(activeCart);
-            cartItem.setQuantity(quantity);
-            BigDecimal priceCartItem = BigDecimal.valueOf(quantity).multiply(product.getPrice());
-            cartItem.setPrice(priceCartItem);
-            cartItem.setDiscount(product.getDiscount());
-            cartItemService.saveCartItem(cartItem);
-            activeCart.getCartItems().add(cartItem);
-            activeCart.setUser(currentUser);
-            cartService.updateSubTotal(activeCart);
-            cartService.saveCart(activeCart);
-            cartService.setActiveCartSessionAttribute(session, activeCart);
+            cartItemService.cartItemInitializer(
+                    cartItem, activeCart, product,
+                    quantity, currentUser, session
+            );
         } else {
-            Long newQuantityCartItem = cartItem.getQuantity() + quantity;
-            if (newQuantityCartItem <= product.getQuantity()){
-                cartItem.setQuantity(newQuantityCartItem);
-                cartItemService.saveCartItem(cartItem);
-                cartService.updateSubTotal(cartItem.getCart());
-                cartService.setActiveCartSessionAttribute(session, cartItem.getCart());
-            } else {
-                throw new QuantityExceededCartException();
-            }
+            cartItemService.updateExistingCartItemWhenAddProductToCart(
+                    cartItem, quantity, product, session
+            );
         }
     }
 

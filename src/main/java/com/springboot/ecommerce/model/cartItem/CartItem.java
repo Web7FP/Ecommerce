@@ -29,7 +29,7 @@ public class CartItem extends BasicEntity {
     @SequenceGenerator(
             name = "cart_item_sequence",
             sequenceName = "cart_item_sequence",
-            allocationSize = 5,
+            allocationSize = 100,
             initialValue = 1
     )
     @GeneratedValue(

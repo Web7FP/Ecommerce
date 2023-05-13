@@ -24,5 +24,6 @@ public interface CartService {
 
     void updateSubTotal(Cart cart);
 
+    void initNewActiveCart(Cart activeCart, User currentUser);
 
 }

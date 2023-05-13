@@ -94,7 +94,6 @@ public class CartItemServiceImpl implements CartItemService{
     public void cartItemInitializer(CartItem cartItem, Cart activeCart,
                                     Product product, Long quantity,
                                     User currenttUser, HttpSession session) {
-        cartItem = new CartItem();
         cartItem.setProduct(product);
         cartItem.setCart(activeCart);
         cartItem.setQuantity(quantity);
@@ -120,10 +119,7 @@ public class CartItemServiceImpl implements CartItemService{
         Long newQuantityCartItem = existingCartItem.getQuantity() + quantity;
 
         if (newQuantityCartItem <= product.getQuantity()){
-            existingCartItem.setQuantity(newQuantityCartItem);
-            this.saveCartItem(existingCartItem);
-
-            cartService.updateSubTotal(existingCartItem.getCart());
+            this.updateQuantityCartItem(existingCartItem, newQuantityCartItem);
             cartService.setActiveCartSessionAttribute(session, existingCartItem.getCart());
         } else {
             throw new QuantityExceededCartException();
