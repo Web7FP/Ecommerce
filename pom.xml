@@ -16,6 +16,7 @@
     <description>Ecommerce</description>
     <properties>
         <java.version>20</java.version>
+        <elasticsearch.version>8.7.1</elasticsearch.version>
     </properties>
     <dependencies>
         <dependency>
@@ -118,7 +119,20 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.plugin</groupId>
+            <artifactId>x-pack-sql-jdbc</artifactId>
+            <version>8.7.1</version>
+        </dependency>
     </dependencies>
+
+
 
     <build>
         <plugins>

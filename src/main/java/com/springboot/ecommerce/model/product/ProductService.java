@@ -26,4 +26,6 @@ public interface ProductService {
 
     Product findBySlugProduct (String slugProduct);
 
+    void indexAll();
+
 }

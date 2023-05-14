@@ -13,7 +13,7 @@ import com.springboot.ecommerce.model.transaction.Transaction;
 import com.springboot.ecommerce.model.transaction.TransactionServiceImpl;
 import com.springboot.ecommerce.model.userMeta.UserMeta;
 import com.springboot.ecommerce.model.userMeta.UserMetaServiceImpl;
-import com.springboot.ecommerce.user.User;
+import com.springboot.ecommerce.model.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -3,7 +3,7 @@ package com.springboot.ecommerce.controller;
 
 import com.springboot.ecommerce.security.registration.RegistrationRequest;
 import com.springboot.ecommerce.security.registration.RegistrationService;
-import com.springboot.ecommerce.user.UserRole;
+import com.springboot.ecommerce.model.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.springboot.ecommerce.user.UserRole.*;
+import static com.springboot.ecommerce.model.user.UserRole.*;
 
 @Controller
 @RequestMapping("/registration")

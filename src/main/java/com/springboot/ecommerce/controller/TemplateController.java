@@ -5,9 +5,10 @@ import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.cart.CartServiceImpl;
 import com.springboot.ecommerce.model.product.Product;
 import com.springboot.ecommerce.model.product.ProductServiceImpl;
-import com.springboot.ecommerce.user.User;
-import com.springboot.ecommerce.user.UserRole;
-import com.springboot.ecommerce.user.UserService;
+import com.springboot.ecommerce.model.user.User;
+import com.springboot.ecommerce.model.user.UserRole;
+import com.springboot.ecommerce.model.user.UserService;
+import com.springboot.ecommerce.search.model.product.ProductElasticSearchServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,9 +16,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +25,7 @@ public class TemplateController {
     private final ProductServiceImpl productService;
     private final UserService userService;
     private final CartServiceImpl cartService;
+    private final ProductElasticSearchServiceImpl productElasticSearchService;
 
 
     @GetMapping("/setCartSession")
@@ -82,5 +83,19 @@ public class TemplateController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         return "home";
+    }
+
+    @PostMapping("/search-product")
+    public String processingSearch(@RequestParam("query") String query, RedirectAttributes redirectAttributes, Model model){
+//        redirectAttributes.addAttribute("query", query);
+        model.addAttribute("productList", productElasticSearchService.getAllByTitle(query));
+        return "test-result-search";
+//        return "redirect:/search?q={query}";
+    }
+
+    @GetMapping("/search?q={query}")
+    public String getResultSearch(@PathVariable("query") String titleProduct, Model model){
+        model.addAttribute("productList", productElasticSearchService.getAllByTitle(titleProduct));
+        return "test-result-search";
     }
 }

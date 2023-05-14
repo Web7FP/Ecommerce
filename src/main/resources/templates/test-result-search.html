@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Test result search</title>
+</head>
+<body>
+<div class="test-result-search">
+  <table>
+    <tr th:each="product : ${productList}">
+      <td th:text="${product.getTitle()}"></td>
+      <td th:text="${product.getPrice()}"></td>
+      <td>
+        <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

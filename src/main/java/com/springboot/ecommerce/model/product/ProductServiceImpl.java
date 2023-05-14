@@ -2,6 +2,7 @@ package com.springboot.ecommerce.model.product;
 
 import com.springboot.ecommerce.model.productMeta.ProductMeta;
 import com.springboot.ecommerce.model.productMeta.ProductMetaServiceImpl;
+import com.springboot.ecommerce.search.model.product.ProductElasticSearchServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,8 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
     private final ProductMetaServiceImpl productMetaService;
+    private final ProductElasticSearchServiceImpl productElasticSearchService;
+
 
     @Override
     public void saveNewProduct(Product product) {
@@ -26,11 +29,13 @@ public class ProductServiceImpl implements ProductService{
             productMetaService.saveProductMeta(productMeta);
         }
         productRepository.save(product);
+        productElasticSearchService.initProductElasticSearch(product);
     }
 
     @Override
     public void saveProduct(Product product) {
         productRepository.save(product);
+        productElasticSearchService.updateProductElasticSearch(product);
     }
 
     @Override
@@ -40,6 +45,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void deleteProduct(Integer id) {
+        productElasticSearchService.delete(id);
         productMetaService.deleteByProduct(id);
         productRepository.deleteById(id);
     }
@@ -92,4 +98,8 @@ public class ProductServiceImpl implements ProductService{
         return productRepository.findAllByCategories_IdAndTags_Id(categoryId, tagId);
     }
 
+    @Override
+    public void indexAll() {
+        return;
+    }
 }

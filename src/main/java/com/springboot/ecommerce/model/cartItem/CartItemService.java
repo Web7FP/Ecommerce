@@ -2,7 +2,7 @@ package com.springboot.ecommerce.model.cartItem;
 
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.product.Product;
-import com.springboot.ecommerce.user.User;
+import com.springboot.ecommerce.model.user.User;
 import jakarta.servlet.http.HttpSession;
 
 public interface CartItemService {

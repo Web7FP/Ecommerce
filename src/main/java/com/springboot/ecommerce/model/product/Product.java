@@ -8,7 +8,7 @@ import com.springboot.ecommerce.model.auditListener.BasicEntity;
 import com.springboot.ecommerce.model.orderItem.OrderItem;
 import com.springboot.ecommerce.model.productMeta.ProductMeta;
 import com.springboot.ecommerce.model.tag.Tag;
-import com.springboot.ecommerce.user.User;
+import com.springboot.ecommerce.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -59,6 +59,7 @@ public class Product extends BasicEntity {
     private String title;
 
     private String metaTitle;
+
     @Column(nullable = false)
     private String slug;
 

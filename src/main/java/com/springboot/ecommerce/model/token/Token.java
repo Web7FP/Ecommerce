@@ -1,7 +1,7 @@
-package com.springboot.ecommerce.security.token;
+package com.springboot.ecommerce.model.token;
 
 
-import com.springboot.ecommerce.user.User;
+import com.springboot.ecommerce.model.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

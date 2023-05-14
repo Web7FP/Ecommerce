@@ -1,4 +1,4 @@
-package com.springboot.ecommerce.user;
+package com.springboot.ecommerce.model.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

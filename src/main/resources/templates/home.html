@@ -224,5 +224,14 @@
 </div>
 <br><br><br>
 
+<div class="search-engine">
+    <form method="post" th:action="@{/search-product}">
+        <label for="search-product">Search Product</label>
+        <input type="text" id="search-product" name="query">
+
+        <input type="submit" value="search">
+    </form>
+</div>
+
 </body>
 </html>

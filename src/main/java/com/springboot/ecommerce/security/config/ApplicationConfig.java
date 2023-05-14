@@ -1,7 +1,7 @@
 package com.springboot.ecommerce.security.config;
 
 
-import com.springboot.ecommerce.user.UserService;
+import com.springboot.ecommerce.model.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

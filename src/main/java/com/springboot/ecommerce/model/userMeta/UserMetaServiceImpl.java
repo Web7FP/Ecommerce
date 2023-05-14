@@ -1,6 +1,5 @@
 package com.springboot.ecommerce.model.userMeta;
 
-import com.springboot.ecommerce.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,7 @@
 package com.springboot.ecommerce.model.cart;
 
-import com.springboot.ecommerce.user.User;
-import com.springboot.ecommerce.user.UserRole;
+import com.springboot.ecommerce.model.user.User;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.security.core.session.SessionInformation;
 
 import java.util.List;
 

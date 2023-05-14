@@ -1,4 +1,4 @@
-package com.springboot.ecommerce.user;
+package com.springboot.ecommerce.model.user;
 
 
 import com.springboot.ecommerce.model.cart.Cart;

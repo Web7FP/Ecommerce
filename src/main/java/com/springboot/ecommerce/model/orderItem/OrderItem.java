@@ -5,15 +5,12 @@ import com.springboot.ecommerce.model.auditListener.AuditListener;
 import com.springboot.ecommerce.model.auditListener.BasicEntity;
 import com.springboot.ecommerce.model.order.Order;
 import com.springboot.ecommerce.model.product.Product;
-import com.springboot.ecommerce.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter

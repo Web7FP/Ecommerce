@@ -2,9 +2,8 @@ package com.springboot.ecommerce.security.config;
 
 
 import com.springboot.ecommerce.security.loginError.CustomAuthenticationFailureHandler;
-import com.springboot.ecommerce.user.UserRole;
+import com.springboot.ecommerce.model.user.UserRole;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

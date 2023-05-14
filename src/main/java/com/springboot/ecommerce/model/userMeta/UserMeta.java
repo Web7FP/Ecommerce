@@ -1,7 +1,7 @@
 package com.springboot.ecommerce.model.userMeta;
 
 
-import com.springboot.ecommerce.user.User;
+import com.springboot.ecommerce.model.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

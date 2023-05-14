@@ -6,7 +6,7 @@ import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import com.springboot.ecommerce.model.productMeta.ProductMeta;
 import com.springboot.ecommerce.model.productMeta.ProductMetaServiceImpl;
 import com.springboot.ecommerce.model.tag.TagServiceImpl;
-import com.springboot.ecommerce.user.UserService;
+import com.springboot.ecommerce.model.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

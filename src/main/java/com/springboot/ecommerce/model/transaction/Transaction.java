@@ -4,7 +4,7 @@ package com.springboot.ecommerce.model.transaction;
 import com.springboot.ecommerce.model.auditListener.AuditListener;
 import com.springboot.ecommerce.model.auditListener.BasicEntity;
 import com.springboot.ecommerce.model.order.Order;
-import com.springboot.ecommerce.user.User;
+import com.springboot.ecommerce.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;

@@ -1,10 +1,9 @@
 package com.springboot.ecommerce.model.order;
 
-import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.orderItem.OrderItem;
 import com.springboot.ecommerce.model.transaction.Transaction;
 import com.springboot.ecommerce.model.userMeta.UserMeta;
-import com.springboot.ecommerce.user.User;
+import com.springboot.ecommerce.model.user.User;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.springboot.ecommerce.user;
+package com.springboot.ecommerce.model.user;
 
 import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
@@ -8,16 +8,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.springboot.ecommerce.user.UserPermission.PERMISSION1;
-import static com.springboot.ecommerce.user.UserPermission.PERMISSION2;
-
 
 @Getter
 @AllArgsConstructor
 public enum UserRole {
-    ADMIN(Sets.newHashSet(PERMISSION1,PERMISSION2)),
+    ADMIN(Sets.newHashSet(UserPermission.PERMISSION1, UserPermission.PERMISSION2)),
     USER(Sets.newHashSet()),
-    VENDOR(Sets.newHashSet(PERMISSION2));
+    VENDOR(Sets.newHashSet(UserPermission.PERMISSION2));
 
     private final Set<UserPermission> permissions;
 

@@ -1,4 +1,4 @@
-package com.springboot.ecommerce.security.token;
+package com.springboot.ecommerce.model.token;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
