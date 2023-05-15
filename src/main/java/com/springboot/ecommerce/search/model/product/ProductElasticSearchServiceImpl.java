@@ -1,11 +1,14 @@
 package com.springboot.ecommerce.search.model.product;
 
 
+import com.springboot.ecommerce.model.category.Category;
 import com.springboot.ecommerce.model.product.Product;
+import com.springboot.ecommerce.model.tag.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +33,14 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         productElasticSearch.setQuantity(product.getQuantity());
         productElasticSearch.setSku(product.getSku());
         productElasticSearch.setTitle(product.getTitle());
+        productElasticSearch.setCategories(new ArrayList<>());
+        productElasticSearch.setTags(new ArrayList<>());
+        for (Category category: product.getCategories()) {
+            productElasticSearch.getCategories().add(category.getTitle());
+        };
+        for (Tag tag : product.getTags()){
+            productElasticSearch.getTags().add(tag.getTitle());
+        }
 
         this.save(productElasticSearch);
     }
@@ -61,6 +72,16 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         productElasticSearch.setDiscount(product.getDiscount());
         productElasticSearch.setQuantity(product.getQuantity());
         productElasticSearch.setSku(product.getSku());
+        List<String> categoriesTitle = new ArrayList<>();
+        List<String> tagsTitle = new ArrayList<>();
+        for (Category category: product.getCategories()) {
+            categoriesTitle.add(category.getTitle());
+        };
+        for (Tag tag : product.getTags()){
+            tagsTitle.add(tag.getTitle());
+        }
+        productElasticSearch.setCategories(categoriesTitle);
+        productElasticSearch.setTags(tagsTitle);
 
         this.save(productElasticSearch);
 

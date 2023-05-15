@@ -1,5 +1,6 @@
 package com.springboot.ecommerce.search.model.product;
 
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,6 +27,7 @@ public class ProductElasticSearch {
     private String slug;
 
 
+    @Lob
     private String imageLink;
 
     @Field(name = "title", type = FieldType.Text)
@@ -37,5 +40,9 @@ public class ProductElasticSearch {
     private BigDecimal discount;
 
     private Long quantity;
+
+    private List<String> categories;
+
+    private List<String> tags;
 
 }
