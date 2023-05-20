@@ -23,16 +23,19 @@ public class ProductElasticSearch {
     @Field(name = "id", type = FieldType.Keyword)
     private Integer id;
 
-    @Field(name = "slug", type = FieldType.Text)
     private String slug;
-
 
     @Lob
     private String imageLink;
 
-    @Field(name = "title", type = FieldType.Text)
+    @Field(type = FieldType.Text)
     private String title;
 
+    @Field(type = FieldType.Keyword)
+    private String titleKeyword;
+
+
+    @Field(type = FieldType.Keyword)
     private String sku;
 
     private BigDecimal price;
@@ -41,8 +44,10 @@ public class ProductElasticSearch {
 
     private Long quantity;
 
+    @Field(name = "categories", type = FieldType.Keyword)
     private List<String> categories;
 
+    @Field(name = "tags", type = FieldType.Keyword)
     private List<String> tags;
 
 }

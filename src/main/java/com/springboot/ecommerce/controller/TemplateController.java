@@ -8,7 +8,6 @@ import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import com.springboot.ecommerce.model.user.User;
 import com.springboot.ecommerce.model.user.UserRole;
 import com.springboot.ecommerce.model.user.UserService;
-import com.springboot.ecommerce.search.model.product.ProductElasticSearchServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,7 +23,6 @@ public class TemplateController {
     private final ProductServiceImpl productService;
     private final UserService userService;
     private final CartServiceImpl cartService;
-    private final ProductElasticSearchServiceImpl productElasticSearchService;
 
 
     @GetMapping("/setCartSession")
@@ -76,26 +73,14 @@ public class TemplateController {
         int pageSize = 5;
         Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);
         model.addAttribute("listProducts", page.getContent());
-        model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("sortField", sortField);
+        model.addAttribute("currentPage", pageNo);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         return "home";
     }
 
-    @PostMapping("/search-product")
-    public String processingSearch(@RequestParam("query") String query, RedirectAttributes redirectAttributes, Model model){
-//        redirectAttributes.addAttribute("query", query);
-        model.addAttribute("productList", productElasticSearchService.getAllByTitle(query));
-        return "test-result-search";
-//        return "redirect:/search?q={query}";
-    }
 
-    @GetMapping("/search?q={query}")
-    public String getResultSearch(@PathVariable("query") String titleProduct, Model model){
-        model.addAttribute("productList", productElasticSearchService.getAllByTitle(titleProduct));
-        return "test-result-search";
-    }
 }

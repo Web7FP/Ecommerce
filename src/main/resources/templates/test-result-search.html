@@ -7,7 +7,7 @@
 <body>
 <div class="test-result-search">
   <table>
-    <tr th:each="product : ${productList}">
+    <tr th:each="product : ${listProducts}">
       <td th:text="${product.getTitle()}"></td>
       <td th:text="${product.getPrice()}"></td>
       <td>
@@ -15,6 +15,30 @@
       </td>
     </tr>
   </table>
+
+  <div class="pagination">
+    <p th:text="'Total products: ' + ${totalItems}"></p>
+  </div>
+
+  <div>
+                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:if="${currentPage != i}" th:href="@{'/search/q=' + ${query} +  '/page=' + ${i} + '?category=' + ${category} +
+                    '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="${i}"></a>
+                    <span th:unless="${currentPage != i}" th:text="${i}"></span>
+                </span>
+  </div>
+
+  <div class="button">
+    <br><br><br>
+    <a th:if="${currentPage < totalPages }" th:href="@{'/search/q=' + ${query} +  '&page=' + ${currentPage + 1}
+                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="next-button">Next</a>
+  </div>
+  <div  class="button">
+    <a th:if="${currentPage <= totalPages and currentPage > 1}" th:href="@{'/search/q=' + ${query} +  '&page=' + ${currentPage - 1}+
+                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="last-button">Last</a>
+  </div>
+  <br><br><br>
+
 </div>
 </body>
 </html>
