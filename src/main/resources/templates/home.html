@@ -225,10 +225,9 @@
 <br><br><br>
 
 <div class="search-engine">
-    <form method="post" th:action="@{/search-product}">
+    <form method="get" th:action="@{/search}">
         <label for="search-product">Search Product</label>
-        <input type="text" id="search-product" name="query">
-
+        <input type="text" id="search-product" name="q">
         <input type="submit" value="search">
     </form>
 </div>

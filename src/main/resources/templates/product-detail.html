@@ -15,7 +15,7 @@
          th:alt="${product.title}"
          style="height: 100px; width: 100px">
   <p th:text="'Price: ' + ${product.price}"></p><br>
-  <p th:text="'Discoutn: '+ ${product.discount}"></p><br><br>
+  <p th:text="'Discount: '+ ${product.discount}"></p><br><br>
 
     <th:block th:if="${product.shop == false}">
         <p>Product no longer available</p>

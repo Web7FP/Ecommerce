@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 @Controller
@@ -26,9 +23,9 @@ public class ElasticSearchController {
 
 
 
-    @GetMapping("/search/q={name}/page={pageNo}")
+    @GetMapping("/search/page={pageNo}")
     public String findPaginatedProduct(
-            @PathVariable("name") String titleProduct,
+            @RequestParam("name") String titleProduct,
             @PathVariable("pageNo") int pageNo,
             @RequestParam("sortField") String sortField,
             @RequestParam("sortDir") String sortDir,
@@ -55,8 +52,8 @@ public class ElasticSearchController {
         return "test-result-search";
     }
 
-    @GetMapping("/search/q={name}")
-    public String resultSearch(@PathVariable("name") String titleProduct, Model model){
+    @GetMapping("/search")
+    public String resultSearch(@RequestParam("q") String titleProduct, Model model){
         return findPaginatedProduct(
                 titleProduct, 1, "titleKeyword", "asc",
                 "1", null, null, model
