@@ -155,17 +155,17 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
     }
 
     @Override
-    public Page<ProductElasticSearch> searchProduct(String title, String categories,
-                                                    BigDecimal upperBoundPrice, BigDecimal lowerBoundPrice,
+    public Page<ProductElasticSearch> searchProduct(String title, List<String> categories,
+                                                    BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
                                                     int pageNo, int pageSize, String sortField, String sortDirection) {
         if (categories == null && upperBoundPrice == null && lowerBoundPrice == null){
             return this.getAllByTitle(title,pageNo, pageSize, sortField, sortDirection);
         } else if (categories == null && upperBoundPrice != null && lowerBoundPrice != null) {
-            return this.getAllByTitleAndPriceIsBetween(title, upperBoundPrice, lowerBoundPrice, pageNo, pageSize, sortField, sortDirection);
+            return this.getAllByTitleAndPriceIsBetween(title, lowerBoundPrice, upperBoundPrice, pageNo, pageSize, sortField, sortDirection);
         } else if (categories != null && upperBoundPrice == null && lowerBoundPrice == null) {
-            return this.getAllByTitleAndCategories(title, new ArrayList<>(Arrays.asList(categories)), pageNo, pageSize, sortField, sortDirection);
+            return this.getAllByTitleAndCategories(title, categories, pageNo, pageSize, sortField, sortDirection);
         } else if (categories != null && upperBoundPrice != null && lowerBoundPrice != null) {
-            return this.getAllByTitleAndCategoriesAndPriceIsBetween(title, new ArrayList<>(Arrays.asList(categories)), upperBoundPrice, lowerBoundPrice, pageNo, pageSize, sortField, sortDirection);
+            return this.getAllByTitleAndCategoriesAndPriceIsBetween(title, categories, lowerBoundPrice, upperBoundPrice, pageNo, pageSize, sortField, sortDirection);
         }
         return null;
     }

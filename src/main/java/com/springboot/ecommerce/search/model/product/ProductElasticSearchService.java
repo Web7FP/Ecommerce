@@ -40,7 +40,7 @@ public interface ProductElasticSearchService {
     Pageable findPaginated(int pageNo, int pageSize,
                            String sortField, String sortDirection);
 
-    Page<ProductElasticSearch> searchProduct(String title, String  categories,
+    Page<ProductElasticSearch> searchProduct(String title, List<String>  categories,
                                              BigDecimal upperBoundPrice, BigDecimal lowerBoundPrice,
                                              int pageNo, int pageSize,
                                              String sortField, String sortDirection);

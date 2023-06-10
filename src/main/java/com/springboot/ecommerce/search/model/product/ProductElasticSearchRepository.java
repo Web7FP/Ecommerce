@@ -53,8 +53,6 @@ public interface ProductElasticSearchRepository extends ElasticsearchRepository<
                                                                         BigDecimal upperBoundPrice,
                                                                         Pageable pageable);
 
-
-
     @Query("{ \"bool\" : { " +
             "   \"filter\" : [{" +
             "        \"script\" : { " +
@@ -81,7 +79,7 @@ public interface ProductElasticSearchRepository extends ElasticsearchRepository<
             "   }] , " +
             "   \"must\" : [{" +
             "       \"match\" : {" +
-            "           \"title.keyword\" : {" +
+            "           \"title\" : {" +
             "               \"query\" : \"?0\" , " +
             "               \"fuzziness\": 2, " +
             "               \"prefix_length\": 2, " +
@@ -91,7 +89,6 @@ public interface ProductElasticSearchRepository extends ElasticsearchRepository<
             "   }]  " +
             "}}")
     Page<ProductElasticSearch> getAllByFuzzyQueryTitleAndCategoriesContaining(String titleProduct, List<String> categoriesTitle, Pageable pageable);
-
 
 
 
