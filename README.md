@@ -1,7 +1,12 @@
-# Web Team 7 
+# Web Team 7
+----------
 
-## Database schema
-
-link bài gốc ở [đây](https://mysql.tutorials24x7.com/blog/guide-to-design-database-for-shopping-cart-in-mysql) nhé ae :))
+## Contributors 
+- Bùi Ngọc Dũng B21DCTC031
+- Nguyễn Vương Đoàn B21DCTC029
+- Lê Hải Đăng B21DCTC027
+- Trần Văn Hùng B21DCTC047
+- Chu Văn Mạnh B21DCTC068
+- Nguyễn Cường Minh B21DCTC009
 
 
