@@ -23,25 +23,13 @@
         </tr>
     </table>
 
-
+    <!--MAGIC. DON'T TOUCH :)).------------------------------>
     <div class="pagination">
         <p th:text="'Total products: ' + ${totalItems}"></p>
         <span class="page-links"></span>
-
         <div class="pagination-button"></div>
-        <!--  <div class="button">-->
-        <!--    <br><br><br>-->
-        <!--    <a th:if="${currentPage < totalPages }" th:href="@{'/search/q=' + ${query} +  '&page=' + ${currentPage + 1}-->
-        <!--                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="next-button">Next</a>-->
-        <!--  </div>-->
-        <!--  <div  class="button">-->
-        <!--    <a th:if="${currentPage <= totalPages and currentPage > 1}" th:href="@{'/search/q=' + ${query} +  '&page=' + ${currentPage - 1}+-->
-        <!--                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="last-button">Last</a>-->
-        <!--  </div>-->
     </div>
 
-
-    <!--MAGIC. DON'T TOUCH :)).------------------------------>
     <script th:inline="javascript">
         let totalPages = [[${totalPages}]];
         let currentPage = [[${currentPage}]];
