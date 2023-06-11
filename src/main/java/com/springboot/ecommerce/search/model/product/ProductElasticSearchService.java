@@ -19,29 +19,29 @@ public interface ProductElasticSearchService {
 
     void initProductElasticSearch(Product product);
 
-    Page<ProductElasticSearch> getAllByTitleAndPriceIsBetween(String title,
-                                                              BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                              int pageNo, int pageSize,
-                                                              String sortField, String sortDirection);
 
-    Page<ProductElasticSearch> getAllByTitleAndCategories(String title, List<String> categories,
-                                                          int pageNo, int  pageSize,
-                                                          String sortFiled, String sortDirection);
+    Pageable findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 
-    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndPriceIsBetween(String title, List<String> categories,
-                                                                           BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                                           int pageNo, int pageSize,
-                                                                           String sortFiled, String sortDirection);
-
-    Page<ProductElasticSearch> getAllByTitle(String title,
+    Page<ProductElasticSearch> searchProduct(String title,
+                                             List<String>  categories, List<String> tags,
+                                             BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
                                              int pageNo, int pageSize,
                                              String sortField, String sortDirection);
 
-    Pageable findPaginated(int pageNo, int pageSize,
-                           String sortField, String sortDirection);
+    Page<ProductElasticSearch> getAllByTitle(String title, Pageable pageable);
 
-    Page<ProductElasticSearch> searchProduct(String title, List<String>  categories,
-                                             BigDecimal upperBoundPrice, BigDecimal lowerBoundPrice,
-                                             int pageNo, int pageSize,
-                                             String sortField, String sortDirection);
+    Page<ProductElasticSearch> getAllByTitleAndPriceIsBetween(String title, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice, Pageable pageable);
+
+    Page<ProductElasticSearch> getAllByTitleAndCategories(String title, List<String> categories, Pageable pageable);
+
+    Page<ProductElasticSearch> getAllByTitleAndTags(String title, List<String> tags,Pageable pageable);
+
+    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndPriceIsBetween(String title, List<String> categories, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable);
+
+    Page<ProductElasticSearch> getAllByTitleAndTagsAndPricesIsBetween(String title, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable);
+
+    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTags(String title, List<String> categories, List<String> tags,Pageable pageable);
+
+    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(String title, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable);
+
 }

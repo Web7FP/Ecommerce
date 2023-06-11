@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -34,6 +32,7 @@ public class ElasticSearchController {
             @RequestParam(value = "sortField", defaultValue = "titleKeyword") String sortField,
             @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir,
             @RequestParam(value = "category", required = false) List<String> category,
+            @RequestParam(value = "tag", required = false) List<String> tags,
             @RequestParam(value = "upperBoundPrice", required = false) BigDecimal  upperBoundPrice,
             @RequestParam(value = "lowerBoundPrice", required = false) BigDecimal lowerBoundPrice,
             Model model
@@ -41,7 +40,8 @@ public class ElasticSearchController {
         int pageSize = 4;
         Page<ProductElasticSearch> page = productElasticSearchService
                 .searchProduct(
-                        titleProduct, category, lowerBoundPrice, upperBoundPrice,
+                        titleProduct, category, tags,
+                        lowerBoundPrice, upperBoundPrice,
                         pageNo, pageSize, sortField, sortDir
                 );
         model.addAttribute("currentPage", pageNo);
