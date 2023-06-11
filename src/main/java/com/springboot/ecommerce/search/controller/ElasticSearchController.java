@@ -53,15 +53,17 @@ public class ElasticSearchController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("listProducts", page.getContent());
         model.addAttribute("query", titleProduct);
-        return "test-result-search";
+        return "result-search";
     }
 
 //    @GetMapping("/test-search")
 //    public String testSearch(Model model){
 //
 //        List<ProductElasticSearch> productElasticSearches = productElasticSearchRepository
-//                .getAllByFuzzyQueryTitleAndPrice(
-//                        "laptop", BigDecimal.valueOf(0), BigDecimal.valueOf(100)
+//                .getAllByFuzzyQueryTitleAndCategoriesAndTagsAndPriceIsBetween(
+//                        "laptop", new ArrayList<>(Arrays.asList("1", "3")),
+//                        new ArrayList<>(Arrays.asList("1")),
+//                        BigDecimal.valueOf(0), BigDecimal.valueOf(100)
 //                );
 //
 //        model.addAttribute("listProducts", productElasticSearches);
