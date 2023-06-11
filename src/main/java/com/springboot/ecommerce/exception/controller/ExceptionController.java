@@ -51,4 +51,10 @@ public class ExceptionController {
     public String  emptyUserMetaExceptionHandler(){
         return "redirect:/account/edit";
     }
+
+    @ExceptionHandler({ProductNotFoundException.class})
+    public String productNotFoundException(Model model){
+        model.addAttribute("productNotFoundException", "Sorry, no products found matching your selection.");
+        return "result-search";
+    }
 }

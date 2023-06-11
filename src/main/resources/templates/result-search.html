@@ -3,40 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Test result search</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="product-not-found-exception" th:if="${productNotFoundException}">
+    <p th:text="${productNotFoundException}" style="color: red"></p>
+</div>
+<div class="result-search" th:unless="${productNotFoundException}">
+    <table>
+        <tr th:each="product : ${listProducts}">
+            <td th:text="${product.getTitle()}"></td>
+            <td th:text="${product.getPrice()}"></td>
+            <td>
+                <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
+            </td>
+        </tr>
+    </table>
+
+
+    <div class="pagination">
+        <p th:text="'Total products: ' + ${totalItems}"></p>
+        <span class="page-links"></span>
+
+        <div class="pagination-button"></div>
+        <!--  <div class="button">-->
+        <!--    <br><br><br>-->
+        <!--    <a th:if="${currentPage < totalPages }" th:href="@{'/search/q=' + ${query} +  '&page=' + ${currentPage + 1}-->
+        <!--                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="next-button">Next</a>-->
+        <!--  </div>-->
+        <!--  <div  class="button">-->
+        <!--    <a th:if="${currentPage <= totalPages and currentPage > 1}" th:href="@{'/search/q=' + ${query} +  '&page=' + ${currentPage - 1}+-->
+        <!--                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="last-button">Last</a>-->
+        <!--  </div>-->
+    </div>
+
+
+    <!--MAGIC. DON'T TOUCH :)).------------------------------>
+    <script th:inline="javascript">
+        let totalPages = [[${totalPages}]];
+        let currentPage = [[${currentPage}]];
+        let query = [[${query}]];
+        let sortField = [[${sortField}]];
+        let sortDir = [[${sortDir}]];
+        let categories = [[${categories}]];
+        let tags = [[${tags}]];
+        let lowerBoundPrice = [[${lowerBoundPrice}]];
+        let upperBoundPrice = [[${upperBoundPrice}]];
+    </script>
+    <script th:src="@{/js/search-page-link.js}"></script>
+    <!--MAGIC. DON'T TOUCH :)).------------------------------>
+</div>
 <div class="test-result-search">
-  <table>
-    <tr th:each="product : ${listProducts}">
-      <td th:text="${product.getTitle()}"></td>
-      <td th:text="${product.getPrice()}"></td>
-      <td>
-        <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
-      </td>
-    </tr>
-  </table>
 
-  <div class="pagination">
-    <p th:text="'Total products: ' + ${totalItems}"></p>
-  </div>
 
-  <div>
-                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-                    <a th:if="${currentPage != i}" th:href="@{'/search/page=' + ${i} + '?q=' + ${query} +
-                    '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&category=' + ${category} } " th:text="${i}"></a>
-                    <span th:unless="${currentPage != i}" th:text="${i}"></span>
-                </span>
-  </div>
 
-<!--  <div class="button">-->
-<!--    <br><br><br>-->
-<!--    <a th:if="${currentPage < totalPages }" th:href="@{'/search/q=' + ${query} +  '&page=' + ${currentPage + 1}-->
-<!--                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="next-button">Next</a>-->
-<!--  </div>-->
-<!--  <div  class="button">-->
-<!--    <a th:if="${currentPage <= totalPages and currentPage > 1}" th:href="@{'/search/q=' + ${query} +  '&page=' + ${currentPage - 1}+-->
-<!--                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="last-button">Last</a>-->
-<!--  </div>-->
   <br><br><br>
 
 </div>

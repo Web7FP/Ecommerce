@@ -1,6 +1,7 @@
 package com.springboot.ecommerce.search.controller;
 
 
+import com.springboot.ecommerce.exception.ProductNotFoundException;
 import com.springboot.ecommerce.search.model.product.ProductElasticSearch;
 import com.springboot.ecommerce.search.model.product.ProductElasticSearchRepository;
 import com.springboot.ecommerce.search.model.product.ProductElasticSearchServiceImpl;
@@ -20,18 +21,17 @@ import java.util.List;
 public class ElasticSearchController {
 
     private final ProductElasticSearchServiceImpl productElasticSearchService;
-    private final ProductElasticSearchRepository productElasticSearchRepository;
 
 
 
 
     @GetMapping("/search")
     public String searchProduct(
-            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+            @RequestParam(value = "page", defaultValue = "1") int pageNo,
             @RequestParam("q") String titleProduct,
             @RequestParam(value = "sortField", defaultValue = "titleKeyword") String sortField,
             @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir,
-            @RequestParam(value = "category", required = false) List<String> category,
+            @RequestParam(value = "category", required = false) List<String> categories,
             @RequestParam(value = "tag", required = false) List<String> tags,
             @RequestParam(value = "upperBoundPrice", required = false) BigDecimal  upperBoundPrice,
             @RequestParam(value = "lowerBoundPrice", required = false) BigDecimal lowerBoundPrice,
@@ -40,34 +40,27 @@ public class ElasticSearchController {
         int pageSize = 4;
         Page<ProductElasticSearch> page = productElasticSearchService
                 .searchProduct(
-                        titleProduct, category, tags,
+                        titleProduct, categories, tags,
                         lowerBoundPrice, upperBoundPrice,
                         pageNo, pageSize, sortField, sortDir
                 );
+        if (page.isEmpty()){
+            throw new ProductNotFoundException();
+        }
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
-        model.addAttribute("categories", category);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("listProducts", page.getContent());
         model.addAttribute("query", titleProduct);
+        model.addAttribute("categories", categories);
+        model.addAttribute("lowerBoundPrice", lowerBoundPrice);
+        model.addAttribute("upperBoundPrice", upperBoundPrice);
+
         return "result-search";
     }
 
-//    @GetMapping("/test-search")
-//    public String testSearch(Model model){
-//
-//        List<ProductElasticSearch> productElasticSearches = productElasticSearchRepository
-//                .getAllByFuzzyQueryTitleAndCategoriesAndTagsAndPriceIsBetween(
-//                        "laptop", new ArrayList<>(Arrays.asList("1", "3")),
-//                        new ArrayList<>(Arrays.asList("1")),
-//                        BigDecimal.valueOf(0), BigDecimal.valueOf(100)
-//                );
-//
-//        model.addAttribute("listProducts", productElasticSearches);
-//        return "test-s";
-//
-//    }
+
 }
