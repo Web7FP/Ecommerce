@@ -1,48 +1,104 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Test result search</title>
-    <script
-            src="https://code.jquery.com/jquery-3.6.4.js"
-            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-            crossorigin="anonymous"></script>
-</head>
-<body>
-<div class="product-not-found-exception" th:if="${productNotFoundException}">
-    <p th:text="${productNotFoundException}" style="color: red"></p>
-</div>
-<div class="result-search" th:unless="${productNotFoundException}">
-    <table>
-        <tr th:each="product : ${listProducts}">
-            <td th:text="${product.getTitle()}"></td>
-            <td th:text="${product.getPrice()}"></td>
-            <td>
-                <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
-            </td>
-        </tr>
-    </table>
+    <head>
+        <meta charset="UTF-8">
+        <title>Test result search</title>
+        <script
+                src="https://code.jquery.com/jquery-3.6.4.js"
+                integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+                crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="product-not-found-exception" th:if="${productNotFoundException}">
+                <p th:text="${productNotFoundException}" style="color: red"></p>
+            </div>
 
-    <!--MAGIC. DON'T TOUCH :)).------------------------------>
-    <div class="pagination">
-        <p th:text="'Total products: ' + ${totalItems}"></p>
-        <span class="page-links"></span>
-        <div class="pagination-button"></div>
-    </div>
+            <div class="result-search" th:unless="${productNotFoundException}">
 
-    <script th:inline="javascript">
-        let totalPages = [[${totalPages}]];
-        let currentPage = [[${currentPage}]];
-        let query = [[${query}]];
-        let sortField = [[${sortField}]];
-        let sortDir = [[${sortDir}]];
-        let categories = [[${categories}]];
-        let tags = [[${tags}]];
-        let lowerBoundPrice = [[${lowerBoundPrice}]];
-        let upperBoundPrice = [[${upperBoundPrice}]];
-    </script>
-    <script th:src="@{/js/search-page-link.js}"></script>
-    <!--MAGIC. DON'T TOUCH :)).------------------------------>
-</div>
-</body>
+                <table>
+                    <tr th:each="product : ${listProducts}">
+                        <td th:text="${product.getTitle()}"></td>
+                        <td th:text="${product.getPrice()}"></td>
+                        <td>
+                            <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="categories-filter" th:if="${categoriesFilter != null}">
+                    <label for="category-selection">Category Filter: </label>
+                    <th:block th:each="categorySe : ${categoriesFilter}">
+                        <input type="checkbox" id="category-selection"
+                               th:value="${categorySe}"
+                               th:text="${categorySe}"
+                               onchange="updateCategoriesSelection(this)">
+                    </th:block>
+                </div>
+
+                <script th:inline="javascript">
+                    function updateCategoriesSelection(checkbox) {
+                        let searchForm = document.getElementById("search-form");
+                        let categories = searchForm.elements["categories"];
+                        if (checkbox.checked){
+                            let newCategorySelect = document.createElement("input");
+                            newCategorySelect.type= "hidden";
+                            newCategorySelect.name = "categories";
+                            newCategorySelect.value = checkbox.value;
+                            searchForm.appendChild(newCategorySelect);
+                        } else {
+                            for (let i = 0; i < categories.length; i++){
+                                if (categories[i].value === checkbox.value){
+                                    searchForm.removeChild(categories[i]);
+                                    break;
+                                }
+                            }
+                        }
+                        searchForm.submit();
+                    }
+                </script>
+
+                <form id="search-form" method="get" th:action="@{/search}">
+                    <input type="hidden" name="q" th:value="${query}">
+                    <input type="hidden" name="categories" th:value="${categories}">
+                </form>
+
+
+                <div class="tags-filter" th:if="${tagsFilter != null}">
+                    <p>Tag filter: </p>
+                    <th:block th:each="tag : ${tagsFilter}">
+                        <span th:text="${tag}"></span>
+                    </th:block>
+                </div>
+
+                <div class="price-selections" th:if="${priceSelections != null}">
+                    <p>Price Selections: </p>
+                    <th:block th:each="priceSe: ${priceSelections}">
+                        <span th:text="${priceSe}"></span>
+                    </th:block>
+                </div>
+
+                <!--MAGIC. DON'T TOUCH :)).------------------------------>
+                <div class="pagination">
+                    <p th:text="'Total products: ' + ${totalItems}"></p>
+                    <span class="page-links"></span>
+                    <div class="pagination-button"></div>
+                </div>
+
+                <script th:inline="javascript">
+                    let totalPages = [[${totalPages}]];
+                    let currentPage = [[${currentPage}]];
+                    let query = [[${query}]];
+                    let sortField = [[${sortField}]];
+                    let sortDir = [[${sortDir}]];
+                    let categories = [[${categories}]];
+                    let tags = [[${tags}]];
+                    let lowerBoundPrice = [[${lowerBoundPrice}]];
+                    let upperBoundPrice = [[${upperBoundPrice}]];
+                </script>
+                <script th:src="@{/js/search-page-link.js}"></script>
+                <!--MAGIC. DON'T TOUCH :)).------------------------------>
+            </div>
+        </div>
+    </body>
 </html>

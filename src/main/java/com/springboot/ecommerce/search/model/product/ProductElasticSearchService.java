@@ -1,10 +1,15 @@
 package com.springboot.ecommerce.search.model.product;
 
+import com.springboot.ecommerce.model.category.Category;
 import com.springboot.ecommerce.model.product.Product;
+import com.springboot.ecommerce.model.tag.Tag;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 public interface ProductElasticSearchService {
@@ -43,5 +48,19 @@ public interface ProductElasticSearchService {
     Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTags(String title, List<String> categories, List<String> tags,Pageable pageable);
 
     Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(String title, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable);
+
+    List<String> getAllCategoriesFromResultSearch(Page<ProductElasticSearch> productElasticSearches);
+
+    List<String> getAllTagsFromResultSearch(Page<ProductElasticSearch> productElasticSearches);
+
+    List<BigDecimal> getPricesFromResultSearch(Page<ProductElasticSearch> productElasticSearches);
+
+    void setFilterAttributeSession(HttpSession session, Page<ProductElasticSearch> productElasticSearches, String keyword);
+
+    List<String> getCategoriesFilterFromSession(HttpSession session);
+
+    List<String> getTagsFilterFromSession(HttpSession session);
+
+    List<BigDecimal> getPriceSelectionsFromSession(HttpSession session);
 
 }

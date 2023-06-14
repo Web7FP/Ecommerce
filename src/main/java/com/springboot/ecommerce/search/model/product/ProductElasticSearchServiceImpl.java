@@ -2,8 +2,11 @@ package com.springboot.ecommerce.search.model.product;
 
 
 import com.springboot.ecommerce.model.category.Category;
+import com.springboot.ecommerce.model.category.CategoryServiceImpl;
 import com.springboot.ecommerce.model.product.Product;
 import com.springboot.ecommerce.model.tag.Tag;
+import com.springboot.ecommerce.model.tag.TagServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,13 +15,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductElasticSearchServiceImpl implements ProductElasticSearchService{
+
+//    private final CategoryServiceImpl categoryService;
+//    private final TagServiceImpl tagService;
 
     private final ProductElasticSearchRepository productElasticSearchRepository;
 
@@ -41,10 +46,10 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         productElasticSearch.setCategories(new ArrayList<>());
         productElasticSearch.setTags(new ArrayList<>());
         for (Category category: product.getCategories()) {
-            productElasticSearch.getCategories().add(category.getId().toString());
+            productElasticSearch.getCategories().add(category.getTitle());
         }
         for (Tag tag : product.getTags()){
-            productElasticSearch.getTags().add(tag.getId().toString());
+            productElasticSearch.getTags().add(tag.getTitle());
         }
 
         this.save(productElasticSearch);
@@ -81,10 +86,10 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         List<String> categoriesTitle = new ArrayList<>();
         List<String> tagsTitle = new ArrayList<>();
         for (Category category: product.getCategories()) {
-            categoriesTitle.add(category.getId().toString());
+            categoriesTitle.add(category.getTitle());
         }
         for (Tag tag : product.getTags()){
-            tagsTitle.add(tag.getId().toString());
+            tagsTitle.add(tag.getTitle());
         }
         productElasticSearch.setCategories(categoriesTitle);
         productElasticSearch.setTags(tagsTitle);
@@ -197,6 +202,62 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
             return this.getAllByTitleAndCategoriesAndTags(title,categories, tags, pageable);
         }
         return this.getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(title, categories, tags, lowerBoundPrice, upperBoundPrice, pageable);
+    }
+
+
+    @Override
+    public List<String> getAllCategoriesFromResultSearch(Page<ProductElasticSearch> productElasticSearches) {
+        return productElasticSearches.stream()
+                .flatMap(productElasticSearch -> productElasticSearch.getCategories().stream())
+                .distinct().toList();
+    }
+
+    @Override
+    public List<String> getAllTagsFromResultSearch(Page<ProductElasticSearch> productElasticSearches) {
+        return productElasticSearches.stream()
+                .flatMap(productElasticSearch -> productElasticSearch.getTags().stream())
+                .distinct().toList();
+    }
+
+    @Override
+    public List<BigDecimal> getPricesFromResultSearch(Page<ProductElasticSearch> productElasticSearches) {
+        List<BigDecimal> prices = productElasticSearches.stream()
+                .map(ProductElasticSearch::getPrice)
+                .toList();
+        BigDecimal minPrice = Collections.min(prices);
+        BigDecimal maxPrice = Collections.max(prices);
+        BigDecimal stepPrice = BigDecimal.valueOf(150000);
+        List<BigDecimal> priceSelections = new ArrayList<>();
+        for (BigDecimal i = minPrice; i.compareTo(maxPrice) <= 0; i = i.add(stepPrice)){
+            priceSelections.add(i);
+        }
+        return priceSelections;
+    }
+
+    @Override
+    public void setFilterAttributeSession(HttpSession session, Page<ProductElasticSearch> productElasticSearches, String keyword) {
+        String oldKeyword = (String) session.getAttribute("keywordSearch");
+        if (!keyword.equals(oldKeyword)){
+            session.setAttribute("keywordSearch", keyword);
+            session.setAttribute("categoriesFilter", this.getAllCategoriesFromResultSearch(productElasticSearches));
+            session.setAttribute("tagsFilter", this.getAllTagsFromResultSearch(productElasticSearches));
+            session.setAttribute("priceFilter", this.getPricesFromResultSearch(productElasticSearches));
+        }
+    }
+
+    @Override
+    public List<String> getCategoriesFilterFromSession(HttpSession session) {
+        return (List<String>) session.getAttribute("categoriesFilter");
+    }
+
+    @Override
+    public List<String> getTagsFilterFromSession(HttpSession session) {
+        return (List<String>) session.getAttribute("tagsFilter");
+    }
+
+    @Override
+    public List<BigDecimal> getPriceSelectionsFromSession(HttpSession session) {
+        return (List<BigDecimal>) session.getAttribute("priceFilter");
     }
 }
 
