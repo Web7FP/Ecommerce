@@ -60,7 +60,8 @@ public class ElasticSearchController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("listProducts", page.getContent());
         model.addAttribute("query", keyword);
-        model.addAttribute("categories", categories);
+        model.addAttribute("selectedCategories", categories);
+        model.addAttribute("selectedTags", tags);
         model.addAttribute("lowerBoundPrice", lowerBoundPrice);
         model.addAttribute("upperBoundPrice", upperBoundPrice);
 

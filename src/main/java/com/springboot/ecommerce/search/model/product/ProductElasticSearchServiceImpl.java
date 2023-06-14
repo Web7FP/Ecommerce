@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductElasticSearchServiceImpl implements ProductElasticSearchService{
 
-//    private final CategoryServiceImpl categoryService;
-//    private final TagServiceImpl tagService;
 
     private final ProductElasticSearchRepository productElasticSearchRepository;
 
@@ -46,10 +44,10 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         productElasticSearch.setCategories(new ArrayList<>());
         productElasticSearch.setTags(new ArrayList<>());
         for (Category category: product.getCategories()) {
-            productElasticSearch.getCategories().add(category.getTitle());
+            productElasticSearch.getCategories().add(category.getId().toString());
         }
         for (Tag tag : product.getTags()){
-            productElasticSearch.getTags().add(tag.getTitle());
+            productElasticSearch.getTags().add(tag.getId().toString());
         }
 
         this.save(productElasticSearch);
@@ -86,10 +84,10 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         List<String> categoriesTitle = new ArrayList<>();
         List<String> tagsTitle = new ArrayList<>();
         for (Category category: product.getCategories()) {
-            categoriesTitle.add(category.getTitle());
+            categoriesTitle.add(category.getId().toString());
         }
         for (Tag tag : product.getTags()){
-            tagsTitle.add(tag.getTitle());
+            tagsTitle.add(tag.getId().toString());
         }
         productElasticSearch.setCategories(categoriesTitle);
         productElasticSearch.setTags(tagsTitle);

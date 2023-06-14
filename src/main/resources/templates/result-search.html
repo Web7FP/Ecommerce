@@ -32,44 +32,70 @@
                         <input type="checkbox" id="category-selection"
                                th:value="${categorySe}"
                                th:text="${categorySe}"
+                               th:checked="${selectedCategories != null ? #lists.contains(selectedCategories, categorySe) : false}"
                                onchange="updateCategoriesSelection(this)">
                     </th:block>
                 </div>
 
+                <div class="tags-filter" th:if="${tagsFilter != null}">
+                    <label for="tag-selection">Tag Filter: </label>
+                    <th:block th:each="tagSe : ${tagsFilter}">
+                        <input type="checkbox" id="tag-selection"
+                               th:value="${tagSe}"
+                               th:text="${tagSe}"
+                               th:checked="${selectedTags != null ? #lists.contains(selectedTags, tagSe) : false}"
+                               onchange="updateTagsSelection(this)">
+                    </th:block>
+                </div>
+
+
+
                 <script th:inline="javascript">
+                    let selectedCategories = [[${selectedCategories}]];
+                    let selectedTags = [[${selectedTags}]];
                     function updateCategoriesSelection(checkbox) {
-                        let searchForm = document.getElementById("search-form");
-                        let categories = searchForm.elements["categories"];
-                        if (checkbox.checked){
-                            let newCategorySelect = document.createElement("input");
-                            newCategorySelect.type= "hidden";
-                            newCategorySelect.name = "categories";
-                            newCategorySelect.value = checkbox.value;
-                            searchForm.appendChild(newCategorySelect);
-                        } else {
-                            for (let i = 0; i < categories.length; i++){
-                                if (categories[i].value === checkbox.value){
-                                    searchForm.removeChild(categories[i]);
-                                    break;
-                                }
-                            }
+                        if (selectedCategories == null){
+                            selectedCategories = [];
                         }
-                        searchForm.submit();
+                        let categoryValue = checkbox.value;
+                        let index = selectedCategories.indexOf(categoryValue);
+                        if (checkbox.checked && index === -1){
+                            selectedCategories.push(categoryValue);
+                        } else if (!checkbox.checked && index !== -1){
+                            selectedCategories.splice(index, 1);
+                        }
+
+                        let categoriesInput = document.getElementById('categories-selection-input');
+                        categoriesInput.value = selectedCategories.join(',');
+                        document.getElementById('search-form').submit();
+                    }
+
+                    function updateTagsSelection(checkbox){
+                        if (selectedTags == null){
+                            selectedTags = [];
+                        }
+                        let tagValue = checkbox.value;
+                        let index = selectedTags.indexOf(tagValue);
+                        if (checkbox.checked && index === -1){
+                            selectedTags.push(tagValue);
+                        } else if (!checkbox.checked && index !== -1){
+                            selectedTags.splice(index, 1);
+                        }
+
+                        let tagsInput = document.getElementById('tags-selection-input');
+                        tagsInput.value = selectedTags.join(',');
+                        document.getElementById('search-form').submit();
                     }
                 </script>
 
                 <form id="search-form" method="get" th:action="@{/search}">
                     <input type="hidden" name="q" th:value="${query}">
-                    <input type="hidden" name="categories" th:value="${categories}">
+                    <input type="hidden" name="category" id="categories-selection-input">
+                    <input type="hidden" name="tag" id="tags-selection-input">
                 </form>
 
 
-                <div class="tags-filter" th:if="${tagsFilter != null}">
-                    <p>Tag filter: </p>
-                    <th:block th:each="tag : ${tagsFilter}">
-                        <span th:text="${tag}"></span>
-                    </th:block>
-                </div>
+
 
                 <div class="price-selections" th:if="${priceSelections != null}">
                     <p>Price Selections: </p>
