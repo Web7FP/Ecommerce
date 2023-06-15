@@ -217,20 +217,6 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
                 .distinct().toList();
     }
 
-    @Override
-    public List<BigDecimal> getPricesFromResultSearch(Page<ProductElasticSearch> productElasticSearches) {
-        List<BigDecimal> prices = productElasticSearches.stream()
-                .map(ProductElasticSearch::getPrice)
-                .toList();
-        BigDecimal minPrice = Collections.min(prices);
-        BigDecimal maxPrice = Collections.max(prices);
-        BigDecimal stepPrice = BigDecimal.valueOf(150000);
-        List<BigDecimal> priceSelections = new ArrayList<>();
-        for (BigDecimal i = minPrice; i.compareTo(maxPrice) <= 0; i = i.add(stepPrice)){
-            priceSelections.add(i);
-        }
-        return priceSelections;
-    }
 
     @Override
     public void setFilterAttributeSession(HttpSession session, Page<ProductElasticSearch> productElasticSearches, String keyword) {
@@ -239,7 +225,6 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
             session.setAttribute("keywordSearch", keyword);
             session.setAttribute("categoriesFilter", this.getAllCategoriesFromResultSearch(productElasticSearches));
             session.setAttribute("tagsFilter", this.getAllTagsFromResultSearch(productElasticSearches));
-            session.setAttribute("priceFilter", this.getPricesFromResultSearch(productElasticSearches));
         }
     }
 
@@ -253,9 +238,5 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         return (List<String>) session.getAttribute("tagsFilter");
     }
 
-    @Override
-    public List<BigDecimal> getPriceSelectionsFromSession(HttpSession session) {
-        return (List<BigDecimal>) session.getAttribute("priceFilter");
-    }
 }
 

@@ -26,8 +26,6 @@ public class ElasticSearchController {
     private final ProductElasticSearchServiceImpl productElasticSearchService;
 
 
-
-
     @GetMapping("/search")
     public String searchProduct(
             @RequestParam(value = "page", defaultValue = "1") int pageNo,
@@ -67,7 +65,6 @@ public class ElasticSearchController {
 
         model.addAttribute("categoriesFilter", productElasticSearchService.getCategoriesFilterFromSession(session));
         model.addAttribute("tagsFilter", productElasticSearchService.getTagsFilterFromSession(session));
-        model.addAttribute("priceSelections", productElasticSearchService.getPriceSelectionsFromSession(session));
 
         return "result-search";
     }

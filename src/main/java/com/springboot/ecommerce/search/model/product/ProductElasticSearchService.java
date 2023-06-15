@@ -53,14 +53,11 @@ public interface ProductElasticSearchService {
 
     List<String> getAllTagsFromResultSearch(Page<ProductElasticSearch> productElasticSearches);
 
-    List<BigDecimal> getPricesFromResultSearch(Page<ProductElasticSearch> productElasticSearches);
-
     void setFilterAttributeSession(HttpSession session, Page<ProductElasticSearch> productElasticSearches, String keyword);
 
     List<String> getCategoriesFilterFromSession(HttpSession session);
 
     List<String> getTagsFilterFromSession(HttpSession session);
 
-    List<BigDecimal> getPriceSelectionsFromSession(HttpSession session);
 
 }

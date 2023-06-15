@@ -10,12 +10,21 @@
     </head>
     <body>
         <div class="container">
+
+            <div class="search-with-only-keyword">
+                <form th:action="@{/search}" method="get">
+                    <label for="search-product">Search Product: </label>
+                    <input id="search-product" type="text" name="q">
+                    <input type="submit" value="search">
+                </form>
+            </div>
+
             <div class="product-not-found-exception" th:if="${productNotFoundException}">
                 <p th:text="${productNotFoundException}" style="color: red"></p>
             </div>
 
             <div class="result-search" th:unless="${productNotFoundException}">
-
+                <!--MAGIC. DON'T TOUCH :)).------------------------------>
                 <table>
                     <tr th:each="product : ${listProducts}">
                         <td th:text="${product.getTitle()}"></td>
@@ -48,78 +57,44 @@
                     </th:block>
                 </div>
 
+                <div class="price-filter">
+                    <form class="price-input">
+                        <label for="lower-bound-price-selection">Min price:</label>
+                        <input type="number" id="lower-bound-price-selection"><br><br>
+                        <label for="upper-bound-price-selection">Max price: </label>
+                        <input type="number"  id="upper-bound-price-selection" >
+                        <input type="button" value="Search" onclick="updatePriceSelection()">
+                    </form>
+                </div>
 
-
+                <div class="sort-button">
+                    <input type="button" value="Sort ASC name" onclick="sortNameASC()"><br><br>
+                    <input type="button" value="Sort DESC name" onclick="sortNameDESC()"><br><br>
+                    <input type="button" value="Sort ASC price" onclick="sortPriceASC()"><br><br>
+                    <input type="button" value="Sort DESC price" onclick="sortPriceDESC()">
+                </div>
+                <!--MAGIC. DON'T TOUCH :)).------------------------------>
                 <script th:inline="javascript">
                     let selectedCategories = [[${selectedCategories}]];
                     let selectedTags = [[${selectedTags}]];
-                    function updateCategoriesSelection(checkbox) {
-                        if (selectedCategories == null){
-                            selectedCategories = [];
-                        }
-                        let categoryValue = checkbox.value;
-                        let index = selectedCategories.indexOf(categoryValue);
-                        if (checkbox.checked && index === -1){
-                            selectedCategories.push(categoryValue);
-                        } else if (!checkbox.checked && index !== -1){
-                            selectedCategories.splice(index, 1);
-                        }
-                        updateSearchForm();
-                    }
-
-                    function updateTagsSelection(checkbox){
-                        if (selectedTags == null){
-                            selectedTags = [];
-                        }
-                        let tagValue = checkbox.value;
-                        let index = selectedTags.indexOf(tagValue);
-                        if (checkbox.checked && index === -1){
-                            selectedTags.push(tagValue);
-                        } else if (!checkbox.checked && index !== -1){
-                            selectedTags.splice(index, 1);
-                        }
-                        updateSearchForm();
-                    }
-
-                     function updateSearchForm() {
-                        let categoriesInput = document.getElementById('categories-selection-input');
-                        let tagsInput = document.getElementById('tags-selection-input');
-
-                        if (selectedCategories != null) {
-                            if (selectedCategories.length !== 0) {
-                                categoriesInput.value = selectedCategories.join(',');
-                                categoriesInput.name = 'category';
-                            } else {
-                                categoriesInput.removeAttribute("name");
-                            }
-                        }
-                        if (selectedTags != null){
-                            if (selectedTags.length !== 0){
-                                tagsInput.value = selectedTags.join(',');
-                                tagsInput.name = 'tag';
-                            } else {
-                                tagsInput.removeAttribute("name");
-                            }
-                        }
-                         document.getElementById('search-form').submit();
-                    }
+                    let sortFieldSelection = null;
+                    let sortDirectionSelection = null;
                 </script>
+                <script th:src="@{/js/filter-search.js}"></script>
 
                 <form id="search-form" method="get" th:action="@{/search}">
                     <input type="hidden" name="q" th:value="${query}">
-                    <input type="hidden"  id="categories-selection-input">
-                    <input type="hidden"  id="tags-selection-input">
+                    <input type="hidden" id="categories-selection-input">
+                    <input type="hidden" id="tags-selection-input">
+                    <input type="hidden" id="lower-bound-price-input">
+                    <input type="hidden" id="upper-bound-price-input">
+                    <input type="hidden" id="sort-field-input">
+                    <input type="hidden" id="sort-direction-input">
                 </form>
+                <!--MAGIC. DON'T TOUCH :)).------------------------------>
 
 
 
-
-                <div class="price-selections" th:if="${priceSelections != null}">
-                    <p>Price Selections: </p>
-                    <th:block th:each="priceSe: ${priceSelections}">
-                        <span th:text="${priceSe}"></span>
-                    </th:block>
-                </div>
 
                 <!--MAGIC. DON'T TOUCH :)).------------------------------>
                 <div class="pagination">
@@ -139,7 +114,7 @@
                     let lowerBoundPrice = [[${lowerBoundPrice}]];
                     let upperBoundPrice = [[${upperBoundPrice}]];
                 </script>
-                <script th:src="@{/js/search-page-link.js}"></script>
+                <script th:src="@{/js/pagination-result-search.js}"></script>
                 <!--MAGIC. DON'T TOUCH :)).------------------------------>
             </div>
         </div>
