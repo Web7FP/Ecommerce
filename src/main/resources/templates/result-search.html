@@ -64,10 +64,7 @@
                         } else if (!checkbox.checked && index !== -1){
                             selectedCategories.splice(index, 1);
                         }
-
-                        let categoriesInput = document.getElementById('categories-selection-input');
-                        categoriesInput.value = selectedCategories.join(',');
-                        document.getElementById('search-form').submit();
+                        updateSearchForm();
                     }
 
                     function updateTagsSelection(checkbox){
@@ -81,17 +78,37 @@
                         } else if (!checkbox.checked && index !== -1){
                             selectedTags.splice(index, 1);
                         }
+                        updateSearchForm();
+                    }
 
+                     function updateSearchForm() {
+                        let categoriesInput = document.getElementById('categories-selection-input');
                         let tagsInput = document.getElementById('tags-selection-input');
-                        tagsInput.value = selectedTags.join(',');
-                        document.getElementById('search-form').submit();
+
+                        if (selectedCategories != null) {
+                            if (selectedCategories.length !== 0) {
+                                categoriesInput.value = selectedCategories.join(',');
+                                categoriesInput.name = 'category';
+                            } else {
+                                categoriesInput.removeAttribute("name");
+                            }
+                        }
+                        if (selectedTags != null){
+                            if (selectedTags.length !== 0){
+                                tagsInput.value = selectedTags.join(',');
+                                tagsInput.name = 'tag';
+                            } else {
+                                tagsInput.removeAttribute("name");
+                            }
+                        }
+                         document.getElementById('search-form').submit();
                     }
                 </script>
 
                 <form id="search-form" method="get" th:action="@{/search}">
                     <input type="hidden" name="q" th:value="${query}">
-                    <input type="hidden" name="category" id="categories-selection-input">
-                    <input type="hidden" name="tag" id="tags-selection-input">
+                    <input type="hidden"  id="categories-selection-input">
+                    <input type="hidden"  id="tags-selection-input">
                 </form>
 
 
