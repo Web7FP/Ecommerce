@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>My account</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/account-information.css}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="navbar">
+    <div class="logo">
+        <a th:action="@{/home}"><img src="images/logo.png" alt="logo" width="125px"></a>
+    </div>
+    <nav>
+        <ul id="MenuItems">
+            <li><a th:href="@{/home}">Home</a></li>
+
+            <li><a href="">About</a></li>
+            <li><a href="">Contact</a></li>
+            <li><a th:href="@{/account/edit}">Account</a></li>
+        </ul>
+    </nav>
+    <a th:href="@{/cart}"><img th:src="@{/image/cart.png}" width="30px" height="30px"></a>
+</div>
+
 <div class="container">
     <div class="edit-account-information">
         <form method="post" th:action="@{/account/save-user-meta}" th:object="${userMeta}">
@@ -24,8 +42,8 @@
                 <input type="text" id="last-name" th:field="*{lastName}" required><br><br>
             </div>
             <div class="birthday">
-                <label for="birthday">Birthday: </label>
-                <input type="date" th:field="*{birthday}" id="birthday"><br><br>
+                <label for="Date of birth">Date of birth: </label>
+                <input type="date" th:field="*{birthday}" id="Date of birth"><br><br>
             </div>
             <div class="group-mobile">
                 <label for="mobile">Mobile: </label>
@@ -49,7 +67,6 @@
 
             <input type="submit" value="SAVE">
         </form>
-
 
         <br><br>
         <form th:action="@{/home}">

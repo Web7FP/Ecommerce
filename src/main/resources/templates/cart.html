@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Cart</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/cart.css}">
     <style>
         table {border-collapse: collapse;width: 100%;}
         th, td {text-align: left;padding: 8px;}
@@ -32,7 +33,23 @@
 
 </head>
 <body>
-<h1>Cart</h1>
+<div class="navbar">
+    <div class="logo">
+        <a th:href="@{home}"><img src="images/logo.png" alt="logo" width="125px"></a>
+    </div>
+    <nav>
+        <ul id="MenuItems">
+            <li><a th:href="@{home}">Home</a></li>
+            <li><a th:href="@{/product/list}">Products</a></li>
+            <li><a href="">About</a></li>
+            <li><a href="">Contact</a></li>
+            <li><a th:href="@{/account/edit}">Account</a></li>
+        </ul>
+    </nav>
+    <a href="cart.html"><img th:src="@{/image/cart.png}" width="30px" height="30px"></a>
+</div>
+
+<h1>Products</h1>
 <div class="container">
 
     <div class="empty-cart-exception" th:if="${emptyCartException}">
@@ -41,51 +58,57 @@
 
     <div class="shopping-cart" th:unless="${emptyCartException}">
         <table>
-            <thead>
-            <tr></tr>
-            </thead>
-            <tbody>
-            <tr th:each="cartItem : ${cart.cartItems}">
+            <div class="small-container cart-page">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cartItem : ${cart.cartItems}">
 
-                <th:block th:with="product=${cartItem.product}" >
-                    <td th:text="${product.title}"></td>
-                    <td th:text="${product.price}"></td>
-                </th:block>
-                <td>
-                    <th:block>
-                        <div class="custom-number-input h-10 w-32">
-
-                            <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                                <button data-action="decrement" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
-                                    <span class="m-auto text-2xl font-thin">−</span>
-                                </button>
-                                <input type="number"
-                                       id="custom-input-number"
-                                       name="custom-input-number"
-                                       th:data-cart-item-id="${cartItem.getId()}"
-                                       th:maxQuantity="${cartItem.product.quantity}"
-                                       th:value="${cartItem.getQuantity()}">
-                                <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
-                                    <span class="m-auto text-2xl font-thin">+</span>
-                                </button>
-                            </div>
-                        </div>
+                    <th:block th:with="product=${cartItem.product}" >
+                        <td th:text="${product.title}"></td>
+                        <td th:text="${product.price}"></td>
                     </th:block>
-                </td>
-                <td>
-                    <p th:id="'price-cart-item-'+${cartItem.id}"
-                       th:text="${cartItem.quantity}*${cartItem.product.price}"
-                       th:data-price-product="${cartItem.product.price}"></p>
-                </td>
-                <td>
-                    <a th:href="@{/cart/delete-cart-item/{cartItemId}(cartItemId=${cartItem.getId()})}">
-                        <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt="deleted">
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    <td>
+                        <th:block>
+                            <div class="custom-number-input h-10 w-32">
 
+                                <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                                    <button data-action="decrement" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                                        <span class="m-auto text-2xl font-thin">−</span>
+                                    </button>
+                                    <input type="number"
+                                           id="custom-input-number"
+                                           name="custom-input-number"
+                                           th:data-cart-item-id="${cartItem.getId()}"
+                                           th:maxQuantity="${cartItem.product.quantity}"
+                                           th:value="${cartItem.getQuantity()}">
+                                    <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                                        <span class="m-auto text-2xl font-thin">+</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </th:block>
+                    </td>
+                    <td>
+                        <p th:id="'price-cart-item-'+${cartItem.id}"
+                           th:text="${cartItem.quantity}*${cartItem.product.price}"
+                           th:data-price-product="${cartItem.product.price}"></p>
+                    </td>
+                    <td>
+                        <a th:href="@{/cart/delete-cart-item/{cartItemId}(cartItemId=${cartItem.getId()})}">
+                            <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt="deleted">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+           </div>
+        </table>
 
         <p id="sub-total-price-cartItem" th:text="'SubTotal: ' + ${cart.subTotal}"></p>
 

@@ -3,46 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
     <style>
-        /* Add CSS styles for the admin panel */
-        /* Example: */
-        body {
-            background-color: #f2f2f2;
-            font-family: Arial, sans-serif;
-            text-align: center; /* Add this line to center the h1 element */
-        }
-
-        .button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 12px 24px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-        .button:hover {
-            background-color: #3e8e41;
-        }
-
-        .button:active {
-            background-color: #3e8e41;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
+        .user-logo {
+            width: 30px;
+            height: 30px;
         }
     </style>
 </head>
 <body>
-    <h1>Admin Panel</h1>
-    <div>
-        <a class="button" th:href="@{/category-management/categories-list}">Category management</a><br>
-        <a class="button" th:href="@{/tag-management/tags-list}">Tag management</a><br>
-        <a class="button" th:href="@{/product-management/products-list}">Product management</a><br>
-        <a class="button" th:href="@{/order-management}">Order management</a>
+<header>
+    <div class="logo-container">
+        <div class="dropdown">
+            <img th:src="@{/image/user.png}" alt="User Logo" class="user-logo dropdown-btn">
+            <div class="dropdown-content">
+                <a th:href="@{/account/edit}">Profile</a>
+                <a href="/logout">Log Out</a>
+            </div>
+        </div>
     </div>
+</header>
+
+<h1>ADMIN PANEL</h1>
+<div class="button-container">
+    <a class="button" th:href="@{/category-management/categories-list}">Category Management</a>
+    <a class="button" th:href="@{/tag-management/tags-list}">Tag Management</a>
+    <a class="button" th:href="@{/product-management/products-list}">Product Management</a>
+    <a class="button" th:href="@{/order-management}">Order Management</a>
+</div>
 </body>
 </html>
