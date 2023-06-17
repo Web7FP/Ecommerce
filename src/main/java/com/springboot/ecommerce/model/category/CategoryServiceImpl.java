@@ -4,6 +4,10 @@ package com.springboot.ecommerce.model.category;
 import com.springboot.ecommerce.model.product.Product;
 import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,7 +58,23 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
+    public Pageable findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
+        return PageRequest.of(pageNo -1, pageSize, sort);
+    }
+
+    @Override
     public List<Long> getAllSubCategoriesOf(Long categoryParentId) {
         return categoryRepository.getAllSubCategoriesOf(categoryParentId);
+    }
+
+
+    @Override
+    public Page<Category> getAllCategoriesWithPaginationAndSort(int pageNo, int pageSize, String sortField, String sortDirection) {
+        return categoryRepository.findAll(
+                this.findPaginated(pageNo, pageSize, sortField, sortDirection)
+        );
     }
 }

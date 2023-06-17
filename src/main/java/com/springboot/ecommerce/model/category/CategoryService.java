@@ -1,5 +1,8 @@
 package com.springboot.ecommerce.model.category;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface CategoryService {
@@ -14,4 +17,8 @@ public interface CategoryService {
     List<Category> getAllCategoriesExcept(Long categoryId);
 
     List<Long> getAllSubCategoriesOf(Long categoryParentId);
+
+    Pageable findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+
+    Page<Category> getAllCategoriesWithPaginationAndSort(int pageNo, int pageSize, String sortField, String sortDirection);
 }
