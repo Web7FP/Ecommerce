@@ -39,8 +39,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(int pageNo, int pageSize, String sortField, String sortDirection) {
+        return productRepository.findAll(
+                this.findPaginated(pageNo, pageSize, sortField, sortDirection)
+        );
+
     }
 
     @Override
@@ -76,15 +79,14 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Page<Product> findPaginated(int pageNo,
+    public Pageable findPaginated(int pageNo,
                                        int pageSize,
                                        String sortField,
                                        String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
                 ? Sort.by(sortField).ascending()
                 : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return this.productRepository.findAll(pageable);
+        return  PageRequest.of(pageNo - 1, pageSize, sort);
     }
 
     @Override
@@ -98,8 +100,11 @@ public class ProductServiceImpl implements ProductService{
         return productRepository.findAllByCategories_IdAndTags_Id(categoryId, tagId);
     }
 
+
     @Override
-    public void indexAll() {
-        return;
+    public Page<Product> getAllProductByCategoryName(String categoryName, int pageNo, int pageSize, String sortField, String sortDirection) {
+        return productRepository.getAllProductsByCategoryName(
+                categoryName,
+                this.findPaginated(pageNo, pageSize, sortField, sortDirection));
     }
 }

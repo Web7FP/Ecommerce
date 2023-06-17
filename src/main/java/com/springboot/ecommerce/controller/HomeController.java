@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-public class TemplateController {
+public class HomeController {
     private final ProductServiceImpl productService;
     private final UserService userService;
     private final CartServiceImpl cartService;
@@ -70,8 +70,10 @@ public class TemplateController {
             @RequestParam("sortDir") String sortDir,
             Model model
     ){
-        int pageSize = 10;
-        Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        int pageSize = 5;
+        Page<Product> page = productService.getAllProducts(pageNo, pageSize, sortField, sortDir);
+
+
         model.addAttribute("listProducts", page.getContent());
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
@@ -79,6 +81,16 @@ public class TemplateController {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("phoneProducts",
+                productService.getAllProductByCategoryName(
+                        "Smart Phone",
+                        1,10,"title", "asc")
+        );
+        model.addAttribute("laptopProducts",
+                productService.getAllProductByCategoryName(
+                        "Laptop",
+                        1,10,"title", "asc")
+        );
         return "home";
     }
 

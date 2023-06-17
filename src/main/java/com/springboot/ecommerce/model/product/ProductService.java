@@ -1,12 +1,13 @@
 package com.springboot.ecommerce.model.product;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ProductService {
     void saveNewProduct(Product product);
-    List<Product> getAllProducts();
+    Page<Product> getAllProducts(int pageNo, int pageSize, String sortField, String sortDirection);
 
     void deleteProduct(Integer id);
 
@@ -22,10 +23,9 @@ public interface ProductService {
 
     void saveProduct(Product product);
 
-    Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+    Pageable findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 
     Product findBySlugProduct (String slugProduct);
 
-    void indexAll();
-
+    Page<Product> getAllProductByCategoryName(String categoryName, int pageNo, int pageSize, String sortField, String sortDirection);
 }
