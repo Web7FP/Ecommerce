@@ -10,19 +10,20 @@
 <div class="navbar">
     <div class="logo">
         <a th:href="@{/home}">
-            <img th:src="@{/image/logo.png}" alt="store">
+            <img th:src="@{/img/logo.png}" alt="store">
         </a>
     </div>
     <nav>
         <ul id="MenuItems">
             <li><a th:href="@{/home}">Home</a></li>
-            <li><a href="">About</a></li>
+            <li><a th:href="@{/order/history}">Order History</a></li>
             <li><a href="">Contact</a></li>
-            <li><a th:href="@{/account/edit}">Account</a></li>
+            <li><a th:href="@{/account/edit}"> My Account</a></li>
+            <li><a th:href="@{/logout}" style="color: rgb(211, 38, 38);">Logout</a></li>
         </ul>
     </nav>
     <a th:href="@{/cart}">
-        <img th:src="@{/image/cart.png}" width="30px" height="30px">
+        <img th:src="@{/img/cart.png}" width="30px" height="30px">
     </a>
 </div>
 

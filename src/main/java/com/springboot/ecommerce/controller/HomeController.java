@@ -72,6 +72,8 @@ public class HomeController {
     ){
         int pageSize = 5;
         Page<Product> page = productService.getAllProducts(pageNo, pageSize, sortField, sortDir);
+
+
         model.addAttribute("listProducts", page.getContent());
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());

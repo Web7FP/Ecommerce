@@ -9,6 +9,7 @@ body {
 }
 
 .navbar {
+
     display: flex;
     align-items: center;
     padding: 20px;
@@ -18,38 +19,24 @@ body {
     width: 125px;
 }
 
-nav {
+nav{
     flex: 1;
     text-align: right;
 }
-
-nav ul {
+nav ul{
+    display: inline-block;
     list-style-type: none;
 }
-
-nav ul li {
+nav ul li{
     display: inline-block;
     margin-right: 20px;
 }
-
-a {
+a{
     text-decoration: none;
     color: #555;
 }
-
-.container {
-    max-width: 1300px;
-    margin: auto;
-    padding-left: 25px;
-    padding-right: 25px;
-}
-
-.edit-account-information {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+p{
+    color: #555;
 }
 
 .group-first-name,
@@ -98,7 +85,8 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to bottom, #ffffff, #FEB899);
+    background-image: linear-gradient(to bottom, #fff, #ffd6d6);
+    background-size: cover;
 }
 
 .edit-account-information {
