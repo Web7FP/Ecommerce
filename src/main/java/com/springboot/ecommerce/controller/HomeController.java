@@ -84,12 +84,12 @@ public class HomeController {
         model.addAttribute("phoneProducts",
                 productService.getAllProductByCategoryName(
                         "Smart Phone",
-                        1,10,"title", "asc")
+                        1,10,"title", "asc").getContent()
         );
         model.addAttribute("laptopProducts",
                 productService.getAllProductByCategoryName(
                         "Laptop",
-                        1,10,"title", "asc")
+                        1,10,"title", "asc").getContent()
         );
         return "home";
     }

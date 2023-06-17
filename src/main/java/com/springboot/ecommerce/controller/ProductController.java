@@ -41,7 +41,7 @@ public class ProductController {
                                 Model  model
     ){
         int pageSize = 5;
-        Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        Page<Product> page = productService.getAllProducts(pageNo, pageSize, sortField, sortDir);
         List<Product> listProducts = page.getContent();
 
         model.addAttribute("totalPages", page.getTotalPages());
