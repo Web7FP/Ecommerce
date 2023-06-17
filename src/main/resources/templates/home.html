@@ -1,236 +1,525 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home page</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page | MyStore</title>
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css}" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/home.css}">
 
-        th, td {
-            text-align: left;
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-        }
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css}"/>
+    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js}"></script>
 
-        tr:hover {
-            background-color: #f5f5f5;
-        }
 
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .sort-buttons {
-            float: left;
-            margin-left: 10px;
-            margin-top: 10px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .sort-buttons:hover {
-            background-color: #3e8e41;
-        }
-
-        .shopping-cart {
-            float: right;
-            margin-right: 10px;
-            margin-top: 10px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .shopping-cart:hover {
-            background-color: #3e8e41;
-        }
-
-        .order-history {
-            float: left;
-            margin-left: 10px;
-            margin-top: 10px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .order-history:hover {
-            background-color: #3e8e41;
-        }
-
-        .my-account {
-            float: left;
-            margin-left: 10px;
-            margin-top: 10px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .my-account:hover {
-            background-color: #3e8e41;
-        }
-
-        .logout {
-            float: right;
-            margin-right: 10px;
-            margin-top: 10px;
-            background-color: #f44336;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .logout:hover {
-            background-color: #c62828;
-        }
-
-        .navigation {
-            overflow: hidden;
-            background-color: #333;
-        }
-
-        .navigation a {
-            float: left;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        .navigation a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .active {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .next-button, .last-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-right: 10px;
-        }
-
-        .next-button:hover, .last-button:hover {
-            background-color: #3e8e41;
-        }
-
-        .button{
-            margin-bottom: 30px;
-        }
-    </style>
-
-    <script
-            src="https://code.jquery.com/jquery-3.6.4.js"
-            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-            crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="navigation">
-    <a class="active" href="/home">Home</a>
-    <a href="#">Products</a>
-    <a href="#">Contact</a>
-    <a href="#">About</a>
-</div>
-<div class="sort-buttons">
-    <label for="sort-titles">Sort by:</label>
-    <select id="sort-titles">
-        <option value="default">Default</option>
-        <option value="title-asc">Title (A-Z)</option>
-        <option value="title-desc">Title (Z-A)</option>
-    </select>
-    <label for="sort-discount">Discount:</label>
-    <input type="checkbox" id="sort-discount">
-</div>
-<a th:href="@{/cart}" class="shopping-cart">
-    <img class="cart-icon"
-         src="https://salt.tikicdn.com/ts/upload/51/e2/92/8ca7e2cc5ede8c09e34d1beb50267f4f.png"
-         alt="header_header_img_Cart" style="max-width: 100%; width: 24px; height: 24px;"></a>
-<a th:href="@{/order/history}" class="order-history">Order History</a>
-<a th:href="@{/account/edit}" class="my-account">My Account</a>
-<a href="/logout" class="logout">Logout</a>
 
-<div class="product-container">
+<div class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a th:href="@{/home}"><img th:src="@{/img/logo.png}" alt="logo" width="125px"></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li>
 
-    <div class="group-sorting">
-        <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a>
-        <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Sort Discount</a>
+                        <form method="get" th:action="@{/search}">
+                            <input type="text" id="search-product"  name="q" placeholder="🔍">
+                            <input type="submit" id="submit-search" value="Search">
+
+                        </form>
+                    </li>
+                    <li><a th:href="@{/home}" >Home</a></li>
+<!--                    <li><a th:href="@{products.html}">Products</a></li>-->
+                    <li><a th:href="@{/order/history}">Order History</a></li>
+                    <li><a>Contact</a></li>
+                    <li><a th:href="@{/account/edit}">My Account</a></li>
+                    <li><a th:href="@{/logout}" style="color: rgb(211, 38, 38);">Logout</a></li>
+                </ul>
+            </nav>
+
+            <a th:href="@{/cart}"><img th:src="@{/img/cart.png}" width="30px" height="30px"></a>
+            <img th:src="@{/img/menu.png}" class="menu-icon" onclick="menutoggle()">
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <h1>Welcome myStore <br> Trends of technology !</h1>
+                <p>
+                    This is the place to update the latest technology trends that we bring to you <br> Let us satisfy your needs !!!</p>
+                <a href="" class="btn">Explore Now &#8594;</a>
+            </div>
+            <div class="col-2">
+                <img th:src="@{/img/image1.png}">
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="list-products">
-        <table>
-            <thead>
-            <tr>
-                <th>Title</th>
-<!--                <th>Description</th>-->
-                <th>Price</th>
-<!--                <th>Discount</th>-->
-<!--                <th>Quantity</th>-->
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr th:each="product : ${listProducts}">
-                    <td th:text="${product.title}"></td>
-                    <td th:text="${product.price}"></td>
-                    <td>
-                        <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="pagination">
-            <p th:text="'Total products: ' + ${totalItems}"></p>
+<!-- Feadtued Categories -->
+
+<div class="categories">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-3">
+                <img th:src="@{/img/category-1.jpg}">
+            </div>
+            <div class="col-3">
+                <img th:src="@{/img/category-2.jpg}">
+            </div>
+            <div class="col-3">
+                <img th:src="@{/img/category-3.jpg}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Phones and Laptop -->
+
+<div class="small-container">
+    <h2 class="title"> Featured Phones</h2>
+    <div class="row">
+        <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px;">
+            <th:block th:each="product : ${listProducts}">
+
+                <div class="col-4">
+                    <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}"><img th:src="${product.getImageLink()}"></a>
+                    <h4 th:text="${product.title}"></h4>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o"></i>
+                    </div>
+                    <p><span th:text="${product.price}"></span><sup>đ</sup></p>
+                </div>
+
+            </th:block>
+
+        </div>
+    </div>
+    <h2 class="title">Featured Laptop</h2>
+    <div class="Laptop">
+        <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px; margin-bottom: 10px;">
+            <div class="col-4">
+                <img th:src="@{/img/product-5.jpg}">
+                <h4>Red Printed T-Shirt</h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p><span>2.600.000</span><sup>đ</sup></p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="col-4">
+                <img th:src="@{/img/product-6.jpg}">
+                <h4>Red Printed T-Shirt</h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p><span>2.600.000</span><sup>đ</sup></p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="col-4">
+                <img th:src="@{/img/product-7.jpg}">
+                <h4>Red Printed T-Shirt</h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p><span>2.600.000</span><sup>đ</sup></p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="col-4">
+                <img th:src="@{/img/product-8.jpg}">
+                <h4>Red Printed T-Shirt</h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p><span>2.600.000</span><sup>đ</sup></p>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+        <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px;" >
+            <div class="col-4">
+                <img th:src="@{/img/product-9.jpg}">
+                <h4>Red Printed T-Shirt</h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p><span>2.600.000</span><sup>đ</sup></p>
+                <button>Add to Cart</button>
+            </div>
         </div>
     </div>
 
-        <div>
-                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-                    <a th:if="${currentPage != i}" th:href="@{'/home/product-list/page/' + ${i} +
-                    '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="${i}"></a>
-                    <span th:unless="${currentPage != i}" th:text="${i}"></span>
-                </span>
+</div>
+
+<!-- Offer -->
+<div class="offer">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-2">
+                <img th:src="@{/img/exclusive.png}" class="offer-img">
+            </div>
+            <div class="col-2">
+                <p>Exclusively Available on RedStore</p>
+                <h1>Smart Band 4</h1>
+                <small>The Mi Smart Band 4 fearures a 39.9%larger (than Mi Band 3) AMOLED color full-touch display
+                    with adjustable brightness, so everything is clear as can be.<br></small>
+                <a href="products.html" class="btn">Buy Now &#8594;</a>
+            </div>
         </div>
+    </div>
 </div>
-<div class="button">
-    <br><br><br>
-    <a th:if="${currentPage < totalPages }" th:href="@{'/home/product-list/page/' + ${currentPage + 1}
-                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="next-button">Next</a>
-</div>
-<div  class="button">
-    <a th:if="${currentPage <= totalPages and currentPage > 1}" th:href="@{'/home/product-list/page/' + ${currentPage - 1}+
-                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="last-button">Last</a>
-</div>
-<br><br><br>
+<!-----------Smart Watch--------------->
+<div>
+    <h2 class="title-watch"> Top Sale Samrt Watch</h2>
 
-<div class="search-engine">
-    <form method="get" th:action="@{/search}">
-        <label for="search-product">Search Product</label>
-        <input type="text" id="search-product" name="q">
-        <input type="submit" value="search">
-    </form>
+    <div class="watch" >
+        <div class="watch-1"> <!---san pham-->
+            <a href="product-detail.html"><img th:src="@{/img/smart-1.png}"></a>
+            <h4>Xiaomi Redmi Note 12S  </h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p><span>2.600.000</span><sup>đ</sup></p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="watch-1">
+            <img th:src="@{/img/smart-2.png}">
+            <h4>Iphone 14 Pro 12gb | Chính hãng VN/A</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p><span>2.600.000</span><sup>đ</sup></p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="watch-1">
+            <img th:src="@{/img/smart-3.png}">
+            <h4>Samsung Galaxy S23 Ultra 256GB  </h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p><span>2.600.000</span><sup>đ</sup></p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="watch-1">
+            <img th:src="@{/img/smart-4.png}">
+            <h4>Iphone 13 128GB | Chính hãng VN/A</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p><span>2.600.000</span><sup>đ</sup></p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="watch-1">
+            <img th:src="@{/img/smart-5.png}">
+            <h4>Iphone 13 128GB | Chính hãng VN/A</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p><span>2.600.000</span><sup>đ</sup></p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="watch-1">
+            <img th:src="@{/img/smart-3.png}">
+            <h4>Iphone 13 128GB | Chính hãng VN/A</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p><span>2.600.000</span><sup>đ</sup></p>
+            <button>Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="slider-watch-btn">
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.watch').slick({
+                infinite: true,
+                slidesToShow: 5,
+                prevArrow: $('.prev'),
+                nextArrow: $('.next')
+            });
+        });
+    </script>
+
+</div>
+<!---------More Products------------------->
+<div>
+    <h2 class="title-more-products"><button id="moreProductsButton" style="background-color: #f4dba6; border: none;"><h2>More Products</h2></button></h2>
+    <div id="additionalProducts" style="display: none;">
+        <div class="more-product">
+            <div class="sort-search">
+                <div class="sort-buttons">
+                    <label for="sort-titles">Sort by:</label>
+                    <select id="sort-titles">
+                        <option value="default">Default</option>
+                        <option value="title-asc">Title (A-Z)</option>
+                        <option value="title-desc">Title (Z-A)</option>
+                    </select>
+                    <label for="sort-discount">Discount:</label>
+                    <input type="checkbox" id="sort-discount">
+                </div>
+                <div class="group-sorting">
+                    <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a>
+                    <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Sort Discount</a>
+                </div>
+<!--                <div class="search-engine">-->
+<!--                    <form method="get" th:action="@{/search}">-->
+<!--                        <label for="search-product">Search</label>-->
+<!--                        <input type="text" id="search-product" name="q">-->
+<!--                        <input type="submit" id="submit-search" value="search" >-->
+<!--                    </form>-->
+<!--                </div>-->
+
+            </div>
+
+            <div class="product-container">
+
+
+                <div class="list-products">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th style="background-color: #f4dba6;">Title</th>
+                            <!--                <th>Description</th>-->
+                            <th style="background-color: #f4dba6;">Price</th>
+                            <!--                <th>Discount</th>-->
+                            <!--                <th>Quantity</th>-->
+                            <th style="background-color: #f4dba6;">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product : ${listProducts}">
+                            <td th:text="${product.title}"></td>
+                            <td th:text="${product.price}"></td>
+                            <td>
+                                <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <p th:text="'Total products: ' + ${totalItems}"></p>
+                    </div>
+                </div>
+                <div>
+                    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                        <a th:if="${currentPage != i}" th:href="@{'/home/product-list/page/' + ${i} +
+                        '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="${i}"></a>
+                        <span th:unless="${currentPage != i}" th:text="${i}"></span>
+                    </span>
+                </div>
+                <div class="button">
+                    <br><br><br>
+                    <a th:if="${currentPage < totalPages }" th:href="@{'/home/product-list/page/' + ${currentPage + 1}
+                                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="next-button">Next</a>
+                </div>
+                <div  class="button">
+                    <a th:if="${currentPage <= totalPages and currentPage > 1}" th:href="@{'/home/product-list/page/' + ${currentPage - 1}+
+                                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="last-button">Last</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var moreProductsButton = document.getElementById("moreProductsButton");
+        var additionalProductsDiv = document.getElementById("additionalProducts");
+
+        moreProductsButton.addEventListener("click", function() {
+            if (additionalProductsDiv.style.display === "none") {
+                additionalProductsDiv.style.display = "block";
+            } else {
+                additionalProductsDiv.style.display = "none";
+            }
+        });
+
+    </script>
+
+</div>
+<!-- -----------Testimonial Chung nhan-->
+<div class="testimonial">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                    industry's standard dummy text.</p>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <img th:src="@{/img/user-1.png}">
+                <h3>Sean Parker</h3>
+            </div>
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                    industry's standard dummy text.</p>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <img th:src="@{/img/user-2.png}">
+                <h3>Mike Smith</h3>
+            </div>
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                    industry's standard dummy text.</p>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <img th:src="@{/img/user-3.png}">
+                <h3>Mabel Joe</h3>
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- Brands -->
+
+<div class="brands">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-5">
+                <img th:src="@{/img/logo-godrej.png}">
+            </div>
+            <div class="col-5">
+                <img th:src="@{/img/logo-oppo.png}">
+            </div>
+            <div class="col-5">
+                <img th:src="@{/img/logo-coca-cola.png}">
+            </div>
+            <div class="col-5">
+                <img th:src="@{/img/logo-paypal.png}">
+            </div>
+            <div class="col-5">
+                <img th:src="@{/img/logo-philips.png}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+                <h3>Download Our App</h3>
+                <p>Download App for Android and ios mobile phone.</p>
+                <div class="app-logo">
+                    <img th:src="@{/img/play-store.png}">
+                    <img th:src="@{/img/app-store.png}">
+                </div>
+            </div>
+            <div class="footer-col-2">
+                <img th:src="@{/img/logo-white.png}">
+                <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many.
+                </p>
+            </div>
+            <div class="footer-col-3">
+                <h3>Useful Links</h3>
+                <ul>
+                    <li>Coupons</li>
+                    <li>Blog Post</li>
+                    <li>Return Policy</li>
+                    <li>Join Affiliate</li>
+                </ul>
+            </div>
+            <div class="footer-col-4">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                    <li>Youtube</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2020 - Samwit Adhikary</p>
+    </div>
+</div>
+
+<!-- javascript -->
+
+<script>
+    var MenuItems = document.getElementById("MenuItems");
+    MenuItems.style.maxHeight = "0px";
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px"
+        }
+        else {
+            MenuItems.style.maxHeight = "0px"
+        }
+    }
+</script>
+
+</body>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

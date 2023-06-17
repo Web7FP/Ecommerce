@@ -1,90 +1,42 @@
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Sign In</title>
-    <style>
-        body {
-            background-color: #F7F7F7;
-            font-family: Arial, sans-serif;
-        }
 
-        form {
-            background-color: #FFFFFF;
-            border: 1px solid #DDDDDD;
-            padding: 20px;
-            max-width: 400px;
-            margin: 0 auto;
-            margin-top: 50px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    <title>Sign in</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width">
 
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            display: block;
-            padding: 10px;
-            border: 1px solid #DDDDDD;
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        input[type="checkbox"] {
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        button[type="submit"] {
-            background-color: #4CAF50;
-            color: #FFFFFF;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #3E8E41;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/regestration.css}">
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}" />
 </head>
 <body>
-<div class="container">
-  <div class="group_form_login">
+
+<div class="faixa">
+
+    <h1>Login</h1>
     <form th:action="@{/login}" method="post" class="login">
 
         <div class="loginError" th:if="${param.error}">
-            <p style="color: rgba(255,37,91,0.8)">Invalid username or password</p>
+            <p style="color: rgba(125, 6, 35, 0.8); font-weight: 900; margin-left: 70px;">Invalid username or password</p>
         </div>
 
-        <div class="group_username">
-            <label for="username">Your Email</label>
-            <input id="username" name="email" type="email" placeholder="yourEmail@gmail.com" required autofocus>
-        </div>
+        <input class="textbox" type="email" name="email" placeholder="Your_email@gmail.com" required autofocus/>
+        <input class="textbox" type="password" name="password" placeholder="Password" required/>
 
-        <div class="group-password">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" required>
-        </div>
+        <a class="link" th:href="@{/registration}" style="margin: 20px 0px 5px 140px;">Registration</a>
+        <label class="link" for="remember-me">Remember me ?</label>
+        <input type="checkbox" id="remember-me" name="remember-me" style="margin: 2px 0px 5px 190px;">
 
-        <div class="group-remember-me">
-            <label for="remember-me">Remember me ?</label>
-            <input type="checkbox" id="remember-me" name="remember-me">
-        </div>
+        <input class="send" type="submit" value="Sign in"/>
 
-        <input type="submit" value="Sign In">
+<!--        <div class="middle">-->
+<!--            <button class="btn"><i class="fab fa-facebook-f"></i></button>-->
+<!--            <button class="btn"><i class="fab fa-google"></i></button>-->
+<!--            <button class="btn"><i class="fab fa-twitter"></i></button>-->
+<!--        </div>-->
+
     </form>
-  </div>
+
 </div>
+
 </body>
 </html>

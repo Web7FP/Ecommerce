@@ -3,57 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>My account</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/account-information.css}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="navbar">
+    <div class="logo">
+        <a th:href="@{/home}">
+            <img th:src="@{/img/logo.png}" alt="store">
+        </a>
+    </div>
+    <nav>
+        <ul id="MenuItems">
+            <li><a th:href="@{/home}">Home</a></li>
+            <li><a th:href="@{/order/history}">Order History</a></li>
+            <li><a href="">Contact</a></li>
+            <li><a th:href="@{/account/edit}"> My Account</a></li>
+            <li><a th:href="@{/logout}" style="color: rgb(211, 38, 38);">Logout</a></li>
+        </ul>
+    </nav>
+    <a th:href="@{/cart}">
+        <img th:src="@{/img/cart.png}" width="30px" height="30px">
+    </a>
+</div>
+
 <div class="container">
     <div class="edit-account-information">
         <form method="post" th:action="@{/account/save-user-meta}" th:object="${userMeta}">
             <th:block th:if="*{id != null}">
                 <input type="hidden" th:field="*{id}">
             </th:block>
-            <div class="group-first-name">
-                <label for="first-name">First name:</label>
-                <input type="text" id="first-name" th:field="*{firstName}" required><br><br>
+            <div class="form-columns">
+                <div class="group-first-name">
+                    <label for="first-name">First name:</label>
+                    <input type="text" id="first-name" th:field="*{firstName}" required><br><br>
+                </div>
+                <div class="group-middle-name">
+                    <label for="middle-name">Middle name:</label>
+                    <input type="text" id="middle-name" th:field="*{middleName}" ><br><br>
+                </div>
+                <div class="group-last-name">
+                    <label for="last-name">Last name:</label>
+                    <input type="text" id="last-name" th:field="*{lastName}" required><br><br>
+                </div>
+                <div class="birthday">
+                    <label for="birthday">Date of birth: </label>
+                    <input type="date" id="birthday" th:field="*{birthday}" required><br><br>
+                </div>
+                <div class="group-mobile">
+                    <label for="mobile">Mobile: </label>
+                    <input type="text" id="mobile" th:field="*{mobile}" required><br><br>
+                </div>
+                <div class="group-nickname">
+                    <label for="nickname">Nick name:</label>
+                    <input type="text" id="nickname" th:field="*{nickname}"><br><br>
+                </div>
+                <div class="group-address">
+                    <label for="address">Address: </label>
+                    <input type="text" id="address" th:field="*{address}" required><br><br>
+                </div>
+                <div class="group-gender">
+                    <label for="gender">Gender: </label>
+                    <select id="gender" th:field="*{userMetaGender}">
+                        <option th:each="gender : ${genderList}" th:value="${gender}" th:text="${gender}"/>
+                    </select><br><br>
+                </div>
             </div>
-            <div class="group-middle-name">
-                <label for="middle-name">Middle name:</label>
-                <input type="text" id="middle-name" th:field="*{middleName}" ><br><br>
+            <div class="form-actions">
+                <button type="submit">Save</button>
             </div>
-            <div class="group-last-name">
-                <label for="last-name">Last name:</label>
-                <input type="text" id="last-name" th:field="*{lastName}" required><br><br>
-            </div>
-            <div class="birthday">
-                <label for="birthday">Birthday: </label>
-                <input type="date" th:field="*{birthday}" id="birthday"><br><br>
-            </div>
-            <div class="group-mobile">
-                <label for="mobile">Mobile: </label>
-                <input type="text" id="mobile" th:field="*{mobile}" required><br><br>
-            </div>
-            <div class="group-nickname">
-                <label for="nickname">Nick name:</label>
-                <input type="text" id="nickname" th:field="*{nickname}"><br><br>
-            </div>
-            <div class="group-address">
-                <label for="address">Address: </label>
-                <input type="text" id="address" th:field="*{address}" required><br><br>
-            </div>
-
-            <div class="group-gender">
-                <label for="gender">Gender: </label>
-                <select id="gender" th:field="*{userMetaGender}">
-                    <option th:each="gender : ${genderList}" th:value="${gender}" th:text="${gender}"/>
-                </select><br><br>
-            </div>
-
-            <input type="submit" value="SAVE">
         </form>
 
-
-        <br><br>
         <form th:action="@{/home}">
-            <button type="submit">Back to home page</button>
+            <div class="form-actions">
+                <button type="submit">Back to home page</button>
+            </div>
         </form>
     </div>
 </div>
