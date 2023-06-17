@@ -81,7 +81,7 @@
     <h2 class="title"> Featured Phones</h2>
     <div class="row">
         <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px;">
-            <th:block th:each="product : ${listProducts}">
+            <th:block th:each="product : ${phoneProducts}">
 
                 <div class="col-4">
                     <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}"><img th:src="${product.getImageLink()}"></a>
@@ -103,74 +103,23 @@
     <h2 class="title">Featured Laptop</h2>
     <div class="Laptop">
         <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px; margin-bottom: 10px;">
-            <div class="col-4">
-                <img th:src="@{/img/product-5.jpg}">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
+            <th:block th:each="product : ${laptopProducts}">
+                <div class="col-4">
+                    <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}"><img th:src="${product.getImageLink()}"></a>
+                    <h4 th:text="${product.title}"></h4>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o"></i>
+                    </div>
+                    <p><span th:text="${product.price}"></span><sup>đ</sup></p>
                 </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="col-4">
-                <img th:src="@{/img/product-6.jpg}">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="col-4">
-                <img th:src="@{/img/product-7.jpg}">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="col-4">
-                <img th:src="@{/img/product-8.jpg}">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
+
+            </th:block>
         </div>
-        <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px;" >
-            <div class="col-4">
-                <img th:src="@{/img/product-9.jpg}">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
-        </div>
+
     </div>
 
 </div>
