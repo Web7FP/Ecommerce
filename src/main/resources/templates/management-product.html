@@ -4,20 +4,115 @@
     <meta charset="UTF-8">
     <title>Product Management</title>
     <style>
-        table {border-collapse: collapse;width: 100%;}
-        th, td {text-align: left;padding: 8px;}
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+
+        }
+        h1 {color: #007bff;
+            font-size: 40px;
+
+        }
+        table {border-collapse: separate;width: 100%;}
+        th, td {text-align: center;padding: 8px;}
         tr:nth-child(even) {background-color: #D6EEEE;}
+        th {
+            background-color: #007bff;
+            color: white;}
+        a{text-decoration: none;
+            color: inherit}
+        button.add:hover{
+            width: 200px;
+            height: 30px;
+            background-color: white;
+            color: black;
+            border: 2px solid cadetblue;
+            border-radius: 8px;
+            font-size: 20px;
+        }
+
+        button.add{
+            width: 200px;
+            height: 30px;
+            background-color: cadetblue;
+            color: white;
+            border-radius: 8px;
+            font-size: 20px;
+
+        }
+        button.delete {
+            background-color: red;
+            color: white;
+            border: 2px solid red;
+            border-radius: 8px;
+        }
+
+        button.delete:hover {
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+        }
+        button.update {
+            background-color: #4CAF50;
+            color: white;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+        }
+
+        button.update:hover {
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+        }
+        a.nl {
+            background-color: #4CAF50;
+            color: white;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            font-size: 20px;
+        }
+
+        a.nl:hover {
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+            font-size: 20px;
+        }
+        button.back {
+            background-color: burlywood;
+            color: white;
+            border-radius: 4px;
+        }
+
+
     </style>
+    <script>
+        function xoahaykhong(tinnhan) {
+            if (confirm(tinnhan)==true){
+                return true;
+            }
+            return false;
+        }
+
+    </script>
 </head>
 <body>
 <div class="container">
     <h1>Products Management</h1>
+    <button class="add">
     <a th:href="@{/product-management/add-new-product.html}">Add new Product</a><br>
-
+    </button>
     <div class="group-sorting">
-        <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a><br>
-        <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=slug&sortDir=' + ${reverseSortDir}}">Sort Slug</a><br>
-        <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=discount&sortDir=' + ${reverseSortDir}}">Sort Discount</a><br><br>
+        <button class="sort">
+        <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a>
+        </button>
+        <button class="sort">
+        <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=slug&sortDir=' + ${reverseSortDir}}">Sort Slug</a>
+        </button>
+        <button class="sort">
+        <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=discount&sortDir=' + ${reverseSortDir}}">Sort Discount</a>
+        </button>
+
     </div>
 
     <table class="list-products-management">
@@ -43,10 +138,14 @@
                 <td th:text="${product.createdAt}"></td>
                 <td th:text="${product.quantity}"></td>
                 <td>
+                    <button class="update">
                     <a th:href="@{/product-management/update-product-form/{id}(id=${product.id})}">Update</a>
+                    </button>
+                    <button class="delete">
                     <th:block th:if="${product.getOrderItems().isEmpty() or product.getCartItems().isEmpty()}">
-                        <a th:href="@{/product-management/delete-product/{id}(id=${product.id})}">Delete</a>
+                        <a onclick="return xoahaykhong('bạn có chắc muốn xóa không');" th:href="@{/product-management/delete-product/{id}(id=${product.id})}">Delete</a>
                     </th:block>
+                    </button>
 
                 </td>
             </tr>
@@ -67,16 +166,18 @@
             </div>
             <div>
                 <a th:if="${currentPage < totalPages }" th:href="@{'/product-management/products-list/page/' + ${currentPage + 1}
-                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="nl">Next</a>
             </div>
             <div>
-                <a th:if="${currentPage <= totalPages and currentPage > 1}" th:href="@{'/product-management/products-list/page/' + ${totalPages - 1}+
-                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                <a th:if="${currentPage > 1}" th:href="@{'/product-management/products-list/page/' + ${currentPage - 1}+
+                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="nl">Last</a>
             </div>
         </div>
-    </div>
-
+    </div><br>
+    <button class="back">
     <a th:href="@{/admin}">Back to Admin Panel</a>
+    </button>
+
 
 </div>
 </body>

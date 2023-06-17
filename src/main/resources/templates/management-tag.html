@@ -4,18 +4,98 @@
     <meta charset="UTF-8">
     <title>Tag Management</title>
     <style>
-        table {border-collapse: collapse;width: 100%;}
-        th, td {text-align: left;padding: 8px;}
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+
+        }
+        h1 {color: #007bff;
+            font-size: 40px;
+
+        }
+        table {border-collapse: separate;width: 100%;}
+        th, td {text-align: center;padding: 8px;}
         tr:nth-child(even) {background-color: #D6EEEE;}
+        th {
+            background-color: #007bff;
+            color: white;}
+        a{text-decoration: none;
+            color: inherit}
+        button.add:hover {
+            width: 200px;
+            height: 30px;
+            background-color: white;
+            color: black;
+            border: 2px solid cadetblue;
+            border-radius: 8px;
+            font-size: 20px;
+        }
+
+        button.add {
+            width: 200px;
+            height: 30px;
+            background-color: cadetblue;
+            color: white;
+            border-radius: 8px;
+            font-size: 20px;
+
+        }
+        button.delete {
+            background-color: red;
+            color: white;
+            border: 2px solid red;
+            border-radius: 8px;
+        }
+
+        button.delete:hover {
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+        }
+        button.update {
+            background-color: #4CAF50;
+            color: white;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+        }
+
+        button.update:hover {
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+        }
+        button.back {
+            background-color: burlywood;
+            color: white;
+            border-radius: 4px;
+        }
+
     </style>
+    <script>
+        function xoahaykhong(tinnhan) {
+            if (confirm(tinnhan)==true){
+                return true;
+            }
+            return false;
+        }
+
+    </script>
 </head>
 <body>
 <div class="container">
     <h1>Tag Management</h1>
+    <button class="add">
     <a th:href="@{/tag-management/add-new-tag.html}">Add new tag</a><br>
+    </button>
     <table class="tag-management-list">
         <thead>
-            <tr></tr>
+            <tr>
+                <th>Title</th>
+                <th>Meta</th>
+                <th>Slug</th>
+                <th>Content</th>
+                <th>Action</th>
+            </tr>
         </thead>
         <tbody>
             <tr th:each="tag : ${tagList}">
@@ -24,15 +104,19 @@
                 <td th:text="${tag.metaTitle}"></td>
                 <td th:text="${tag.content}"></td>
                 <td>
-                    <a th:href="@{/tag-management/delete-tag/{id}(id=${tag.id})}">Delete</a>
+                    <button class="delete">
+                    <a onclick="return xoahaykhong('bạn có chắc muốn xóa không');" th:href="@{/tag-management/delete-tag/{id}(id=${tag.id})}">Delete</a>
+                    </button>
+                    <button class="update">
                     <a th:href="@{/tag-management/update-tag-form/{id}(id=${tag.id})}">Update</a>
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
-
+<   <button class="back">
     <a th:href="@{/admin}">Back to Admin Panel</a>
-
+    </button>
 </div>
 </body>
 </html>
