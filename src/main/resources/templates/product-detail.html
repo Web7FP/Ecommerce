@@ -1,66 +1,223 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Product detail</title>
-    <script
-            src="https://code.jquery.com/jquery-3.6.4.js"
-            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-            crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - detail | MyStore</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/product-detail.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}">
 </head>
+
 <body>
 <div class="container">
-  <h1 th:text="${product.title}"></h1><br>
-    <img th:src="${product.getImageLink()}"
-         th:alt="${product.title}"
-         style="height: 100px; width: 100px">
-  <p th:text="'Price: ' + ${product.price}"></p><br>
-  <p th:text="'Discount: '+ ${product.discount}"></p><br><br>
+    <div class="navbar">
+        <div class="logo">
+            <a th:href="@{/home}"><img th:src="@{/img/logo.png}" alt="logo" width="125px"></a>
+        </div>
+        <nav>
+            <ul id="MenuItems">
+                <li><a th:href="@{/home}">Home</a></li>
+                <li><a th:href="@{/products.html}">Products</a></li>
+                <li><a>About</a></li>
+                <li><a >Contact</a></li>
+                <li><a th:href="@{/account-information}">Account</a></li>
+            </ul>
+        </nav>
+        <a th:src="@{cart.html}"><img th:href="@{/img/cart.png}" width="30px" height="30px"></a>
+        <img th:src="@{/img/menu.png}" class="menu-icon" onclick="menutoggle()">
+    </div>
+</div>
 
-    <th:block th:if="${product.shop == false}">
-        <p>Product no longer available</p>
-    </th:block>
+<!-- Detail Products -->
 
-    <th:block th:unless="${product.quantity > 0}">
-        <p>Out of stock</p>
-    </th:block>
+<div class="detail-product">
 
-    <th:block th:if="${product.quantity > 0 and product.shop==true}">
-        <div class="custom-number-input h-10 w-32">
+    <div class="product-info" style="display: flex; align-items: center;">
+        <div class="img">
+            <img th:src="${product.getImageLink()}"
+                 th:alt="${product.title}"
+                 style="height: 400px; width: 400px">
+        </div>
+        <div class="next-to-img">
+            <a th:href="@{/home}" id="back">Home page</a><br><br>
+            <h1 th:text="${product.title}"></h1>
+            <p th:text="'Price: ' + ${product.price}"></p><br><br>
+            <p th:text="'Discount: '+ ${product.discount}"></p><br><br>
 
-            <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                <button data-action="decrement" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
-                    <span class="m-auto text-2xl font-thin">−</span>
-                </button>
-                <input type="number"
-                       th:id="'quantity' + ${product.id}"
-                       name="custom-input-number"
-                       value="1">
-                <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
-                    <span class="m-auto text-2xl font-thin">+</span>
-                </button>
+            <th:block th:if="${product.shop == false}">
+                <p>Product no longer available</p>
+            </th:block>
 
-                <button id="button-add-product-to-cart">Add Product To Cart</button>
-            </div>
+            <th:block th:unless="${product.quantity > 0}">
+                <p>Out of stock</p>
+            </th:block>
 
-            <th:block th:if="${product.quantity <= 10}">
-                <p th:text="'Only ' + ${product.quantity} + ' left in stock'"></p>
+            <th:block th:if="${product.quantity > 0 and product.shop==true}">
+                <div class="custom-number-input h-10 w-32">
+
+                    <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                        <button data-action="decrement" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                            <span class="m-auto-text-2xl-font-thin">−</span>
+                        </button>
+                        <input type="number" id="number-product"
+                               th:id="'quantity' + ${product.id}"
+                               name="custom-input-number"
+                               value="1">
+                        <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                            <span class="m-auto-text-2xl-font-thin">+</span>
+                        </button>
+
+                        <button id="button-add-product-to-cart">Add To Cart</button>
+                    </div>
+
+                    <th:block th:if="${product.quantity <= 10}">
+                        <p th:text="'Only ' + ${product.quantity} + ' left in stock'"></p>
+                    </th:block>
+                </div>
             </th:block>
         </div>
-    </th:block>
-  <a th:href="@{/home}">Back to Home page</a>
-
-
-    <!--MAGIC. DON'T TOUCH :)).-->
-    <script th:inline="javascript">
-        let maxQuantityProduct = [[${product.quantity}]];
-        let productId = [[${product.id}]];
-    </script>
-    <script th:src="@{/js/quantity-controll-product-page.js}"></script>
-    <!--MAGIC. DON'T TOUCH :)).-->
-
-
-
+    </div>
 </div>
+<!-- title -->
+<div class="small-container">
+    <div class="row row-2">
+        <h2>Related Products</h2>
+        <p>View More</p>
+    </div>
+</div>
+<!-- Products -->
+<div class="small-container">
+    <div class="row">
+        <div class="col-4">
+            <img th:src="@{/img/product-9.jpg}">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img th:src="@{/img/product-10.jpg}">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img th:src="@{/img/product-11.jpg}">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img th:src="@{/img/product-12.jpg}">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+                <h3>Download Our App</h3>
+                <p>Download App for Android and ios mobile phone.</p>
+                <div class="app-logo">
+                    <img th:src="@{/img/play-store.png}">
+                    <img th:src="@{/img/app-store.png}">
+                </div>
+            </div>
+            <div class="footer-col-2">
+                <img th:src="@{/img/logo-white.png}">
+                <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many.
+                </p>
+            </div>
+            <div class="footer-col-3">
+                <h3>Useful Links</h3>
+                <ul>
+                    <li>Coupons</li>
+                    <li>Blog Post</li>
+                    <li>Return Policy</li>
+                    <li>Join Affiliate</li>
+                </ul>
+            </div>
+            <div class="footer-col-4">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                    <li>Youtube</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2020 - Samwit Adhikary</p>
+    </div>
+</div>
+
+<!-- javascript -->
+
+<script>
+    var MenuItems = document.getElementById("MenuItems");
+    MenuItems.style.maxHeight = "0px";
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px"
+        }
+        else {
+            MenuItems.style.maxHeight = "0px"
+        }
+    }
+</script>
+
+<!-- product gallery -->
+<script>
+    var ProductImg = document.getElementById("ProductImg");
+    var SmallImg = document.getElementsByClassName("small-img");
+
+    SmallImg[0].onclick = function () {
+        ProductImg.src = SmallImg[0].src;
+    }
+    SmallImg[1].onclick = function () {
+        ProductImg.src = SmallImg[1].src;
+    }
+    SmallImg[2].onclick = function () {
+        ProductImg.src = SmallImg[2].src;
+    }
+    SmallImg[3].onclick = function () {
+        ProductImg.src = SmallImg[3].src;
+    }
+
+</script>
 </body>
+
 </html>
