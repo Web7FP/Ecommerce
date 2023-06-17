@@ -5,18 +5,25 @@
     <title>Sign In</title>
     <style>
         body {
-            background-color: #F7F7F7;
             font-family: Arial, sans-serif;
+            height: 100%;
+            margin: 0;
+            background: url("https://static.videezy.com/system/resources/previews/000/043/221/original/spatk.mp4") no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
         }
 
         form {
-            background-color: #FFFFFF;
+            background-color: rgba(255, 255, 255, 0.9);
             border: 1px solid #DDDDDD;
             padding: 20px;
             max-width: 400px;
             margin: 0 auto;
             margin-top: 50px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
         }
 
         label {
@@ -54,11 +61,15 @@
         }
 
         button[type="submit"]:hover {
-            background-color: #3E8E41;
+            background-color: #3e8e41;
         }
+
     </style>
 </head>
 <body>
+<video autoplay muted loop id="video-bg">
+    <source src="https://static.videezy.com/system/resources/previews/000/043/221/original/spatk.mp4" type="video/mp4">
+</video>
 <div class="container">
   <div class="group_form_login">
     <form th:action="@{/login}" method="post" class="login">
