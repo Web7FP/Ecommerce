@@ -8,9 +8,9 @@
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css}" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" th:href="@{/css/home.css}">
 
-    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css}"/>
-    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
-    <script th:src="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 
 </head>
@@ -33,7 +33,6 @@
                         </form>
                     </li>
                     <li><a th:href="@{/home}" >Home</a></li>
-<!--                    <li><a th:href="@{products.html}">Products</a></li>-->
                     <li><a th:href="@{/order/history}">Order History</a></li>
                     <li><a>Contact</a></li>
                     <li><a th:href="@{/account/edit}">My Account</a></li>
@@ -301,56 +300,34 @@
     <h2 class="title-more-products"><button id="moreProductsButton" style="background-color: #f4dba6; border: none;"><h2>More Products</h2></button></h2>
     <div id="additionalProducts" style="display: none;">
         <div class="more-product">
-            <div class="sort-search">
-                <div class="sort-buttons">
-                    <label for="sort-titles">Sort by:</label>
-                    <select id="sort-titles">
-                        <option value="default">Default</option>
-                        <option value="title-asc">Title (A-Z)</option>
-                        <option value="title-desc">Title (Z-A)</option>
-                    </select>
-                    <label for="sort-discount">Discount:</label>
-                    <input type="checkbox" id="sort-discount">
-                </div>
-                <div class="group-sorting">
-                    <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a>
-                    <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Sort Discount</a>
-                </div>
-<!--                <div class="search-engine">-->
-<!--                    <form method="get" th:action="@{/search}">-->
-<!--                        <label for="search-product">Search</label>-->
-<!--                        <input type="text" id="search-product" name="q">-->
-<!--                        <input type="submit" id="submit-search" value="search" >-->
-<!--                    </form>-->
-<!--                </div>-->
 
-            </div>
 
             <div class="product-container">
 
 
                 <div class="list-products">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th style="background-color: #f4dba6;">Title</th>
-                            <!--                <th>Description</th>-->
-                            <th style="background-color: #f4dba6;">Price</th>
-                            <!--                <th>Discount</th>-->
-                            <!--                <th>Quantity</th>-->
-                            <th style="background-color: #f4dba6;">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="product : ${listProducts}">
-                            <td th:text="${product.title}"></td>
-                            <td th:text="${product.price}"></td>
-                            <td>
-                                <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+
+
+                        <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px;">
+                            <th:block th:each="product : ${listProducts}">
+
+                                <div class="col-4">
+                                    <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}"><img th:src="${product.getImageLink()}"></a>
+                                    <h4 th:text="${product.title}"></h4>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    </div>
+                                    <p><span th:text="${product.price}"></span><sup>đ</sup></p>
+                                </div>
+
+                            </th:block>
+
+
+                    </div>
                     <div class="pagination">
                         <p th:text="'Total products: ' + ${totalItems}"></p>
                     </div>
