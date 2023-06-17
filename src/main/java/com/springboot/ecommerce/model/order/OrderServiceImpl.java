@@ -316,7 +316,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Page<Order> getAllOrderWithPaginationAndSort(int pageNo, int pageSize, String sortField, String sortDirection) {
         return orderRepository.findAll(
-                this.findPaginated(pageNo, pageSize, sortField, sortDirection);
-        )
-    }
+                this.findPaginated(pageNo, pageSize, sortField, sortDirection)
+        );
+    };
 }
