@@ -19,20 +19,20 @@
             <p style="color: rgba(125, 6, 35, 0.8); font-weight: 900; margin-left: 70px;">Invalid username or password</p>
         </div>
 
-        <input class="textbox" type="email" placeholder="Your_email@gmail.com" required autofocus/>
-        <input class="textbox" type="password" placeholder="Password" required/>
+        <input class="textbox" type="email" name="email" placeholder="Your_email@gmail.com" required autofocus/>
+        <input class="textbox" type="password" name="password" placeholder="Password" required/>
 
-        <a class="link" th:href="@{registration.html}" style="margin: 20px 0px 5px 140px;">Registration</a>
+        <a class="link" th:href="@{/registration}" style="margin: 20px 0px 5px 140px;">Registration</a>
         <label class="link" for="remember-me">Remember me ?</label>
         <input type="checkbox" id="remember-me" name="remember-me" style="margin: 2px 0px 5px 190px;">
 
         <input class="send" type="submit" value="Sign in"/>
 
-        <div class="middle">
-            <button class="btn"><i class="fab fa-facebook-f"></i></button>
-            <button class="btn"><i class="fab fa-google"></i></button>
-            <button class="btn"><i class="fab fa-twitter"></i></button>
-        </div>
+<!--        <div class="middle">-->
+<!--            <button class="btn"><i class="fab fa-facebook-f"></i></button>-->
+<!--            <button class="btn"><i class="fab fa-google"></i></button>-->
+<!--            <button class="btn"><i class="fab fa-twitter"></i></button>-->
+<!--        </div>-->
 
     </form>
 

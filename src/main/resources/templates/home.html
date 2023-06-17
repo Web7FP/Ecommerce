@@ -8,9 +8,9 @@
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css}" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" th:href="@{/css/home.css}">
 
-    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/slick-carousel1.8.1/slick/slick.css}"/>
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css}"/>
     <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
-    <script th:src="@{https://cdn.jsdelivr.net/npm/slick-carousel1.8.1/slick/slick.min.js}"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js}"></script>
 
 
 </head>
@@ -20,23 +20,24 @@
     <div class="container">
         <div class="navbar">
             <div class="logo">
-                <a th:href="@{home.html}"><img th:src="@{/img/logo.png}" alt="logo" width="125px"></a>
+                <a th:href="@{/home}"><img th:src="@{/img/logo.png}" alt="logo" width="125px"></a>
             </div>
             <nav>
                 <ul id="MenuItems">
                     <li>
+
                         <form method="get" th:action="@{/search}">
-                            <input type="text" placeholder="   Search..."
-                                   style="border-radius: 10px;border: none; height:30px; width:300px;">
-                            <i class="fa-solid fa-magnifying-glass" style="margin-right: 20px;" stype="submit" value="search"></i>
+                            <input type="text" id="search-product"  name="q" placeholder="🔍">
+                            <input type="submit" id="submit-search" value="Search">
+
                         </form>
                     </li>
-                    <li><a th:href="@{home.html}" >Home</a></li>
-                    <li><a th:href="@{products.html}">Products</a></li>
+                    <li><a th:href="@{/home}" >Home</a></li>
+<!--                    <li><a th:href="@{products.html}">Products</a></li>-->
                     <li><a th:href="@{/order/history}">Order History</a></li>
                     <li><a>Contact</a></li>
                     <li><a th:href="@{/account/edit}">My Account</a></li>
-                    <li><a th:href="@{/home.html}" style="color: rgb(211, 38, 38);">Logout</a></li>
+                    <li><a th:href="@{/logout}" style="color: rgb(211, 38, 38);">Logout</a></li>
                 </ul>
             </nav>
 
@@ -81,58 +82,23 @@
     <h2 class="title"> Featured Phones</h2>
     <div class="row">
         <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px;">
-            <div class="col-4">
-                <a th:href="@{product-detail.html}"><img th:src="@{/img/product-1.jpg}"></a>
-                <h4>Xiaomi Redmi Note 12S | Chính hãng VN/A </h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
+            <th:block th:each="product : ${listProducts}">
+
+                <div class="col-4">
+                    <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}"><img th:src="${product.getImageLink()}"></a>
+                    <h4 th:text="${product.title}"></h4>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o"></i>
+                    </div>
+                    <p><span th:text="${product.price}"></span><sup>đ</sup></p>
                 </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="col-4">
-                <img th:src="@{/img/img/product-2.jpg}">
-                <h4>Iphone 14 Pro 12gb | Chính hãng VN/A</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="col-4">
-                <img th:src="@{/img/product-3.jpg}">
-                <h4>Samsung Galaxy S23 Ultra 256GB  </h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="col-4">
-                <img th:src="@{/img/product-4.jpg}">
-                <h4>Iphone 13 128GB | Chính hãng VN/A</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
+
+            </th:block>
+
         </div>
     </div>
     <h2 class="title">Featured Laptop</h2>
@@ -194,45 +160,6 @@
         <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px;" >
             <div class="col-4">
                 <img th:src="@{/img/product-9.jpg}">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="col-4">
-                <img th:src="@{/img/product-10.jpg}">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="col-4">
-                <img th:src="@{/img/product-11.jpg}">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p><span>2.600.000</span><sup>đ</sup></p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="col-4">
-                <img th:src="@{/img/product-12.jpg}">
                 <h4>Red Printed T-Shirt</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -389,13 +316,13 @@
                     <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a>
                     <a class="sort-buttons" th:href="@{'/home/product-list/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Sort Discount</a>
                 </div>
-                <div class="search-engine">
-                    <form method="get" th:action="@{/search}">
-                        <label for="search-product">Search</label>
-                        <input type="text" id="search-product" name="q">
-                        <input type="submit" id="submit-search" value="search" >
-                    </form>
-                </div>
+<!--                <div class="search-engine">-->
+<!--                    <form method="get" th:action="@{/search}">-->
+<!--                        <label for="search-product">Search</label>-->
+<!--                        <input type="text" id="search-product" name="q">-->
+<!--                        <input type="submit" id="submit-search" value="search" >-->
+<!--                    </form>-->
+<!--                </div>-->
 
             </div>
 
