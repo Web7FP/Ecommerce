@@ -3,6 +3,10 @@ package com.springboot.ecommerce.model.tag;
 import com.springboot.ecommerce.model.product.Product;
 import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +50,18 @@ public class TagServiceImpl implements TagService{
         tagRepository.deleteById(id);
     }
 
+    @Override
+    public Pageable findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
+        return PageRequest.of(pageNo - 1, pageSize, sort);
+    }
 
-
+    @Override
+    public Page<Tag> getAllTagWithPaginationAndSort(int pageNo, int pageSize, String sortField, String sortDirection) {
+        return tagRepository.findAll(
+                this.findPaginated(pageNo, pageSize, sortField, sortDirection)
+        );
+    }
 }

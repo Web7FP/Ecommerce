@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            background:radial-gradient(#fff,#ffd6d6);
             color: #444;
             margin: 0;
             padding: 0;
@@ -42,7 +42,7 @@
         }
 
         th {
-            background-color: #f5f5f5;
+            background-color: #ef6565;
             font-weight: bold;
         }
 
@@ -70,15 +70,20 @@
 
         .order-list a {
             display: inline-block;
-            padding: 6px 12px;
-            background-color: #2196f3;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-        }
+            background: #ff523b;
+            color: white;
+            padding: 8px 30px;
+            margin: 30px 0;
+            border-radius: 30px;
+            transition: background 0.5s}
 
         .order-list a:hover {
-            background-color: #0e91d1;
+            background-color: #563434;
+        }
+        button.back {
+            background-color: burlywood;
+            color: white;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -116,9 +121,9 @@
                 </tfoot>
             </table>
         </div>
-
+        <button class="back">
         <a th:href="@{/admin}">Back to Admin Panel</a>
-
+        </button>
     </div>
 </div>
 </body>

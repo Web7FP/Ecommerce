@@ -5,6 +5,8 @@ import com.springboot.ecommerce.model.transaction.Transaction;
 import com.springboot.ecommerce.model.userMeta.UserMeta;
 import com.springboot.ecommerce.model.user.User;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -52,5 +54,9 @@ public interface OrderService {
     void buyAgainHandler(Long orderId, HttpSession session);
 
     void processingNewOrder(Transaction newTransaction, User currentUser, HttpSession session);
+
+    Pageable findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+
+    Page<Order> getAllOrderWithPaginationAndSort(int pageNo, int pageSize, String sortField, String sortDirection);
 
 }

@@ -16,6 +16,10 @@ import com.springboot.ecommerce.model.userMeta.UserMetaServiceImpl;
 import com.springboot.ecommerce.model.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -299,4 +303,20 @@ public class OrderServiceImpl implements OrderService{
         cartService.setCompletedStatusCart(activeCart, currentUser);
         session.removeAttribute("cart");
     }
+
+
+    @Override
+    public Pageable findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
+        return PageRequest.of(pageNo - 1, pageSize, sort);
+    }
+
+    @Override
+    public Page<Order> getAllOrderWithPaginationAndSort(int pageNo, int pageSize, String sortField, String sortDirection) {
+        return orderRepository.findAll(
+                this.findPaginated(pageNo, pageSize, sortField, sortDirection)
+        );
+    };
 }
