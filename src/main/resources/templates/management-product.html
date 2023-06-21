@@ -4,40 +4,37 @@
     <meta charset="UTF-8">
     <title>Product Management</title>
     <style>
+        .nen{
+            background: radial-gradient(#fff,#ffd6d6)}
         body {
             background-color: #f2f2f2;
             font-family: Arial, sans-serif;
 
         }
-        h1 {color: #007bff;
+        h1 {
             font-size: 40px;
 
         }
         table {border-collapse: separate;width: 100%;}
         th, td {text-align: center;padding: 8px;}
-        tr:nth-child(even) {background-color: #D6EEEE;}
+        .nhan{background-color: #ef6565}
+        tr:nth-child(even) {background-color: #ffd6d6;}
         th {
-            background-color: #007bff;
+            background-color: #ef6565;
             color: white;}
         a{text-decoration: none;
             color: inherit}
-        button.add:hover{
-            width: 200px;
-            height: 30px;
-            background-color: white;
-            color: black;
-            border: 2px solid cadetblue;
-            border-radius: 8px;
-            font-size: 20px;
-        }
-
         button.add{
-            width: 200px;
-            height: 30px;
-            background-color: cadetblue;
+            display: inline-block;
+            background: #ff523b;
             color: white;
-            border-radius: 8px;
-            font-size: 20px;
+            padding: 8px 30px;
+            margin: 30px 0;
+            border-radius: 30px;
+            transition: background 0.5s;
+        }
+        button.add:hover{
+            background: #563434;
 
         }
         button.delete {
@@ -83,7 +80,9 @@
             color: white;
             border-radius: 4px;
         }
-
+        .group-sorting{
+            background-color: #ffd6d6;
+        }
 
     </style>
     <script>
@@ -98,18 +97,20 @@
 </head>
 <body>
 <div class="container">
+    <div class="nen">
     <h1>Products Management</h1>
     <button class="add">
     <a th:href="@{/product-management/add-new-product.html}">Add new Product</a><br>
     </button>
+    </div>
     <div class="group-sorting">
-        <button class="sort">
+        <button class="add">
         <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Sort Title</a>
         </button>
-        <button class="sort">
+        <button class="add">
         <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=slug&sortDir=' + ${reverseSortDir}}">Sort Slug</a>
         </button>
-        <button class="sort">
+        <button class="add">
         <a th:href="@{'/product-management/products-list/page/' + ${currentPage} + '?sortField=discount&sortDir=' + ${reverseSortDir}}">Sort Discount</a>
         </button>
 
@@ -117,7 +118,7 @@
 
     <table class="list-products-management">
         <thead style="background-color: aquamarine">
-            <tr>
+            <tr class="nhan">
                 <td>Title</td>
                 <td>Slug</td>
                 <td>Sku</td>
