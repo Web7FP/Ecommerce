@@ -110,7 +110,8 @@
     <div class="row">
         <th:block th:each="reProduct : ${relatedProducts}">
             <div class="col-4">
-                <img th:src="${reProduct.getImageLink()}" th:alt="${reProduct.getTitle()}">
+                <a th:href="@{/product/{slugProduct}(slugProduct=${reProduct.slug})}"><img th:src="${reProduct.getImageLink()}"></a>
+
                 <h4 th:text="${reProduct.getTitle()}"></h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
