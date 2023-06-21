@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -103,60 +103,25 @@
 <div class="small-container">
     <div class="row row-2">
         <h2>Related Products</h2>
-        <p>View More</p>
     </div>
 </div>
-<!-- Products -->
+<!-- Related Products -->
 <div class="small-container">
     <div class="row">
-        <div class="col-4">
-            <img th:src="@{/img/product-9.jpg}">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
+        <th:block th:each="reProduct : ${relatedProducts}">
+            <div class="col-4">
+                <img th:src="${reProduct.getImageLink()}" th:alt="${reProduct.getTitle()}">
+                <h4 th:text="${reProduct.getTitle()}"></h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p><span th:text="${product.price}"></span><sup>đ</sup></p>
             </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img th:src="@{/img/product-10.jpg}">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img th:src="@{/img/product-11.jpg}">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img th:src="@{/img/product-12.jpg}">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
+        </th:block>>
     </div>
 </div>
 

@@ -41,4 +41,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "from Product as p join p.tags as t " +
             "where t.slug = :tagSlug")
     Page<Product> getAllProductByTagId(@Param("tagSlug") String tagSlug, Pageable pageable);
+
+    @Query("select distinct p " +
+            "from Product as p join p.categories as c " +
+            "where c.id in ?1 and p.id <> ?2")
+    Page<Product> getAllRelatedProduct(List<Long> relatedCategoriesId, Integer productId, Pageable pageable);
+
+
 }

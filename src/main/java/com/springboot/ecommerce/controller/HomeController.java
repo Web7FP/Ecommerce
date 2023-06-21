@@ -62,6 +62,10 @@ public class HomeController {
             Model model){
         Product product = productService.findBySlugProduct(slugProduct);
         model.addAttribute("product", product);
+        model.addAttribute("relatedProducts",
+                productService.getAllRelatedProduct(
+                        product, productService.findPaginated(1,5, "title", "asc")).getContent()
+        );
         return "product-detail";
     }
 
