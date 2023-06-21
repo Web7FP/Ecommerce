@@ -1,7 +1,7 @@
 .detail-product {
     padding: 10px 50px 20px;
     min-height: 70vh;
-    margin: 0px 300px 0px 300px;
+    margin: 0px 200px 0px 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,18 +24,23 @@
     background-color: rgb(86, 26, 26);
     transition: 1s
 }
-#number-product{
+.number-product{
     border: none;
     height: 30px;
     width: 50px;
-    border-radius: 0px;
+    border-radius: 10px;
     text-align: center;
-    background-color: rgb(230, 216, 196);
+    background-color: rgb(243, 206, 155);
     font-size: 18px;
 }
-.m-auto-text-2xl-font-thin{
-    outline: none;
-    background-color: rgb(230, 224, 224);
-    height: 30px;
+.increase-decrease-product{
+    border: none;
+    background-color: rgb(245, 195, 162);
+    height: 20px;
+    width: 20px;
+    font-weight: 400;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
 }
 

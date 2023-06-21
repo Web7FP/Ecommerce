@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product - detail | MyStore</title>
+    <title>Product - detail | TechShop</title>
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/product-detail.css}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -47,10 +47,10 @@
                  style="height: 400px; width: 400px">
         </div>
         <div class="next-to-img">
-            <a th:href="@{/home}" id="back">Home page</a><br><br>
-            <h1 th:text="${product.title}"></h1>
-            <p th:text="'Price: ' + ${product.price}"></p><br><br>
-            <p th:text="'Discount: '+ ${product.discount}"></p><br><br>
+            <a th:href="@{/home}" id="back">Home page/</a><br><br>
+            <h1 th:text="${product.title}"></h1><br>
+            <p th:text="'Price: ' + ${product.price} + ' VND'" style="font-size: 25px;font-weight:500 "></p><br>
+            <p th:text="'Discount: '+ ${product.discount} + ' VND' "></p><br><br>
 
             <th:block th:if="${product.shop == false}">
                 <p>Product no longer available</p>
@@ -64,16 +64,18 @@
                 <div class="custom-number-input h-10 w-32">
 
                     <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                        <button data-action="decrement" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                        <button data-action="decrement" class="increase-decrease-product">
                             <span class="m-auto-text-2xl-font-thin">−</span>
                         </button>
-                        <input type="number" id="number-product"
+                        <input type="number" class="number-product"
+
                                th:id="'quantity' + ${product.id}"
                                name="custom-input-number"
                                value="1">
-                        <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
-                            <span class="m-auto-text-2xl-font-thin">+</span>
-                        </button>
+                        <button data-action="increment" class="increase-decrease-product">
+                            <span class="m-auto-text-2xl-font-thin" >+</span>
+                        </button><br><br>
+                    </div>
 
                         <button id="button-add-product-to-cart">Add To Cart</button>
                     </div>
@@ -90,7 +92,7 @@
                     <th:block th:if="${product.quantity <= 10}">
                         <p th:text="'Only ' + ${product.quantity} + ' left in stock'"></p>
                     </th:block>
-                </div>
+
             </th:block>
 
 
