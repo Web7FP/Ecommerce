@@ -97,6 +97,10 @@ public class HomeController {
                         "Laptop",
                         productService.findPaginated(1, 10, "title", "asc")).getContent()
         );
+        model.addAttribute("watchProducts",
+                productService.getAllProductByCategoryName(
+                        "Watch",
+                        productService.findPaginated(1,10, "title", "asc")).getContent());
         return "home";
     }
 
