@@ -27,5 +27,9 @@ public interface ProductService {
 
     Product findBySlugProduct (String slugProduct);
 
-    Page<Product> getAllProductByCategoryName(String categoryName, int pageNo, int pageSize, String sortField, String sortDirection);
+    Page<Product> getAllProductByCategoryName(String categoryName, Pageable pageable);
+
+    Page<Product> getAllProductByCategorySlug(String categorySlug, Pageable pageable);
+
+    Page<Product> getAllProductByTagSlug(String tagSlug, Pageable pageable);
 }

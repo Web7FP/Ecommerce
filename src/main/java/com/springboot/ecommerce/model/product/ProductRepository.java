@@ -30,4 +30,15 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "from Product as p join p.categories as c " +
             "where c.title = :categoryName")
     Page<Product> getAllProductsByCategoryName(@Param("categoryName") String categoryName, Pageable pageable);
+
+    @Query("select p " +
+            "from Product as p join p.categories as c " +
+            "where c.slug = :categorySlug")
+    Page<Product> getAllProductsByCategoryId(@Param("categorySlug") String categorySlug, Pageable pageable);
+
+
+    @Query("select p " +
+            "from Product as p join p.tags as t " +
+            "where t.slug = :tagSlug")
+    Page<Product> getAllProductByTagId(@Param("tagSlug") String tagSlug, Pageable pageable);
 }

@@ -9,8 +9,10 @@
     <link rel="stylesheet" th:href="@{/css/home.css}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
 
 
 </head>
@@ -115,7 +117,7 @@
                         <i class="fa fa-star-o"></i>
                     </div>
                     <p><span th:text="${product.price}"></span><sup>đ</sup></p>
-                    <button>Add to Cart</button>
+                    <button class="button-add-product-to-cart" onclick="addProductToCart(this)"  th:data-product-id="${product.id}">Add to Cart</button>
                 </div>
 
             </th:block>
@@ -124,6 +126,7 @@
     </div>
 
 </div>
+
 
 <!-- Offer -->
 <div class="offer">
@@ -445,8 +448,9 @@
         }
     }
 </script>
-
+<!--Magic. Don't touch-->
+<script th:src="@{/js/add-product-to-cart-from-pros-page.js}"></script>
+<!--Magic. Don't touch-->
 </body>
 <script th:src="@{/js/main.js}"></script>
-</body>
 </html>

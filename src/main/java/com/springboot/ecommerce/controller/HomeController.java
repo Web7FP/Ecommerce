@@ -3,6 +3,8 @@ package com.springboot.ecommerce.controller;
 
 import com.springboot.ecommerce.model.cart.Cart;
 import com.springboot.ecommerce.model.cart.CartServiceImpl;
+import com.springboot.ecommerce.model.category.Category;
+import com.springboot.ecommerce.model.category.CategoryServiceImpl;
 import com.springboot.ecommerce.model.product.Product;
 import com.springboot.ecommerce.model.product.ProductServiceImpl;
 import com.springboot.ecommerce.model.user.User;
@@ -63,7 +65,7 @@ public class HomeController {
         return "product-detail";
     }
 
-    @GetMapping("home/product-list/page/{pageNo}")
+    @GetMapping("/home/product-list/page/{pageNo}")
     public String findPaginatedProduct(
             @PathVariable("pageNo") int pageNo,
             @RequestParam("sortField") String sortField,
@@ -84,14 +86,52 @@ public class HomeController {
         model.addAttribute("phoneProducts",
                 productService.getAllProductByCategoryName(
                         "Smart Phone",
-                        1,10,"title", "asc").getContent()
+                        productService.findPaginated(1, 10, "title", "asc")).getContent()
         );
         model.addAttribute("laptopProducts",
                 productService.getAllProductByCategoryName(
                         "Laptop",
-                        1,10,"title", "asc").getContent()
+                        productService.findPaginated(1, 10, "title", "asc")).getContent()
         );
         return "home";
+    }
+
+    @GetMapping("/category/{slugCategory}")
+    public String getProductsByCategory(@PathVariable("slugCategory") String categorySlug,
+                                        @RequestParam(value = "sortField", defaultValue = "title") String sortField,
+                                        @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection,
+                                        @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+                                        Model model){
+        int pageSize = 5;
+        Page<Product> productPage  = productService.getAllProductByCategorySlug(
+                categorySlug, productService.findPaginated(pageNo, pageSize, sortField, sortDirection)
+        );
+        model.addAttribute("productsList", productPage.getContent());
+        model.addAttribute("totalItems", productPage.getTotalElements());
+        model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("sortDir", sortDirection);
+        model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
+        return "products-category-tag";
+    }
+
+
+    @GetMapping("/tag/{slugTag}")
+    public String getProductsByTag(@PathVariable("slugTag") String tagSlug,
+                                   @RequestParam(value = "sortField", defaultValue = "title") String sortField,
+                                   @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection,
+                                   @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+                                   Model model
+    ){
+        int pageSize = 5;
+        model.addAttribute("productsList",
+                productService.getAllProductByTagSlug(
+                        tagSlug,
+                        productService.findPaginated(pageNo, pageSize, sortField, sortDirection)
+                ).getContent());
+
+        return "products-category-tag";
     }
 
 

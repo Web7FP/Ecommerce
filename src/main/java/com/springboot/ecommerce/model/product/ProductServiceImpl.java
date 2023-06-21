@@ -102,9 +102,19 @@ public class ProductServiceImpl implements ProductService{
 
 
     @Override
-    public Page<Product> getAllProductByCategoryName(String categoryName, int pageNo, int pageSize, String sortField, String sortDirection) {
-        return productRepository.getAllProductsByCategoryName(
-                categoryName,
-                this.findPaginated(pageNo, pageSize, sortField, sortDirection));
+    public Page<Product> getAllProductByCategoryName(String categoryName, Pageable pageable) {
+        return productRepository.getAllProductsByCategoryName(categoryName,pageable);
+    }
+
+    @Override
+    public Page<Product> getAllProductByCategorySlug(String categorySlug, Pageable pageable) {
+        return productRepository.getAllProductsByCategoryId(categorySlug, pageable);
+    }
+
+
+    @Override
+    public Page<Product> getAllProductByTagSlug(String tagSLug, Pageable pageable) {
+        return productRepository.getAllProductByTagId(tagSLug, pageable);
     }
 }
+
