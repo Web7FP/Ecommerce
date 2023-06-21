@@ -1,5 +1,6 @@
 package com.springboot.ecommerce.model.product;
 
+import com.springboot.ecommerce.model.category.Category;
 import com.springboot.ecommerce.model.productMeta.ProductMeta;
 import com.springboot.ecommerce.model.productMeta.ProductMetaServiceImpl;
 import com.springboot.ecommerce.search.model.product.ProductElasticSearchServiceImpl;
@@ -115,6 +116,16 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Page<Product> getAllProductByTagSlug(String tagSLug, Pageable pageable) {
         return productRepository.getAllProductByTagId(tagSLug, pageable);
+    }
+
+
+    @Override
+    public Page<Product> getAllRelatedProduct(Product product, Pageable pageable) {
+        List<Long> relatedCategoriesId = product.getCategories()
+                .stream()
+                .map(Category::getId)
+                .toList();
+        return productRepository.getAllRelatedProduct(relatedCategoriesId, product.getId(), pageable);
     }
 }
 

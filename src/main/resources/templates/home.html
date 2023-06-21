@@ -96,6 +96,7 @@
                         <i class="fa fa-star-o"></i>
                     </div>
                     <p><span th:text="${product.price}"></span><sup>đ</sup></p>
+                    <button class="button-add-product-to-cart" onclick="addProductToCart(this)"  th:data-product-id="${product.id}">Add to Cart</button>
                 </div>
 
             </th:block>
@@ -119,7 +120,6 @@
                     <p><span th:text="${product.price}"></span><sup>đ</sup></p>
                     <button class="button-add-product-to-cart" onclick="addProductToCart(this)"  th:data-product-id="${product.id}">Add to Cart</button>
                 </div>
-
             </th:block>
         </div>
 
@@ -150,85 +150,24 @@
     <h2 class="title-watch"> Top Sale Samrt Watch</h2>
 
     <div class="watch" >
-        <div class="watch-1"> <!---san pham-->
-            <a href="product-detail.html"><img th:src="@{/img/smart-1.png}"></a>
-            <h4>Xiaomi Redmi Note 12S  </h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p><span>2.600.000</span><sup>đ</sup></p>
-            <button>Add to Cart</button>
-        </div>
-        <div class="watch-1">
-            <img th:src="@{/img/smart-2.png}">
-            <h4>Iphone 14 Pro 12gb | Chính hãng VN/A</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p><span>2.600.000</span><sup>đ</sup></p>
-            <button>Add to Cart</button>
-        </div>
-        <div class="watch-1">
-            <img th:src="@{/img/smart-3.png}">
-            <h4>Samsung Galaxy S23 Ultra 256GB  </h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p><span>2.600.000</span><sup>đ</sup></p>
-            <button>Add to Cart</button>
-        </div>
-        <div class="watch-1">
-            <img th:src="@{/img/smart-4.png}">
-            <h4>Iphone 13 128GB | Chính hãng VN/A</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p><span>2.600.000</span><sup>đ</sup></p>
-            <button>Add to Cart</button>
-        </div>
 
-        <div class="watch-1">
-            <img th:src="@{/img/smart-5.png}">
-            <h4>Iphone 13 128GB | Chính hãng VN/A</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
+        <th:block th:each="product : ${watchProducts}">
+            <div class="watch-1"> <!---san pham-->
+                <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}"><img th:src="${product.getImageLink()}"></a>
+                <h4 th:text="${product.title}"></h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p><span th:text="${product.price}"></span><sup>đ</sup></p>
+                <button class="button-add-product-to-cart" onclick="addProductToCart(this)"  th:data-product-id="${product.id}">Add to Cart</button>
             </div>
-            <p><span>2.600.000</span><sup>đ</sup></p>
-            <button>Add to Cart</button>
-        </div>
-        <div class="watch-1">
-            <img th:src="@{/img/smart-3.png}">
-            <h4>Iphone 13 128GB | Chính hãng VN/A</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p><span>2.600.000</span><sup>đ</sup></p>
-            <button>Add to Cart</button>
-        </div>
+        </th:block>
+
+
     </div>
 
     <div class="slider-watch-btn">

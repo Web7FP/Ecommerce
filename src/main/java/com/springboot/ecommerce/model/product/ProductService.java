@@ -32,4 +32,6 @@ public interface ProductService {
     Page<Product> getAllProductByCategorySlug(String categorySlug, Pageable pageable);
 
     Page<Product> getAllProductByTagSlug(String tagSlug, Pageable pageable);
+
+    Page<Product> getAllRelatedProduct(Product product, Pageable pageable);
 }
