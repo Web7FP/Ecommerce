@@ -3,6 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <title>Product Management</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #FFA500, #FFC0CB);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .update-product-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .update-product-form label {
+            font-size: 16px;
+            color: #444;
+        }
+
+        .update-product-form input[type="text"],
+        .update-product-form input[type="number"],
+        .update-product-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #444;
+            background-color: #f6f6f6;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .update-product-form input[type="submit"],
+        .update-product-form button,
+        .update-product-form a.btn-product-meta,
+        .update-product-form a.btn-product-management {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            background-color: #FFC0CB;
+        }
+
+        .update-product-form input[type="submit"]:hover,
+        .update-product-form button:hover,
+        .update-product-form a.btn-product-meta:hover,
+        .update-product-form a.btn-product-management:hover {
+            opacity: 0.8;
+        }
+
+        .update-product-form .group-product-meta button {
+            background-color: #FFC0CB;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .update-product-form .group-product-meta button:hover {
+            background-color: #FFC0CB;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .form-buttons a {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            background-color: #FFC0CB;
+        }
+
+        .form-buttons a:hover {
+            opacity: 0.8;
+        }
+
+        .update-product-form .group-title,
+        .update-product-form .group-image,
+        .update-product-form .group-meta-title,
+        .update-product-form .group-slug,
+        .update-product-form .group-summary,
+        .update-product-form .group-sku,
+        .update-product-form .group-shop-available,
+        .update-product-form .group-price,
+        .update-product-form .group-discount,
+        .update-product-form .group-quantity,
+        .update-product-form .group-published-at,
+        .update-product-form .group-starts-at,
+        .update-product-form .group-ends-at,
+        .update-product-form .group-content,
+        .update-product-form .group-category,
+        .update-product-form .group-tag,
+        .update-product-form .group-product-meta {
+            margin-bottom: 20px;
+        }
+
+        .update-product-form .group-product-meta .form-group-product-meta {
+            margin-bottom: 10px;
+        }
+
+        .update-product-form .group-product-meta .form-group-product-meta:last-child {
+            margin-bottom: 0;
+        }
+
+        .update-product-form .group-product-meta label,
+        .update-product-form .group-product-meta textarea {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .update-product-form .group-product-meta input[type="text"] {
+            width: 80%;
+        }
+
+        .update-product-form .group-product-meta textarea {
+            width: 100%;
+            resize: vertical;
+        }
+
+        .update-product-form a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -134,13 +283,13 @@
                 <input type="submit" value="Add new product">
             </th:block>
 
+            <div class="form-buttons" th:if="${product.id != null}">
+                <a th:href="@{/product-management/product-meta-management/{id}(id=${product.id})}" class = "btn-product-meta">Product Meta Management</a>
+                <a th:href="@{/product-management/products-list}" class="btn-product-management">Back to Product management</a><br>
+            </div>
+
+
         </form>
-
-        <th:block th:if="${product.id != null}">
-            <a th:href="@{/product-management/product-meta-management/{id}(id=${product.id})}">Product Meta Management</a><br><br>
-        </th:block>
-
-        <a th:href="@{/product-management/products-list}">Back to Product management</a><br>
 
     </div>
 </div>
