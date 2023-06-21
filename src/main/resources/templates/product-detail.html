@@ -74,11 +74,22 @@
                         <button id="button-add-product-to-cart">Add To Cart</button>
                     </div>
 
+                    <!--MAGIC. DON'T TOUCH :)).-->
+                    <script th:inline="javascript">
+                        let maxQuantityProduct = [[${product.quantity}]];
+                        let productId = [[${product.id}]];
+                    </script>
+                    <script th:src="@{/js/quantity-controll-product-page.js}"></script>
+                    <!--MAGIC. DON'T TOUCH :)).-->
+
+
                     <th:block th:if="${product.quantity <= 10}">
                         <p th:text="'Only ' + ${product.quantity} + ' left in stock'"></p>
                     </th:block>
                 </div>
             </th:block>
+
+
         </div>
     </div>
 </div>

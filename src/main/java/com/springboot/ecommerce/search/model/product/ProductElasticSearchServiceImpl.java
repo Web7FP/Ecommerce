@@ -44,10 +44,10 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         productElasticSearch.setCategories(new ArrayList<>());
         productElasticSearch.setTags(new ArrayList<>());
         for (Category category: product.getCategories()) {
-            productElasticSearch.getCategories().add(category.getId().toString());
+            productElasticSearch.getCategories().add(category.getTitle());
         }
         for (Tag tag : product.getTags()){
-            productElasticSearch.getTags().add(tag.getId().toString());
+            productElasticSearch.getTags().add(tag.getTitle());
         }
 
         this.save(productElasticSearch);
@@ -84,10 +84,10 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         List<String> categoriesTitle = new ArrayList<>();
         List<String> tagsTitle = new ArrayList<>();
         for (Category category: product.getCategories()) {
-            categoriesTitle.add(category.getId().toString());
+            categoriesTitle.add(category.getTitle());
         }
         for (Tag tag : product.getTags()){
-            tagsTitle.add(tag.getId().toString());
+            tagsTitle.add(tag.getTitle());
         }
         productElasticSearch.setCategories(categoriesTitle);
         productElasticSearch.setTags(tagsTitle);
