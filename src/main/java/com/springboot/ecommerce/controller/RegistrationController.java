@@ -39,7 +39,7 @@ public class RegistrationController {
     @GetMapping("confirm")
     public String confirm(@RequestParam("token") String token){
         registrationService.confirmedToken(token);
-        return "redirect:/home";
+        return "redirect:/login";
     }
 
 
