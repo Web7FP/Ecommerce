@@ -10,7 +10,9 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.js"
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+
+    <script src=""
             integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -260,13 +262,12 @@
 
 </div>
 <!-- -----------Testimonial Chung nhan-->
-<div class="testimonial">
-    <div class="small-container">
-        <div class="row">
+<div class="testimonial" >
+    <div class="small-container" >
+        <div class="testimonial-detail">
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                    industry's standard dummy text.</p>
+                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -274,13 +275,12 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                 </div>
-                <img th:src="@{/img/user-1.png}">
-                <h3>Sean Parker</h3>
+                <img th:src="@{/img/user-1.png}" style="margin-left: 95px;"><br>
+                <h3>Hung Tran </h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                    industry's standard dummy text.</p>
+                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -288,13 +288,12 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                 </div>
-                <img th:src="@{/img/user-2.png}">
-                <h3>Mike Smith</h3>
+                <img th:src="@{/img/user-2.png}" style="margin-left: 95px;"><br>
+                <h3>Le Hai Dang</h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                    industry's standard dummy text.</p>
+                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -302,11 +301,70 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                 </div>
-                <img th:src="@{/img/user-3.png}">
-                <h3>Mabel Joe</h3>
+                <img th:src="@{/img/user-3.png}" style="margin-left: 95px;"><br>
+                <h3>Cuong Minh</h3>
+            </div>
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <img th:src="@{/img/user-1.png}" style="margin-left: 95px;"><br>
+                <h3>Bui Dung</h3>
+            </div>
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <img th:src="@{/img/user-1.png}" style="margin-left: 95px;"><br>
+                <h3>Vuong Doan</h3>
+            </div>
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <img th:src="@{/img/user-1.png}" style="margin-left: 95px;"><br>
+                <h3>Chu Manh</h3>
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            var slider = $('.testimonial-detail');
+
+            function autoSlide() {
+                slider.slick('slickNext');
+            }
+
+            slider.slick({
+                infinite: true,
+                slidesToShow: 3,
+                prevArrow: $('.prevv'),
+                nextArrow: $('.nextt')
+            });
+
+            setInterval(autoSlide, 4000);
+        });
+    </script>
+
 </div>
 
 <!-- Brands -->
