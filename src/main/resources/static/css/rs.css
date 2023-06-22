@@ -12,6 +12,7 @@ body{
     margin-bottom: 25px;
 
 }
+
 .result-search {
     display: grid;
     grid-template-columns: 15% 85%;

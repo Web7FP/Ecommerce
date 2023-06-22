@@ -1,0 +1,70 @@
+body{
+    background: #f2f2f2;
+    font-family: 'Arial', sans-serif;
+}
+
+.container-ordpay {
+    width: auto;
+    justify-content: center;
+    margin-top: 25px ;
+    margin-bottom: 15px ;
+    margin-right: 5%;
+    margin-left: 5%;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.group-user-information,
+.group-order-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.cart-item-list, .cart-item-list table{
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.cart-item-list, .user-meta th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+
+
+.transaction {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+}
+.transaction p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.transaction p:not(:last-child) {
+    margin-bottom: 10px;
+}
+.user-meta th{
+    font-weight: bold;
+}
+.cart-item-list th{
+    font-weight: bold;
+}

@@ -6,11 +6,20 @@
     <title>Order detail</title>
     <style>
         /* Thiết lập kích thước và định dạng cho các phần tử */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #FFA500, #FFC0CB);
+            color: #444;
+            margin: 0;
+            padding: 0;
+        }
         .container {
             width: 800px;
             margin: 0 auto;
+            margin-bottom: 30px;
             padding: 20px;
-            background-color: #f5f5f5;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .group-user-information,
@@ -57,11 +66,29 @@
         .transaction p:not(:last-child) {
             margin-bottom: 10px;
         }
+        .order-list a {
+            display: inline-block;
+            background: #ff523b;
+            color: white;
+            padding: 8px 30px;
+            margin: 30px 0;
+            border-radius: 30px;
+            transition: background 0.5s}
+
+        .order-list a:hover {
+            background-color: #563434;
+        }
+        button.back {
+            background-color: burlywood;
+            color: white;
+            border-radius: 4px;
+        }
 
     </style>
 </head>
 
 <body>
+<a><img th:src="@{/img/logo.png}" alt="logo" width="80px"></a>
 <div class="container">
     <div class="group-user-information">
         <th:block th:with="userMeta=${order.getUser().getUserMeta()}">
@@ -134,6 +161,9 @@
         </th:block>
 
     </div>
+    <button class="back">
+        <a th:href="@{/order-management}">Back</a>
+    </button>
 </div>
 </body>
 </html>

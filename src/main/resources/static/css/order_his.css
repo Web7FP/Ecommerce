@@ -18,6 +18,7 @@ body{
 
 .container_ordhis {
     display: flex;
+    flex-direction: column;
     background: #F7F7F7;
     width: 80%;
     margin-top: 25px;
@@ -30,6 +31,7 @@ body{
 .group-delivered-order-list, .group-completed-order-list,
 .group-cancelled-order-list {
     margin-bottom: 30px;
+    display: flex;
 }
 h2 {
     text-align: center;
@@ -43,7 +45,7 @@ table {
     width: 90%;
     margin-top: 10px;
     margin-right: auto;
-    margin-left: auto;
+    margin-left: 5%;
     background-color: #f6f6f6;
     table-layout: fixed;
 }
@@ -96,7 +98,7 @@ button:hover {
     background-color: #ddd;
 }
 
-    /* CSS cho mũi tên trong button */
+
 .order-his-button button::before{
     content: "";
     display: inline-block;
