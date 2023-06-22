@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(to bottom, #fff, #ffd6d6);
+    background-image: linear-gradient(to bottom, #fcfafa, #f6c1c1);
 }
 .img{
     margin-right: 30px;
