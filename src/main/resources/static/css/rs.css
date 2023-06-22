@@ -1,0 +1,150 @@
+body{
+    background: #f2f2f2;
+    font-family: 'Arial', sans-serif;
+}
+.container_rs {
+    display: flex;
+    background: #F7F7F7;
+    width: 80%;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+
+}
+.result-search {
+    display: grid;
+    grid-template-columns: 15% 85%;
+    background: #f2f2f2;
+    margin-top: 25px;
+    margin-bottom: auto;
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+
+.left4filter {
+    /* Cột bên trái */
+    grid-column: 1 / span 1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-top: 25px;
+    margin-bottom: auto;
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+
+.right4 {
+    /* Cột bên phải */
+    grid-column: 2 / span 1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-top: 25px;
+    margin-bottom: auto;
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+
+.right4 table{
+    border-collapse: collapse;
+    width: 90%;
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #f6f6f6;
+    table-layout: fixed;
+
+}
+.right4 td,th{
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+
+}
+
+
+
+
+
+
+.search-with-only-keyword form{
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+    align-items: center;
+}
+.search-with-only-keyword label{
+    font-weight: bold;
+}
+.search-with-only-keyword input[type="text"]{
+    flex: 1;
+    padding: 5px;
+    margin: 5px 5px;
+
+}
+.search-with-only-keyword input[type="submit"]{
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center;
+    width: 10%;
+}
+
+.categories-filter{
+    margin-bottom: 20px;
+}
+.categories-filter label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.categories-filter input[type="checkbox"] {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.tags-filter{
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+.tags-filter label{
+    display: block;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+.tags-filter input[type="checkbox"] {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.price-filter{
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.sort-button{
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.pagination{
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
