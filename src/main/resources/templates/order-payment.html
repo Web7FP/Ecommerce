@@ -4,9 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Payment Information</title>
+    <link rel="stylesheet" th:href="@{/css/order_pay.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css}" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
 </head>
 <body>
-<div class="container">
+<<div class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a th:href="@{/home}"><img th:src="@{/img/logo.png}" alt="logo" width="125px"></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li>
+                        <form method="get" th:action="@{/search}">
+                            <input type="text" id="search-product"  name="q" placeholder="🔍"
+                                   style="border-radius: 10px;border: none; height:30px; width:300px;">
+                            <input type="submit" id="submit-search" value="Search"
+                                   style="border-radius: 10px; border: none; height: 30px ; width:75px; background-color: #f68383">
+                        </form>
+                    </li>
+                    <li><a th:href="@{/home}" >Home</a></li>
+                    <li><a>Products</a></li>
+                    <li><a th:href="@{/order/history}">Order History</a></li>
+                    <li><a>Contact</a></li>
+                    <li><a th:href="@{/account/edit}">My Account</a></li>
+                    <li><a th:href="@{/logout}" style="color: rgb(211, 38, 38);">Logout</a></li>
+                </ul>
+            </nav>
+            <a th:href="@{/cart}"><img th:src="@{/img/cart.png}" width="30px" height="30px"></a>
+            <img th:src="@{/img/menu.png}" class="menu-icon" onclick="menutoggle()">
+        </div>
+
+    </div>
+</div>
+<div class="container-ordpay">
     <div class="cart-item-list">
         <table>
             <thead></thead>
@@ -32,16 +70,16 @@
     <div class="user-meta">
         <table th:object="${userMeta}">
             <tr>
-                <th>Your name:</th>
-                <td th:text="' ' + *{firstName} + ' ' + *{middleName} + ' ' + *{lastName}"></td>
+                <th style="width: 15%">Your name:</th>
+                <td style="width: 85%" th:text="' ' + *{firstName} + ' ' + *{middleName} + ' ' + *{lastName}"></td>
             </tr>
             <tr>
-                <th>Address:</th>
-                <td th:text="*{address}"></td>
+                <th style="width: 15%">Address:</th>
+                <td style="width: 85%" th:text="*{address}"></td>
             </tr>
             <tr>
-                <th>Mobile:</th>
-                <td th:text="*{mobile}"></td>
+                <th style="width: 15%">Mobile:</th>
+                <td style="width: 85%" th:text="*{mobile}"></td>
             </tr>
         </table>
     </div>
@@ -70,6 +108,46 @@
 
             <input type="submit" value="ORDER">
         </form>
+    </div>
+</div>
+<!-- Footer -->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+                <h3>Download Our App</h3>
+                <p>Download App for Android and ios mobile phone.</p>
+                <div class="app-logo">
+                    <img th:src="@{/img/play-store.png}">
+                    <img th:src="@{/img/app-store.png}">
+                </div>
+            </div>
+            <div class="footer-col-2">
+                <img th:src="@{/img/logo-white.png}">
+                <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many.
+                </p>
+            </div>
+            <div class="footer-col-3">
+                <h3>Useful Links</h3>
+                <ul>
+                    <li>Coupons</li>
+                    <li>Blog Post</li>
+                    <li>Return Policy</li>
+                    <li>Join Affiliate</li>
+                </ul>
+            </div>
+            <div class="footer-col-4">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                    <li>Youtube</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2020 - Samwit Adhikary</p>
     </div>
 </div>
 </body>
