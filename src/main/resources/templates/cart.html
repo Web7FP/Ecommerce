@@ -41,6 +41,14 @@
             </div>
             <nav>
                 <ul id="MenuItems">
+                    <li>
+                        <form method="get" th:action="@{/search}">
+                            <input type="text" id="search-product"  name="q" placeholder="🔍"
+                                   style="border-radius: 10px;border: 1px solid gray; height:30px; width:300px;">
+                            <input type="submit" id="submit-search" value="Search"
+                                   style="border-radius: 10px; border: none; height: 30px ; width:75px; background-color: #f68383">
+                        </form>
+                    </li>
                     <li><a th:href="@{/home}" >Home</a></li>
                     <li><a th:href="@{/order/history}">Order History</a></li>
                     <li><a>Contact</a></li>
@@ -117,7 +125,7 @@
             <div class="box-container">
                 <div class="subtotal-row">
                     <p class="subtotal-text">SubTotal:</p>
-                    <p class="subtotal-value" th:text="${cart.subTotal}"></p>
+                    <p class="subtotal-value" id="sub-total-price-cartItem" th:text="${cart.subTotal}"></p>
                     <br><br>
                 </div>
                 <br>

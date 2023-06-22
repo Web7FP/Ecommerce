@@ -120,8 +120,8 @@
         }
     </style>
     <script>
-        function xoahaykhong(tinnhan) {
-            if (confirm(tinnhan)==true){
+        function waringDelete(message) {
+            if (confirm(message)==true){
                 return true;
             }
             return false;
@@ -177,8 +177,8 @@
                     <button class="update">
                     <a th:href="@{/product-management/update-product-form/{id}(id=${product.id})}">Update</a>
                     </button>
-                    <th:block th:if="${product.getOrderItems().isEmpty() or product.getCartItems().isEmpty()}">
-                        <a class="delete" onclick="return xoahaykhong('bạn có chắc muốn xóa không');" th:href="@{/product-management/delete-product/{id}(id=${product.id})}">Delete</a>
+                    <th:block th:if="${product.getOrderItems().isEmpty() and product.getCartItems().isEmpty()}">
+                        <a class="delete" onclick="return waringDelete('bạn có chắc muốn xóa không');" th:href="@{/product-management/delete-product/{id}(id=${product.id})}">Delete</a>
                     </th:block>
 
                 </td>
