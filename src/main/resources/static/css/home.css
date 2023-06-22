@@ -220,14 +220,25 @@ small{
 
 .slider-watch-btn{
     position: relative;
-    display: block;
-    top: 5px;
-    text-align: center;
+    top: -220px;
 }
-.prev, .next{
+.prev{
     font-size: 40px; color: rgb(247, 209, 209);
-    background-color: rgb(255, 235, 229); border: none;
+    background-color: rgb(245, 181, 168); border: none;
     opacity: 90%;
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 30px;
+}
+.next{
+    font-size: 40px; color: rgb(247, 209, 209);
+    background-color: rgb(245, 181, 168); border: none;
+    opacity: 90%;
+    position: absolute;
+    top: 0;
+    right:0;
+    width: 30px;
 }
 .watch-1 button:hover {
     background-color: #e99085;
@@ -238,10 +249,10 @@ small{
 .watch-1 img{
     width: 70%;
 }
-/*-------------------------------------More Product*/
+/*-------------------------------------Testi title*/
 .title-more-products{
     text-align: center;
-    margin: 15px auto 80px;
+    margin: 20px auto 80px;
     position: relative;
     line-height: 60px;
     color: #555;
@@ -250,59 +261,7 @@ small{
     height: 55px;
     border-radius: 25px;
 }
-.more-product{
-    margin: 20px 500px 20px 500px ;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-}
-.sort-buttons,.search-engine,.product-container{
-    text-align: center;
-    margin-bottom: 20px;
-}
-table {
-    border-collapse: collapse;
-    width: 100%;
 
-}
-
-th, td {
-    text-align: left;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-}
-
-tr:hover {
-    background-color: #f5f5f5;
-}
-
-th {
-    background-color: #4CAF50;
-    color: white;
-}
-.sort-buttons {
-    float: left;
-    margin-left: 10px;
-    margin-top: 10px;
-    background-color: #e48282;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-}
-.sort-search{
-    display: flex;
-}
-#submit-search{
-    width: 60px;
-    border: none;
-    border-radius: 5px;
-    background-color: #ef6565;
-}
-#search-product{
-    width: 200px;
-    border-radius: 20px;
-}
 /*------------------------------------ Testimonial */
 .testimonial-container{
     max-width: 1080px;

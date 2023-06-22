@@ -7,14 +7,56 @@
                 src="https://code.jquery.com/jquery-3.6.4.js"
                 integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
                 crossorigin="anonymous"></script>
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css}" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" th:href="@{/css/home.css}">
+        <link rel="stylesheet" th:href="@{/css/rs.css}">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
     </head>
     <body>
+    <div class="header">
         <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <a th:href="@{/home}"><img th:src="@{/img/logo.png}" alt="logo" width="125px"></a>
+                </div>
+                <nav>
+                    <ul id="MenuItems">
+                        <li>
+
+                            <form method="get" th:action="@{/search}">
+                                <input type="text" id="search-product"  name="q" placeholder="🔍">
+                                <input type="submit" id="submit-search" value="Search">
+
+                            </form>
+                        </li>
+                        <li><a th:href="@{/home}" >Home</a></li>
+                        <li><a th:href="@{/order/history}">Order History</a></li>
+                        <li><a>Contact</a></li>
+                        <li><a th:href="@{/account/edit}">My Account</a></li>
+                        <li><a th:href="@{/logout}" style="color: rgb(211, 38, 38);">Logout</a></li>
+                    </ul>
+                </nav>
+
+                <a th:href="@{/cart}"><img th:src="@{/img/cart.png}" width="30px" height="30px"></a>
+                <img th:src="@{/img/menu.png}" class="menu-icon" onclick="menutoggle()">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ko đc động vào -->
+        <div class="container-rs">
 
             <div class="search-with-only-keyword">
                 <form th:action="@{/search}" method="get">
-                    <label for="search-product">Search Product: </label>
-                    <input id="search-product" type="text" name="q">
+                    <label for="search-product-header">Search Product: </label>
+                    <input id="search-product-header" type="text" name="q">
                     <input type="submit" value="search">
                 </form>
             </div>
@@ -25,16 +67,8 @@
 
             <div class="result-search" th:unless="${productNotFoundException}">
                 <!--MAGIC. DON'T TOUCH :)).------------------------------>
-                <table>
-                    <tr th:each="product : ${listProducts}">
-                        <td th:text="${product.getTitle()}"></td>
-                        <td th:text="${product.getPrice()}"></td>
-                        <td>
-                            <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
-                        </td>
-                    </tr>
-                </table>
 
+                <div class="left4filter">
                 <div class="categories-filter" th:if="${categoriesFilter != null}">
                     <label for="category-selection">Category Filter: </label>
                     <th:block th:each="categorySe : ${categoriesFilter}">
@@ -117,6 +151,83 @@
                 <script th:src="@{/js/pagination-result-search.js}"></script>
                 <!--MAGIC. DON'T TOUCH :)).------------------------------>
             </div>
+                <div class="right4">
+                    <table>
+                        <tr th:each="product : ${listProducts}">
+                            <td th:text="${product.getTitle()}"></td>
+                            <td th:text="${product.getPrice()}"></td>
+                            <td>
+                                <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
+    <!-- Brands -->
+
+    <div class="brands">
+        <div class="small-container">
+            <div class="row">
+                <div class="col-5">
+                    <img th:src="@{/img/logo-godrej.png}">
+                </div>
+                <div class="col-5">
+                    <img th:src="@{/img/logo-oppo.png}">
+                </div>
+                <div class="col-5">
+                    <img th:src="@{/img/logo-coca-cola.png}">
+                </div>
+                <div class="col-5">
+                    <img th:src="@{/img/logo-paypal.png}">
+                </div>
+                <div class="col-5">
+                    <img th:src="@{/img/logo-philips.png}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Download Our App</h3>
+                    <p>Download App for Android and ios mobile phone.</p>
+                    <div class="app-logo">
+                        <img th:src="@{/img/play-store.png}">
+                        <img th:src="@{/img/app-store.png}">
+                    </div>
+                </div>
+                <div class="footer-col-2">
+                    <img th:src="@{/img/logo-white.png}">
+                    <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many.
+                    </p>
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Coupons</li>
+                        <li>Blog Post</li>
+                        <li>Return Policy</li>
+                        <li>Join Affiliate</li>
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Twitter</li>
+                        <li>Instagram</li>
+                        <li>Youtube</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <p class="copyright">Copyright 2020 - Samwit Adhikary</p>
+        </div>
+    </div>
+
     </body>
 </html>

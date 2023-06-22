@@ -4,30 +4,106 @@
     <meta charset="UTF-8">
     <title>Product Meta Management</title>
     <style>
+        .nen{
+            background: radial-gradient(#fff,#ffd6d6)}
         table {border-collapse: collapse;width: 100%;}
         th, td {text-align: left;padding: 8px;}
         tr:nth-child(even) {background-color: #D6EEEE;}
+        button.add{
+            display: inline-block;
+            background: #ff523b;
+            color: white;
+            padding: 8px 30px;
+            margin: 30px 0;
+            border-radius: 30px;
+            transition: background 0.5s;
+        }
+        button.add:hover{
+            background: #563434;
+
+        }
+        table {border-collapse: separate;width: 100%;}
+        th, td {text-align: center;padding: 8px;}
+        tr:nth-child(even) {background-color: #ffd6d6;}
+        th {
+            background-color:#ef6565;
+            color: white;}
+        a{text-decoration: none;
+            color: inherit}
+        button.delete {
+            background-color: red;
+            color: white;
+            border: 2px solid red;
+            border-radius: 8px;
+        }
+
+        button.delete:hover {
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+        }
+        button.edit {
+            background-color: #4CAF50;
+            color: white;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+        }
+
+        button.edit:hover {
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+        }
+
+        button.back {
+            background-color: burlywood;
+            color: white;
+            border-radius: 4px;
+        }
     </style>
+    <script>
+        function xoahaykhong(tinnhan) {
+            if (confirm(tinnhan)==true){
+                return true;
+            }
+            return false;
+        }
+
+    </script>
+
 </head>
 <body>
 <div class="container">
+    <div class="nen">
     <h1>Product Meta Management</h1>
+        <button class="add">
     <a th:href="@{/product-management/add-new-product-meta/productId={productId}(productId=${product.id})}">Add new product meta</a><br>
+        </button>
+    </div>
     <table class="list-product-meta">
         <thead>
-            <tr>Key Product Meta</tr>
-            <tr>Action</tr>
+            <tr>
+                <th> Key Product Meta</th>
+                <th>Action</th>
+            </tr>
         </thead>
         <tbody>
             <tr th:each="productMeta : ${productMetaList}">
               <td th:text="${productMeta.keyProductMeta}"></td>
               <td>
-                  <a th:href="@{/product-management/delete-product-meta/{id}(id=${productMeta.id})}">Delete</a>
-                  <a th:href="@{/product-management/update-product-meta-form/{id}(id=${productMeta.id})}">Edit</a>
+                  <button class="delete">
+                   <a onclick="return xoahaykhong('bạn có chắc muốn xóa không');" th:href="@{/product-management/delete-product-meta/{id}(id=${productMeta.id})}">Delete</a>
+                  </button>
+                  <button class="edit">
+                   <a th:href="@{/product-management/update-product-meta-form/{id}(id=${productMeta.id})}">Edit</a>
+                  </button>
               </td>
             </tr>
         </tbody>
     </table>
+    <button class="back">
+        <a th:href="@{/product-management/products-list}">Back</a>
+    </button>
 </div>
 </body>
 </html>
