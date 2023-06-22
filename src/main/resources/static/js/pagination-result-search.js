@@ -26,13 +26,13 @@ $(document).ready(function () {
 
     if (currentPage < totalPages) {
         let p = currentPage + 1;
-        let nextPageLinkButton = '<a href="'+url+'&page=' + p +'">Next</a>';
-        $('div.pagination-button').append(nextPageLinkButton);
+        let nextPageLinkButton = '<a href="'+url+'&page=' + p +'">&raquo;</a>';
+        $('div.pagination-button-next').append(nextPageLinkButton);
     }
 
     if (currentPage <= totalPages && currentPage > 1){
         let p = currentPage - 1;
-        let previousPageLinkButton = '<a href="'+url+'&page=' + p +'">Prev</a>';
-        $('div.pagination-button').append(previousPageLinkButton);
+        let previousPageLinkButton = '<a href="'+url+'&page=' + p +'">&laquo;</a>';
+        $('div.pagination-button-prev').append(previousPageLinkButton);
     }
 })

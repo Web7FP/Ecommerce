@@ -17,6 +17,42 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+
+        <style>
+            .pagination {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px;
+                background-color: #f5f5f5;
+                border: 1px solid #ddd;
+            }
+
+            .page-links {
+                display: flex;
+                gap: 5px;
+            }
+
+            .page-links a,
+            .page-links span {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                border: 1px solid #ddd; /* Gray */
+            }
+
+
+            .pagination-button-prev a, .pagination-button-next a {
+                padding: 5px 10px;
+                text-decoration: none;
+                color: #333;
+                background-color: #ddd;
+                border: 1px solid #bbb;
+            }
+
+
+        </style>
     </head>
     <body>
     <div class="header">
@@ -155,21 +191,15 @@
 
                         </div>
                     </div>
-<!--                    <table>-->
-<!--                        <tr th:each="product : ${listProducts}">-->
-<!--                            <td th:text="${product.getTitle()}"></td>-->
-<!--                            <td th:text="${product.getPrice()}"></td>-->
-<!--                            <td>-->
-<!--                                <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>-->
-<!--                            </td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
+
+
+                    <p th:text="'Total products: ' + ${totalItems}"></p>
 
                     <!--MAGIC. DON'T TOUCH :)).------------------------------>
                     <div class="pagination">
-                        <p th:text="'Total products: ' + ${totalItems}"></p>
+                        <div class="pagination-button-prev"></div>
                         <span class="page-links"></span>
-                        <div class="pagination-button"></div>
+                        <div class="pagination-button-next"></div>
                     </div>
 
                     <script th:inline="javascript">
