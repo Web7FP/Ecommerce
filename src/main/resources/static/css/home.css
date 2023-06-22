@@ -220,14 +220,25 @@ small{
 
 .slider-watch-btn{
     position: relative;
-    display: flex;
     top: -220px;
-    gap: 1480px;
 }
-.prev, .next{
+.prev{
     font-size: 40px; color: rgb(247, 209, 209);
     background-color: rgb(245, 181, 168); border: none;
     opacity: 90%;
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 30px;
+}
+.next{
+    font-size: 40px; color: rgb(247, 209, 209);
+    background-color: rgb(245, 181, 168); border: none;
+    opacity: 90%;
+    position: absolute;
+    top: 0;
+    right:0;
+    width: 30px;
 }
 .watch-1 button:hover {
     background-color: #e99085;
