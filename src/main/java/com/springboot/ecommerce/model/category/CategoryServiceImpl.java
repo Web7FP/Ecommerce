@@ -62,6 +62,8 @@ public class CategoryServiceImpl implements CategoryService{
         return categoryRepository.getAllSubCategoriesOf(categoryParentId);
     }
 
-
-
+    @Override
+    public List<Long> getAllCategoryParent() {
+        return categoryRepository.getALlCategoryParent();
+    }
 }
