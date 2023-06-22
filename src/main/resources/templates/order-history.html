@@ -32,11 +32,11 @@
             <nav>
                 <ul id="MenuItems">
                     <li>
-
                         <form method="get" th:action="@{/search}">
-                            <input type="text" id="search-product"  name="q" placeholder="🔍">
-                            <input type="submit" id="submit-search" value="Search">
-
+                            <input type="text" id="search-product"  name="q" placeholder="🔍"
+                                   style="border-radius: 10px;border: none; height:30px; width:300px;">
+                            <input type="submit" id="submit-search" value="Search"
+                                   style="border-radius: 10px; border: none; height: 30px ; width:75px; background-color: #f68383">
                         </form>
                     </li>
                     <li><a th:href="@{/home}" >Home</a></li>

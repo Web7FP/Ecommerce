@@ -54,7 +54,7 @@ function updateSubTotal(){
     priceSpans.forEach(priceSpan => {
         subTotal += Number(priceSpan.textContent)
     });
-    document.getElementById("sub-total-price-cartItem").textContent = String("SubTotal: "+subTotal);
+    document.getElementById("sub-total-price-cartItem").textContent = String(subTotal);
 }
 
 

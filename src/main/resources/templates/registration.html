@@ -13,16 +13,16 @@
 
   <form class="registration" th:action="@{registration/register}" method="post" th:object="${request}">
 
-    <input class="textbox" type="text" placeholder="firstname" th:field="*{firstName}"/>
-    <input class="textbox" type="text" placeholder="lasttname" th:field="*{lastName}"/>
-    <input class="textbox" type="email" placeholder="Email" th:field="*{email}"/>
+    <input class="textbox" type="text" placeholder="firstname" th:field="*{firstName}" required/>
+    <input class="textbox" type="text" placeholder="lasttname" th:field="*{lastName}" required/>
+    <input class="textbox" type="email" placeholder="Email" th:field="*{email}" required/>
     <div class="email-already-taken-exception" th:if="${emailAlreadyTakenException}">
       <span th:text="${emailAlreadyTakenException}" style="color: red"></span>
     </div>
     <div class="email-not-valid-exception" th:if="${emailNotValidException}" style="margin-left: 30px">
       <span th:text="${emailNotValidException}" style="color: #770202; "></span>
     </div>
-    <input class="textbox" type="password" placeholder="Password" th:field="*{password}"/>
+    <input class="textbox" type="password" placeholder="Password" th:field="*{password}" required/>
     <div class="group_userRole" >
       <label for="role"></label>
       <select id="role" th:field="*{userRole}">
