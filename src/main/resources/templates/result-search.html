@@ -133,15 +133,37 @@
 
             </div>
                 <div class="right4">
-                    <table>
-                        <tr th:each="product : ${listProducts}">
-                            <td th:text="${product.getTitle()}"></td>
-                            <td th:text="${product.getPrice()}"></td>
-                            <td>
-                                <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="row">
+                        <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px;">
+                            <th:block th:each="product : ${listProducts}">
+
+                                <div class="col-4">
+                                    <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}"><img th:src="${product.getImageLink()}"></a>
+                                    <h4 th:text="${product.title}"></h4>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    </div>
+                                    <p><span th:text="${product.price}"></span><sup>đ</sup></p>
+                                    <button class="button-add-product-to-cart" onclick="addProductToCart(this)"  th:data-product-id="${product.id}">Add to Cart</button>
+                                </div>
+
+                            </th:block>
+
+                        </div>
+                    </div>
+<!--                    <table>-->
+<!--                        <tr th:each="product : ${listProducts}">-->
+<!--                            <td th:text="${product.getTitle()}"></td>-->
+<!--                            <td th:text="${product.getPrice()}"></td>-->
+<!--                            <td>-->
+<!--                                <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}">Detail</a>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
 
                     <!--MAGIC. DON'T TOUCH :)).------------------------------>
                     <div class="pagination">

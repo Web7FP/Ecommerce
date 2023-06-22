@@ -64,7 +64,7 @@ public class HomeController {
         model.addAttribute("product", product);
         model.addAttribute("relatedProducts",
                 productService.getAllRelatedProduct(
-                        product, productService.findPaginated(1,5, "title", "asc")).getContent()
+                        product, productService.findPaginated(1,10, "title", "asc")).getContent()
         );
         return "product-detail";
     }
@@ -132,7 +132,7 @@ public class HomeController {
                                    @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
                                    Model model
     ){
-        int pageSize = 5;
+        int pageSize = 10;
         model.addAttribute("productsList",
                 productService.getAllProductByTagSlug(
                         tagSlug,
