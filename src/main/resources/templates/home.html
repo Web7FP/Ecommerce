@@ -9,11 +9,8 @@
     <link rel="stylesheet" th:href="@{/css/home.css}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.js"
-            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-            crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 
 </head>
@@ -148,7 +145,7 @@
 </div>
 <!-----------Smart Watch--------------->
 <div>
-    <h2 class="title-watch"> Top Sale Samrt Watch</h2>
+    <h2 class="title-watch"> Top Sale Smart Watch</h2>
 
     <div class="watch" >
 
@@ -168,19 +165,28 @@
             </div>
         </th:block>
     </div>
+
     <div class="slider-watch-btn">
-        <button class="prev">Prev</button>
-        <button class="next">Next</button>
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
     </div>
 
     <script>
-        $(document).ready(function(){
-            $('.watch').slick({
+        $(document).ready(function() {
+            var slider = $('.watch');
+
+            function autoSlide() {
+                slider.slick('slickNext');
+            }
+
+            slider.slick({
                 infinite: true,
                 slidesToShow: 5,
-                prevArrow: $('.prev'),
-                nextArrow: $('.next')
+                prevArrow: $('.prevv'),
+                nextArrow: $('.nextt')
             });
+
+            setInterval(autoSlide, 4000);
         });
     </script>
 
