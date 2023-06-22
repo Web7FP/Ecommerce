@@ -76,6 +76,7 @@
             padding: 5px 10px;
             cursor: pointer;
             transition: background-color 0.3s ease-in-out;
+            margin-top: 20px;
         }
 
         .update-product-form .group-product-meta button:hover {
@@ -102,6 +103,14 @@
 
         .form-buttons a:hover {
             opacity: 0.8;
+        }
+
+        .update-product-form .group-product-meta .form-group-key-content{
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f6f6f6;
         }
 
         .update-product-form .group-title,
@@ -246,12 +255,14 @@
             <th:block th:if="*{id != null}">
                 <div class="group-product-meta">
                     <label for="product-meta">Product Meta List: </label>
-                    <div id="product-meta">
-                        <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
-                            <label for="key-product-meta" th:text="'Key product meta '+ ${metaStatus.count}"></label>
-                            <p id="key-product-meta" th:text="*{productMetas[__${metaStatus.index}__].keyProductMeta}"></p>
-                            <label for="content-product-meta" th:text="'Content ' + ${metaStatus.count}"></label>
-                            <p id="content-product-meta" th:text="*{productMetas[__${metaStatus.index}__].content}"></p><br><br>
+                    <div class="form-group-key-content">
+                        <div id="product-meta">
+                            <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
+                                <label for="key-product-meta" th:text="'Key product meta '+ ${metaStatus.count}"></label>
+                                <p id="key-product-meta" th:text="*{productMetas[__${metaStatus.index}__].keyProductMeta}"></p>
+                                <label for="content-product-meta" th:text="'Content ' + ${metaStatus.count}"></label>
+                                <p id="content-product-meta" th:text="*{productMetas[__${metaStatus.index}__].content}"></p><br><br>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -263,13 +274,15 @@
             <th:block th:unless="*{id != null}">
                 <div class="group-product-meta">
                     <label for="product-meta-new">Product Meta List: </label>
-                    <div id="product-meta-new">
-                        <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
-                            <label for="key-product-meta-new" th:text="'Key product meta '+ ${metaStatus.count}"></label>
-                            <input id="key-product-meta-new" th:field="*{productMetas[__${metaStatus.index}__].keyProductMeta}" type="text" required>
-                            <label for="content-product-meta-new" th:text="'Content ' + ${metaStatus.count}"></label>
-                            <textarea id="content-product-meta-new" th:field="*{productMetas[__${metaStatus.index}__].content}" rows="3"></textarea><br><br>
-                            <button type="button" onclick="removeProductMeta(this)">Delete</button>
+                    <div class="form-group-key-content">
+                        <div id="product-meta-new">
+                            <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
+                                <label for="key-product-meta-new" th:text="'Key product meta '+ ${metaStatus.count}"></label>
+                                <input id="key-product-meta-new" th:field="*{productMetas[__${metaStatus.index}__].keyProductMeta}" type="text" required>
+                                <label for="content-product-meta-new" th:text="'Content ' + ${metaStatus.count}"></label>
+                                <textarea id="content-product-meta-new" th:field="*{productMetas[__${metaStatus.index}__].content}" rows="3"></textarea><br><br>
+                                <button type="button" onclick="removeProductMeta(this)">Delete</button>
+                            </div>
                         </div>
                     </div>
                     <button type="button" onclick="addProductMeta()">Add New Product Meta Form</button>
