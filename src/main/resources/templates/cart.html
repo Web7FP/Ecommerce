@@ -59,9 +59,9 @@
 <div class="container">
 
     <div class="empty-cart-exception" th:if="${emptyCartException}">
-        <p th:text="${emptyCartException}" style="color: red"></p>
+        <br><br>
+        <img class="no-item-image" th:src="@{/img/empty-cart.png}" alt="Cart Empty">
     </div>
-
     <div class="shopping-cart" th:unless="${emptyCartException}">
         <table>
             <div class="small-container cart-page">
@@ -70,7 +70,8 @@
                     <th>Product</th>
                     <th>Price</th>
                     <th>Quantity</th>
-                    <th>Subtotal</th>
+                    <th>SubTotal</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,16 +84,15 @@
                         <th:block>
                             <div class="custom-number-input h-10 w-32">
                                 <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                                    <button data-action="decrement" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                                    <button data-action="decrement" class="increase-decrease-product">
                                         <span class="m-auto text-2xl font-thin">−</span>
                                     </button>
-                                    <input type="number"
-                                           id="custom-input-number"
+                                    <input type="number" class="number-product"
                                            name="custom-input-number"
                                            th:data-cart-item-id="${cartItem.getId()}"
                                            th:maxQuantity="${cartItem.product.quantity}"
                                            th:value="${cartItem.getQuantity()}">
-                                    <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                                    <button data-action="increment" class="increase-decrease-product">
                                         <span class="m-auto text-2xl font-thin">+</span>
                                     </button>
                                 </div>
@@ -104,17 +104,26 @@
                            th:text="${cartItem.quantity}*${cartItem.product.price}"
                            th:data-price-product="${cartItem.product.price}"></p>
                     </td>
+                    <td>
+                        <a th:href="@{/cart/delete-cart-item/{cartItemId}(cartItemId=${cartItem.getId()})}">
+                            <img class="small-image" th:src="@{https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg}" alt="deleted">
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </div>
         </table>
-
+        <br>
         <p id="sub-total-price-cartItem" th:text="'SubTotal: ' + ${cart.subTotal}"></p>
 
-        <a th:href="@{order/checkout/payment}">Order</a>
-
+        <br>
+        <a class="custom-button" th:href="@{order/checkout/payment}">Order</a>
+        <br><br>
     </div>
-    <a th:href="@{/home}">Continue Shopping</a><br><br>
+    <div class="custom-button-container">
+        <button class="custom-button" onclick="window.location.href='/home'">Continue Shopping</button>
+    </div>
+
 
     <!--MAGIC. DON'T TOUCH :)).-->
     <script type="text/javascript" th:src="@{/js/quantity-controll-Cart.js}"></script>

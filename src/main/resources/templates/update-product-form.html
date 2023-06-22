@@ -244,17 +244,21 @@
             <br><br>
 
             <th:block th:if="*{id != null}">
+                <th:block th:if="*{productMetas != null or productMetas.size() == 0}">
+
                 <div class="group-product-meta">
-                    <label for="product-meta">Product Meta List: </label>
-                    <div id="product-meta">
-                        <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
-                            <label for="key-product-meta" th:text="'Key product meta '+ ${metaStatus.count}"></label>
-                            <p id="key-product-meta" th:text="*{productMetas[__${metaStatus.index}__].keyProductMeta}"></p>
-                            <label for="content-product-meta" th:text="'Content ' + ${metaStatus.count}"></label>
-                            <p id="content-product-meta" th:text="*{productMetas[__${metaStatus.index}__].content}"></p><br><br>
+                        <label for="product-meta">Product Meta List: </label>
+                        <div id="product-meta">
+                            <div class="form-group-product-meta" th:each="meta, metaStatus : *{productMetas}">
+                                <label for="key-product-meta" th:text="'Key product meta '+ ${metaStatus.count}"></label>
+                                <p id="key-product-meta" th:text="*{productMetas[__${metaStatus.index}__].keyProductMeta}"></p>
+                                <label for="content-product-meta" th:text="'Content ' + ${metaStatus.count}"></label>
+                                <p id="content-product-meta" th:text="*{productMetas[__${metaStatus.index}__].content}"></p><br><br>
+                            </div>
                         </div>
-                    </div>
                 </div>
+                </th:block>
+
 
                 <input type="submit" value="Update product">
 
