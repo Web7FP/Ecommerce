@@ -220,14 +220,25 @@ small{
 
 .slider-watch-btn{
     position: relative;
-    display: block;
-    top: 5px;
-    text-align: center;
+    top: -220px;
 }
-.prev, .next{
+.prev{
     font-size: 40px; color: rgb(247, 209, 209);
-    background-color: rgb(255, 235, 229); border: none;
+    background-color: rgb(245, 181, 168); border: none;
     opacity: 90%;
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 30px;
+}
+.next{
+    font-size: 40px; color: rgb(247, 209, 209);
+    background-color: rgb(245, 181, 168); border: none;
+    opacity: 90%;
+    position: absolute;
+    top: 0;
+    right:0;
+    width: 30px;
 }
 .watch-1 button:hover {
     background-color: #e99085;
@@ -241,7 +252,7 @@ small{
 /*-------------------------------------More Product*/
 .title-more-products{
     text-align: center;
-    margin: 15px auto 80px;
+    margin: 20px auto 80px;
     position: relative;
     line-height: 60px;
     color: #555;
@@ -304,6 +315,20 @@ th {
     border-radius: 20px;
 }
 /*------------------------------------ Testimonial */
+.testimonial-container{
+    max-width: 1080px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.testimonial-detail{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
 .testimonial{
     margin-top: 100px;
 }
