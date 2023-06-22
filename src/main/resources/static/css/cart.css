@@ -334,3 +334,23 @@ th:last-child{
     align-items: center;
     height: 20vh;
 }
+.increase-decrease-product{
+    border: none;
+    background-color: rgb(245, 195, 162);
+    height: 20px;
+    width: 20px;
+    font-weight: 400;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.number-product{
+    border: none;
+    height: 30px;
+    width: 50px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: rgb(243, 206, 155);
+    font-size: 18px;
+}
