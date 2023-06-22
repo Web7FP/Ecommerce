@@ -10,10 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}">
-    <script
-            src="https://code.jquery.com/jquery-3.6.4.js"
-            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 </head>
 
 <body>
@@ -107,7 +106,7 @@
 </div>
 <!-- Related Products -->
 <div class="small-container">
-    <div class="row">
+    <div class="relatedPr">
         <th:block th:each="reProduct : ${relatedProducts}">
             <div class="col-4">
                 <a th:href="@{/product/{slugProduct}(slugProduct=${reProduct.slug})}"><img th:src="${reProduct.getImageLink()}"></a>
@@ -122,8 +121,26 @@
                 </div>
                 <p><span th:text="${product.price}"></span><sup>đ</sup></p>
             </div>
-        </th:block>>
+        </th:block>
     </div>
+    <script>
+        $(document).ready(function() {
+            var slider = $('.relatedPr');
+
+            function autoSlide() {
+                slider.slick('slickNext');
+            }
+
+            slider.slick({
+                infinite: true,
+                slidesToShow: 5,
+                prevArrow: $('.prevv'),
+                nextArrow: $('.nextt')
+            });
+
+            setInterval(autoSlide, 4000);
+        });
+    </script>
 </div>
 
 <!-- Footer -->

@@ -40,7 +40,7 @@ p{
     padding-left: 25px;
     padding-right: 25px;
 }
-.row{
+.row, .relatedPr{
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -608,7 +608,7 @@ form a{
 /* Media query for 600 screen size */
 @media only screen and (max-width: 600px){
 
-    .row{
+    .row, .relatedPr{
         text-align: center;
     }
     .col-2, .col-3, .col-4{
