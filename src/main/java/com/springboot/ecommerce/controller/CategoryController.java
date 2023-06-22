@@ -32,6 +32,7 @@ public class CategoryController {
     @GetMapping("categories-list")
     public String viewCategoryList(Model model){
         model.addAttribute("categoriesList", categoryService.getAllCategories());
+        model.addAttribute("categoriesParentList", categoryService.getAllCategoryParent());
         return "management-category";
     }
 

@@ -24,8 +24,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "where c.categoryParent.id = ?1")
     List<Long> getAllSubCategoriesOf(Long categoryParentId);
 
-    @Query("select c " +
-            "from Category  as c " +
-            "where c.slug = ?1")
-    Category getCategoryBySlug(String categorySlug);
+    @Query("select c.categoryParent.id " +
+            "from Category as c ")
+    List<Long> getALlCategoryParent();
 }

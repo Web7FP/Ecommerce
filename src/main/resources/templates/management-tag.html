@@ -88,13 +88,12 @@
             }}
     </style>
     <script>
-        function xoahaykhong(tinnhan) {
-            if (confirm(tinnhan)==true){
+        function warningDelete(message) {
+            if (confirm(message)==true){
                 return true;
             }
             return false;
         }
-
     </script>
 </head>
 <body>
@@ -124,7 +123,7 @@
                 <td th:text="${tag.content}"></td>
                 <td>
                     <button class="delete">
-                    <a onclick="return xoahaykhong('bạn có chắc muốn xóa không');" th:href="@{/tag-management/delete-tag/{id}(id=${tag.id})}">Delete</a>
+                    <a onclick="return warningDelete('bạn có chắc muốn xóa không');" th:href="@{/tag-management/delete-tag/{id}(id=${tag.id})}">Delete</a>
                     </button>
                     <button class="update">
                     <a th:href="@{/tag-management/update-tag-form/{id}(id=${tag.id})}">Update</a>

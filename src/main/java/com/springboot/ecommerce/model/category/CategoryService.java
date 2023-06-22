@@ -18,4 +18,5 @@ public interface CategoryService {
 
     List<Long> getAllSubCategoriesOf(Long categoryParentId);
 
+    List<Long> getAllCategoryParent();
 }
