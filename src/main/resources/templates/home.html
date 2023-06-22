@@ -182,11 +182,19 @@
             slider.slick({
                 infinite: true,
                 slidesToShow: 5,
-                prevArrow: $('.prevv'),
-                nextArrow: $('.nextt')
+                prevArrow: $('.prev'),
+                nextArrow: $('.next')
             });
 
-            setInterval(autoSlide, 4000);
+            $('.prev').click(function() {
+                slider.slick('slickPrev');
+            });
+
+            $('.next').click(function() {
+                slider.slick('slickNext');
+            });
+
+            setInterval(autoSlide, 6000);
         });
     </script>
 
