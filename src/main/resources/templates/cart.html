@@ -113,12 +113,18 @@
                 </tbody>
             </div>
         </table>
-        <br>
-        <p id="sub-total-price-cartItem" th:text="'SubTotal: ' + ${cart.subTotal}"></p>
+        <div style="display: flex; justify-content: flex-end;">
+            <div class="box-container">
+                <div class="subtotal-row">
+                    <p class="subtotal-text">SubTotal:</p>
+                    <p class="subtotal-value" th:text="${cart.subTotal}"></p>
+                    <br><br>
+                </div>
+                <br>
+                <a class="custom-button-order" th:href="@{order/checkout/payment}">Order</a>
+            </div>
+        </div>
 
-        <br>
-        <a class="custom-button" th:href="@{order/checkout/payment}">Order</a>
-        <br><br>
     </div>
     <div class="custom-button-container">
         <button class="custom-button" onclick="window.location.href='/home'">Continue Shopping</button>
