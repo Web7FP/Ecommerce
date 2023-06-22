@@ -50,8 +50,6 @@
                 background-color: #ddd;
                 border: 1px solid #bbb;
             }
-
-
         </style>
     </head>
     <body>
@@ -89,13 +87,7 @@
     <!-- ko đc động vào -->
         <div class="container-rs">
 
-            <div class="search-with-only-keyword">
-                <form th:action="@{/search}" method="get">
-                    <label for="search-product-header">Search Product: </label>
-                    <input id="search-product-header" type="text" name="q">
-                    <input type="submit" value="search">
-                </form>
-            </div>
+
 
             <div class="product-not-found-exception" th:if="${productNotFoundException}">
                 <p th:text="${productNotFoundException}" style="color: red"></p>
