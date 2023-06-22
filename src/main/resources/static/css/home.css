@@ -249,9 +249,10 @@ small{
 .watch-1 img{
     width: 70%;
 }
-/*-------------------------------------Testi title*/
+/*-------------------------------------Review title*/
 .title-more-products{
     text-align: center;
+    font-size: 32px;
     margin: 20px auto 80px;
     position: relative;
     line-height: 60px;

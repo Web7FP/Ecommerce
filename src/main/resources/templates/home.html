@@ -25,21 +25,21 @@
             <nav>
                 <ul id="MenuItems">
                     <li>
-
                         <form method="get" th:action="@{/search}">
-                            <input type="text" id="search-product"  name="q" placeholder="🔍">
-                            <input type="submit" id="submit-search" value="Search">
-
+                            <input type="text" id="search-product"  name="q" placeholder="🔍"
+                                   style="border-radius: 10px;border: none; height:30px; width:300px;">
+                            <input type="submit" id="submit-search" value="Search"
+                            style="border-radius: 10px; border: none; height: 30px ; width:75px; background-color: #f68383">
                         </form>
                     </li>
                     <li><a th:href="@{/home}" >Home</a></li>
+                    <li><a>Products</a></li>
                     <li><a th:href="@{/order/history}">Order History</a></li>
                     <li><a>Contact</a></li>
                     <li><a th:href="@{/account/edit}">My Account</a></li>
                     <li><a th:href="@{/logout}" style="color: rgb(211, 38, 38);">Logout</a></li>
                 </ul>
             </nav>
-
             <a th:href="@{/cart}"><img th:src="@{/img/cart.png}" width="30px" height="30px"></a>
             <img th:src="@{/img/menu.png}" class="menu-icon" onclick="menutoggle()">
         </div>
@@ -201,7 +201,7 @@
 </div>
 <!---------Title------------------->
 <div>
-    <h2 class="title-more-products"><button id="moreProductsButton" style="background-color: #f4dba6; border: none;"><h2>Testimonial</h2></button></h2>
+    <h2 class="title-more-products"><button id="moreProductsButton" style="background-color: #eecd93; border: none;"><h2 style="color: #484747; font-size: 25px; align-items: center">Review TechShop</h2></button></h2>
 </div>
 <!-- -----------Testimonial Chung nhan-->
 <div class="testimonial" >
@@ -370,7 +370,7 @@
             </div>
         </div>
         <hr>
-        <p class="copyright">Copyright 2020 - Samwit Adhikary</p>
+        <p class="copyright">Copyright 2023 - Team 7 Web</p>
     </div>
 </div>
 
