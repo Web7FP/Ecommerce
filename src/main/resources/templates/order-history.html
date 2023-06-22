@@ -3,59 +3,76 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        /* CSS styles go here */
-        .container {
-            width: 80%;
-            margin: auto;
-        }
-        .group-all-order-list, .group-processing-order-list,
-        .group-delivered-order-list, .group-completed-order-list,
-        .group-cancelled-order-list {
-            margin-bottom: 40px;
-        }
-        h2 {
-            margin-top: 50px;
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 10px;
-        }
-        td, th {
-            text-align: left;
-            padding: 8px;
-            border: 1px solid #ddd;
-            font-size: 14px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        button:hover {
-            background-color: #3e8e41;
-        }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Histories</title>
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css}" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/order_his.css}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+
+
+
+
 </head>
 <body>
-<div class="container">
+
+<div class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a th:href="@{/home}"><img th:src="@{/img/logo.png}" alt="logo" width="125px"></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li>
+
+                        <form method="get" th:action="@{/search}">
+                            <input type="text" id="search-product"  name="q" placeholder="🔍">
+                            <input type="submit" id="submit-search" value="Search">
+
+                        </form>
+                    </li>
+                    <li><a th:href="@{/home}" >Home</a></li>
+                    <li><a th:href="@{/order/history}">Order History</a></li>
+                    <li><a>Contact</a></li>
+                    <li><a th:href="@{/account/edit}">My Account</a></li>
+                    <li><a th:href="@{/logout}" style="color: rgb(211, 38, 38);">Logout</a></li>
+                </ul>
+            </nav>
+
+            <a th:href="@{/cart}"><img th:src="@{/img/cart.png}" width="30px" height="30px"></a>
+            <img th:src="@{/img/menu.png}" class="menu-icon" onclick="menutoggle()">
+        </div>
+
+    </div>
+</div>
+<div class="slider-nav">
+    <div >
+        <h2>All orders</h2>
+    </div>
+    <div >
+        <h2>Processing orders</h2>
+    </div>
+    <div >
+        <h2>Deliverd orders</h2>
+    </div>
+    <div >
+        <h2>Completed orders</h2>
+    </div>
+    <div>
+        <h2>Cancelled orders</h2>
+    </div>
+</div>
+<div class="container_ordhis">
     <div class="group-all-order-list">
-        <h2>All order:</h2><br><br>
+        <h2>All order</h2><br><br>
         <th:block th:each="order : ${allOrderList}">
             <div th:class="'order-list-' + ${order.getId()}">
                 <table>
@@ -73,7 +90,7 @@
     </div>
 
     <div class="group-processing-order-list">
-        <h2>Processing orders: </h2><br><br>
+        <h2>Processing orders</h2><br><br>
         <th:block th:each="order : ${processingOrderList}">
             <div th:class="'order-list-' + ${order.getId()}">
                 <table>
@@ -85,21 +102,16 @@
                         <td th:text="${orderItem.getQuantity()}"></td>
                         <td th:text="${orderItem.getPrice()}"></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <form th:action="@{/order/update-cancelled-order/{orderId}(orderId=${order.getId()})}">
-                                <button type="submit">Cancel</button>
-                            </form>
-                        </td>
-                    </tr>
                 </table>
-
+                <form class="button-pos" th:action="@{/order/update-cancelled-order/{orderId}(orderId=${order.getId()})}">
+                    <button type="submit">Cancel</button>
+                </form>
             </div>
         </th:block>
     </div>
 
     <div class="group-delivered-order-list">
-        <h2>Delivered orders: </h2><br><br>
+        <h2>Delivered orders</h2><br><br>
         <th:block th:each="order : ${deliveredOrderList}">
             <div th:class="'order-list-' + ${order.getId()}">
                 <table>
@@ -111,20 +123,16 @@
                         <td th:text="${orderItem.getQuantity()}"></td>
                         <td th:text="${orderItem.getPrice()}"></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <form th:action="@{/order/update-cancelled-order/{orderId}(orderId=${order.getId()})}">
-                                <button type="submit">Cancel</button>
-                            </form>
-                        </td>
-                    </tr>
                 </table>
+                <form class="button-pos" th:action="@{/order/update-cancelled-order/{orderId}(orderId=${order.getId()})}">
+                    <button type="submit">Cancel</button>
+                </form>
             </div>
         </th:block>
     </div>
 
     <div class="group-completed-order-list">
-        <h2>Completed orders: </h2><br><br>
+        <h2>Completed orders</h2><br><br>
         <th:block th:each="order : ${completedOrderList}">
             <div th:class="'order-list-' + ${order.getId()}">
                 <table>
@@ -142,7 +150,7 @@
     </div>
 
     <div class="group-cancelled-order-list">
-        <h2>Cancelled orders: </h2><br><br>
+        <h2>Cancelled orders</h2><br><br>
         <th:block th:each="order : ${cancelledOrderList}">
             <div th:class="'order-list-' + ${order.getId()}">
                 <table>
@@ -154,17 +162,114 @@
                         <td th:text="${orderItem.getQuantity()}"></td>
                         <td th:text="${orderItem.getPrice()}"></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <form th:action="@{/order/buy-again/{orderId}(orderId=${order.getId()})}">
-                                <button type="submit">Buy again</button>
-                            </form>
-                        </td>
-                    </tr>
                 </table>
+                <form class="button-pos" th:action="@{/order/buy-again/{orderId}(orderId=${order.getId()})}">
+                    <button type="submit">Buy again</button>
+                </form>
             </div>
         </th:block>
     </div>
 </div>
+
+<!-- thử script -->
+
+<div class="order-his-button">
+    <button class="prev-1">&#10094;</button>
+    <button class="next-1">&#10095;</button>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.container_ordhis').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.slider-nav',
+        });
+
+        $('.slider-nav').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.container_ordhis',
+            centerMode: true,
+            focusOnSelect: true,
+            arrows: false,
+        });
+
+        $('.prev-1').click(function() {
+            $('.container_ordhis').slick('slickPrev');
+        });
+
+        $('.next-1').click(function() {
+            $('.container_ordhis').slick('slickNext');
+        });
+    });
+</script>
+<!-- Brands -->
+
+<div class="brands">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-5">
+                <img th:src="@{/img/logo-godrej.png}">
+            </div>
+            <div class="col-5">
+                <img th:src="@{/img/logo-oppo.png}">
+            </div>
+            <div class="col-5">
+                <img th:src="@{/img/logo-coca-cola.png}">
+            </div>
+            <div class="col-5">
+                <img th:src="@{/img/logo-paypal.png}">
+            </div>
+            <div class="col-5">
+                <img th:src="@{/img/logo-philips.png}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+                <h3>Download Our App</h3>
+                <p>Download App for Android and ios mobile phone.</p>
+                <div class="app-logo">
+                    <img th:src="@{/img/play-store.png}">
+                    <img th:src="@{/img/app-store.png}">
+                </div>
+            </div>
+            <div class="footer-col-2">
+                <img th:src="@{/img/logo-white.png}">
+                <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many.
+                </p>
+            </div>
+            <div class="footer-col-3">
+                <h3>Useful Links</h3>
+                <ul>
+                    <li>Coupons</li>
+                    <li>Blog Post</li>
+                    <li>Return Policy</li>
+                    <li>Join Affiliate</li>
+                </ul>
+            </div>
+            <div class="footer-col-4">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                    <li>Youtube</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2020 - Samwit Adhikary</p>
+    </div>
+</div>
+
+
 </body>
 </html>

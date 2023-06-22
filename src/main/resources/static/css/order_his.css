@@ -1,0 +1,113 @@
+
+    /* CSS styles go here */
+body{
+    background: #f2f2f2;
+    font-family: 'Arial', sans-serif;
+}
+
+.slider-nav{
+    display: flex;
+    background: #F7F7F7;
+    width: 80%;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+
+
+.container_ordhis {
+    display: flex;
+    background: #F7F7F7;
+    width: 80%;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+
+}
+.group-all-order-list, .group-processing-order-list,
+.group-delivered-order-list, .group-completed-order-list,
+.group-cancelled-order-list {
+    margin-bottom: 30px;
+}
+h2 {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: lighter;
+}
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #f6f6f6;
+    table-layout: fixed;
+}
+td, th {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    width: 25%;
+}
+th {
+    background-color: #f2f2f2;
+}
+button {
+    background-color: #FF6347;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+button:hover {
+    background-color: #3e8e41;
+}
+.button-pos{
+    float: right;
+    margin-top: 10px;
+    margin-right: 5%;
+    margin-left: auto;
+    margin-bottom: 10px;
+}
+
+.order-his-button{
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    border: none;
+    color: #333;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    text-align: center;
+}
+    /* CSS cho button */
+.order-his-button:hover{
+    background-color: #ddd;
+}
+
+    /* CSS cho mũi tên trong button */
+.order-his-button button::before{
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.prev-1{
+    content: "\2190";
+}
+.next-1{
+    content: "\2192";
+}
+
