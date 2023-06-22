@@ -220,13 +220,13 @@ small{
 
 .slider-watch-btn{
     position: relative;
-    display: block;
-    top: 5px;
-    text-align: center;
+    display: flex;
+    top: -220px;
+    gap: 1480px;
 }
 .prev, .next{
     font-size: 40px; color: rgb(247, 209, 209);
-    background-color: rgb(255, 235, 229); border: none;
+    background-color: rgb(245, 181, 168); border: none;
     opacity: 90%;
 }
 .watch-1 button:hover {
@@ -241,7 +241,7 @@ small{
 /*-------------------------------------More Product*/
 .title-more-products{
     text-align: center;
-    margin: 15px auto 80px;
+    margin: 20px auto 80px;
     position: relative;
     line-height: 60px;
     color: #555;
