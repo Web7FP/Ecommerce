@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>Product Management</title>
     <style>
+
         .nen{
             background: radial-gradient(#fff,#ffd6d6)}
         body {
+            margin: auto;
             background-color: #f2f2f2;
             font-family: Arial, sans-serif;
 
@@ -14,7 +16,7 @@
         h1 {margin-top: auto;
             font-size: 40px;
             color: #ff523b;
-
+            margin-left: 30px;
         }
         table {border-collapse: separate;width: 100%;}
         th, td {text-align: center;padding: 8px;}
@@ -30,7 +32,7 @@
             background: #ff523b;
             color: white;
             padding: 8px 30px;
-            margin: 30px 0;
+            margin: 30px 30px;
             border-radius: 30px;
             transition: background 0.5s;
         }
@@ -63,20 +65,7 @@
             color: black;
             border-radius: 8px;
         }
-        a.nl {
-            background-color: #4CAF50;
-            color: white;
-            border: 2px solid #4CAF50;
-            border-radius: 8px;
-            font-size: 20px;
-        }
 
-        a.nl:hover {
-            background-color: white;
-            color: black;
-            border-radius: 8px;
-            font-size: 20px;
-        }
         button.back {
             background-color: burlywood;
             color: white;
@@ -89,21 +78,46 @@
             margin: auto;
             font-family: 'Poppins', sans-serif;
             overflow: auto;
-            background: linear-gradient(315deg, rgba(101,0,94,1) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgba(255,25,25,1) 98%);
+            background: linear-gradient(315deg, rgba(101,0,94,1) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgba(255,25,25,1) 98%) fixed;
             animation: gradient 15s ease infinite;
             background-size: 400% 400%;
-            background-attachment: fixed;
+
         }
         @keyframes gradient {
             0% {
-                background-position: 0% 0%;
+                background-position: 0 0;
             }
             50% {
                 background-position: 100% 100%;
             }
             100% {
-                background-position: 0% 0%;
+                background-position: 0 0;
             }}
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+            font-size: 22px;
+        }
+
+        .atv {
+            background-color: #e99085;
+            border: 1px solid #e99085;
+            display: inline-block;
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            font-size: 22px;
+        }
     </style>
     <script>
         function xoahaykhong(tinnhan) {
@@ -116,7 +130,7 @@
     </script>
 </head>
 <body>
-<div class="tnn"><a><img th:src="@{/img/logo.png}" alt="logo" width="80px"></a></div>
+ <div class="tnn"><a><img th:src="@{/img/logo.png}" alt="logo" width="80px"></a></div>
 <div class="container">
     <div class="nen">
     <h1>Products Management</h1>
@@ -173,32 +187,32 @@
     </table>
 
     <div th:if="${totalPages > 1}">
-        <div>
-            <div class="total-rows">
-                <p th:text="'Total rows: ' + ${totalItems}"></p>
-            </div>
-            <div>
+        <div class="total-rows">
+            <p th:text="'Total rows: ' + ${totalItems}"></p>
+        </div>
+       <div class="pagination">
+           <span>
+            <a th:if="${currentPage > 1}" th:href="@{'/product-management/products-list/page/' + ${currentPage - 1}+
+                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="nl">&laquo;</a>
+           </span>
+           <span>
                 <span th:each="i : ${#numbers.sequence(1, totalPages)}">
                     <a th:if="${currentPage != i}" th:href="@{'/product-management/products-list/page/' + ${i} +
-                    '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="${i}"></a>
-                    <span th:unless="${currentPage != i}" th:text="${i}"></span>
+                    '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="${i}" class="nl"></a>
+                    <span th:unless="${currentPage != i}" th:text="${i}" class="atv"></span>
                 </span>
-            </div>
-            <div>
-                <a th:if="${currentPage < totalPages }" th:href="@{'/product-management/products-list/page/' + ${currentPage + 1}
-                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="nl">Next</a>
-            </div>
-            <div>
-                <a th:if="${currentPage > 1}" th:href="@{'/product-management/products-list/page/' + ${currentPage - 1}+
-                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="nl">Last</a>
-            </div>
-        </div>
+           </span>
+           <span>
+            <a th:if="${currentPage < totalPages }" th:href="@{'/product-management/products-list/page/' + ${currentPage + 1}
+                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" id="nl">&raquo;</a>
+           </span><br>
+       </div>
     </div><br>
     <button class="back">
     <a th:href="@{/admin}">Back to Admin Panel</a>
     </button>
 
-
+    </div>
 </div>
 </body>
 </html>
