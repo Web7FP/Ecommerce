@@ -76,11 +76,11 @@
                 </tr>
                 <tr>
                     <th>Address:</th>
-                    <td th:text="${userMeta.address}"></td>
+                    <td th:text="*{address}"></td>
                 </tr>
                 <tr>
                     <th>Mobile:</th>
-                    <td th:text="${userMeta.mobile}"></td>
+                    <td th:text="*{mobile}"></td>
                 </tr>
             </table>
         </th:block>

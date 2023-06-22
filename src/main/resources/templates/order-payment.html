@@ -11,6 +11,12 @@
         <table>
             <thead></thead>
             <tbody>
+            <tr>
+                <th>Product name</th>
+                <th>Price</th>
+                <th>Item price</th>
+                <th>Quantity</th>
+            </tr>
             <tr th:each="cartItem : ${cart.cartItems}">
                 <th:block th:with="product=${cartItem.product}">
                     <td th:text="${product.title}"></td>
@@ -26,14 +32,16 @@
     <div class="user-meta">
         <table th:object="${userMeta}">
             <tr>
-                <td th:text="'Your name: ' + *{firstName} + ' '
-                + *{middleName} + ' ' + *{lastName}"></td>
+                <th>Your name:</th>
+                <td th:text="' ' + *{firstName} + ' ' + *{middleName} + ' ' + *{lastName}"></td>
             </tr>
             <tr>
-                <td th:text="'Address: ' + *{address}"></td>
+                <th>Address:</th>
+                <td th:text="*{address}"></td>
             </tr>
             <tr>
-                <td th:text="'Mobile: ' + *{mobile}"></td>
+                <th>Mobile:</th>
+                <td th:text="*{mobile}"></td>
             </tr>
         </table>
     </div>

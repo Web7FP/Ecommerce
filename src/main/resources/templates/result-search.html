@@ -130,26 +130,7 @@
 
 
 
-                <!--MAGIC. DON'T TOUCH :)).------------------------------>
-                <div class="pagination">
-                    <p th:text="'Total products: ' + ${totalItems}"></p>
-                    <span class="page-links"></span>
-                    <div class="pagination-button"></div>
-                </div>
 
-                <script th:inline="javascript">
-                    let totalPages = [[${totalPages}]];
-                    let currentPage = [[${currentPage}]];
-                    let query = [[${query}]];
-                    let sortField = [[${sortField}]];
-                    let sortDir = [[${sortDir}]];
-                    let categories = [[${categories}]];
-                    let tags = [[${tags}]];
-                    let lowerBoundPrice = [[${lowerBoundPrice}]];
-                    let upperBoundPrice = [[${upperBoundPrice}]];
-                </script>
-                <script th:src="@{/js/pagination-result-search.js}"></script>
-                <!--MAGIC. DON'T TOUCH :)).------------------------------>
             </div>
                 <div class="right4">
                     <table>
@@ -161,6 +142,27 @@
                             </td>
                         </tr>
                     </table>
+
+                    <!--MAGIC. DON'T TOUCH :)).------------------------------>
+                    <div class="pagination">
+                        <p th:text="'Total products: ' + ${totalItems}"></p>
+                        <span class="page-links"></span>
+                        <div class="pagination-button"></div>
+                    </div>
+
+                    <script th:inline="javascript">
+                        let totalPages = [[${totalPages}]];
+                        let currentPage = [[${currentPage}]];
+                        let query = [[${query}]];
+                        let sortField = [[${sortField}]];
+                        let sortDir = [[${sortDir}]];
+                        let categories = [[${categories}]];
+                        let tags = [[${tags}]];
+                        let lowerBoundPrice = [[${lowerBoundPrice}]];
+                        let upperBoundPrice = [[${upperBoundPrice}]];
+                    </script>
+                    <script th:src="@{/js/pagination-result-search.js}"></script>
+                    <!--MAGIC. DON'T TOUCH :)).------------------------------>
                 </div>
             </div>
         </div>
