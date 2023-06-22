@@ -199,76 +199,9 @@
     </script>
 
 </div>
-<!---------More Products------------------->
+<!---------Title------------------->
 <div>
-    <h2 class="title-more-products"><button id="moreProductsButton" style="background-color: #f4dba6; border: none;"><h2>More Products</h2></button></h2>
-    <div id="additionalProducts" style="display: none;">
-        <div class="more-product">
-
-
-            <div class="product-container">
-
-
-                <div class="list-products">
-
-
-                        <div class="row" style="background-color: rgb(245, 235, 223); border-radius: 10px;">
-                            <th:block th:each="product : ${listProducts}">
-
-                                <div class="col-4">
-                                    <a th:href="@{/product/{slugProduct}(slugProduct=${product.slug})}"><img th:src="${product.getImageLink()}"></a>
-                                    <h4 th:text="${product.title}"></h4>
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <p><span th:text="${product.price}"></span><sup>đ</sup></p>
-                                </div>
-
-                            </th:block>
-
-
-                    </div>
-                    <div class="pagination">
-                        <p th:text="'Total products: ' + ${totalItems}"></p>
-                    </div>
-                </div>
-                <div>
-                    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-                        <a th:if="${currentPage != i}" th:href="@{'/home/product-list/page/' + ${i} +
-                        '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="${i}"></a>
-                        <span th:unless="${currentPage != i}" th:text="${i}"></span>
-                    </span>
-                </div>
-                <div class="button">
-                    <br><br><br>
-                    <a th:if="${currentPage < totalPages }" th:href="@{'/home/product-list/page/' + ${currentPage + 1}
-                                + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="next-button">Next</a>
-                </div>
-                <div  class="button">
-                    <a th:if="${currentPage <= totalPages and currentPage > 1}" th:href="@{'/home/product-list/page/' + ${currentPage - 1}+
-                                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" class="last-button">Last</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        let moreProductsButton = document.getElementById("moreProductsButton");
-        let additionalProductsDiv = document.getElementById("additionalProducts");
-
-        moreProductsButton.addEventListener("click", function() {
-            if (additionalProductsDiv.style.display === "none") {
-                additionalProductsDiv.style.display = "block";
-            } else {
-                additionalProductsDiv.style.display = "none";
-            }
-        });
-
-    </script>
-
+    <h2 class="title-more-products"><button id="moreProductsButton" style="background-color: #f4dba6; border: none;"><h2>Testimonial</h2></button></h2>
 </div>
 <!-- -----------Testimonial Chung nhan-->
 <div class="testimonial" >

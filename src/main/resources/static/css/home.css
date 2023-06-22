@@ -249,7 +249,7 @@ small{
 .watch-1 img{
     width: 70%;
 }
-/*-------------------------------------More Product*/
+/*-------------------------------------Testi title*/
 .title-more-products{
     text-align: center;
     margin: 20px auto 80px;
@@ -261,59 +261,7 @@ small{
     height: 55px;
     border-radius: 25px;
 }
-.more-product{
-    margin: 20px 500px 20px 500px ;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-}
-.sort-buttons,.search-engine,.product-container{
-    text-align: center;
-    margin-bottom: 20px;
-}
-table {
-    border-collapse: collapse;
-    width: 100%;
 
-}
-
-th, td {
-    text-align: left;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-}
-
-tr:hover {
-    background-color: #f5f5f5;
-}
-
-th {
-    background-color: #4CAF50;
-    color: white;
-}
-.sort-buttons {
-    float: left;
-    margin-left: 10px;
-    margin-top: 10px;
-    background-color: #e48282;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-}
-.sort-search{
-    display: flex;
-}
-#submit-search{
-    width: 60px;
-    border: none;
-    border-radius: 5px;
-    background-color: #ef6565;
-}
-#search-product{
-    width: 200px;
-    border-radius: 20px;
-}
 /*------------------------------------ Testimonial */
 .testimonial-container{
     max-width: 1080px;
