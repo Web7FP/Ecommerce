@@ -8,19 +8,19 @@
 <body>
 <div class="container">
     <div class="cart-item-list">
-            <table>
-                <thead></thead>
-                <tbody>
-                <tr th:each="cartItem : ${cart.cartItems}">
-                    <th:block th:with="product=${cartItem.product}">
-                        <td th:text="${product.title}"></td>
-                        <td th:text="${product.price}"></td>
-                        <td th:text="${cartItem.price}"></td>
-                        <td th:text="${cartItem.quantity}"></td>
-                    </th:block>
-                </tr>
-                </tbody>
-            </table>
+        <table>
+            <thead></thead>
+            <tbody>
+            <tr th:each="cartItem : ${cart.cartItems}">
+                <th:block th:with="product=${cartItem.product}">
+                    <td th:text="${product.title}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td th:text="${cartItem.price}"></td>
+                    <td th:text="${cartItem.quantity}"></td>
+                </th:block>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <div class="user-meta">

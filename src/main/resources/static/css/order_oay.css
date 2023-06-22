@@ -1,0 +1,41 @@
+body{
+    background: #f2f2f2;
+    font-family: 'Arial', sans-serif;
+}
+
+.container-ordpay{
+    background: #F7F7F7;
+    width: 90%;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+.cart-item-list{
+    display: flex;
+    background: #F7F7F7;
+    width: 80%;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+table{
+    border-collapse: collapse;
+    width: 90%;
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #f6f6f6;
+    table-layout: fixed;
+}
+td, th {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    width: 25%;
+}
+th {
+    background-color: #f2f2f2;
+}
