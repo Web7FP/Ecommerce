@@ -59,9 +59,9 @@
 <div class="container">
 
     <div class="empty-cart-exception" th:if="${emptyCartException}">
-        <p th:text="${emptyCartException}" style="color: red"></p>
+        <br><br>
+        <img class="no-item-image" th:src="@{/img/empty-cart.png}" alt="Cart Empty">
     </div>
-
     <div class="shopping-cart" th:unless="${emptyCartException}">
         <table>
             <div class="small-container cart-page">
@@ -71,6 +71,7 @@
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Subtotal</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -104,17 +105,26 @@
                            th:text="${cartItem.quantity}*${cartItem.product.price}"
                            th:data-price-product="${cartItem.product.price}"></p>
                     </td>
+                    <td>
+                        <a th:href="@{/cart/delete-cart-item/{cartItemId}(cartItemId=${cartItem.getId()})}">
+                            <img class="small-image" th:src="@{https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg}" alt="deleted">
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
            </div>
         </table>
-
+        <br>
         <p id="sub-total-price-cartItem" th:text="'SubTotal: ' + ${cart.subTotal}"></p>
 
-        <a th:href="@{order/checkout/payment}">Order</a>
-
+        <br>
+        <a class="custom-button" th:href="@{order/checkout/payment}">Order</a>
+        <br><br>
     </div>
-    <a th:href="@{/home}">Continue Shopping</a><br><br>
+    <div class="custom-button-container">
+        <button class="custom-button" onclick="window.location.href='/home'">Continue Shopping</button>
+    </div>
+
 
     <!--MAGIC. DON'T TOUCH :)).-->
     <script type="text/javascript" th:src="@{/js/quantity-controll-Cart.js}"></script>
