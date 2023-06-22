@@ -37,14 +37,15 @@
             background: #563434;
 
         }
-        button.delete {
-            background-color: red;
-            color: white;
-            border: 2px solid red;
-            border-radius: 8px;
-        }
+       .delete {
+           background-color: red;
+           color: white;
+           border: 2px solid red;
+           border-radius: 8px;
+           font-size:14px
+       }
 
-        button.delete:hover {
+        .delete:hover {
             background-color: white;
             color: black;
             border-radius: 8px;
@@ -142,11 +143,9 @@
                     <button class="update">
                     <a th:href="@{/product-management/update-product-form/{id}(id=${product.id})}">Update</a>
                     </button>
-                    <button class="delete">
                     <th:block th:if="${product.getOrderItems().isEmpty() or product.getCartItems().isEmpty()}">
-                        <a onclick="return xoahaykhong('bạn có chắc muốn xóa không');" th:href="@{/product-management/delete-product/{id}(id=${product.id})}">Delete</a>
+                        <a class="delete" onclick="return xoahaykhong('bạn có chắc muốn xóa không');" th:href="@{/product-management/delete-product/{id}(id=${product.id})}">Delete</a>
                     </th:block>
-                    </button>
 
                 </td>
             </tr>
