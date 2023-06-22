@@ -8,8 +8,8 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.navbar {
-
+.navbar
+{
     display: flex;
     align-items: center;
     padding: 20px;
@@ -89,6 +89,15 @@ button:hover {
     background-size: cover;
 }
 
+.container-header{
+    max-width: 1300px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 20px;
+    flex: 1;
+}
+
 .edit-account-information {
     background: #ffffff;
     padding: 20px;
@@ -137,6 +146,7 @@ button:hover {
 }
 /* Footer */
 .footer{
+    margin-top: auto;
     background: black;
     color: #8a8a8a;
     font-size: 14px;
@@ -192,9 +202,17 @@ ul{
     display: none;
 }
 
-.container-1{
-    max-width: 1300px;
-    margin: auto;
-    padding-left: 25px;
-    padding-right: 25px;
+tr:nth-child(even) {
+    background-color: #d6eeee;
+}
+
+thead {
+    background-color: aquamarine;
+}
+
+.row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }

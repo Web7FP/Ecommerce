@@ -8,24 +8,26 @@
 </head>
 <body>
 
-<div class="navbar">
-    <div class="logo">
-        <a th:href="@{/home}">
-            <img th:src="@{/img/logo.png}" alt="store">
-        </a>
+<div class="header">
+    <div class="container-header">
+        <div class="navbar">
+            <div class="logo">
+                <a th:href="@{/home}"><img th:src="@{/img/logo.png}" alt="logo" width="125px"></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li><a th:href="@{/home}" >Home</a></li>
+                    <li><a th:href="@{/order/history}">Order History</a></li>
+                    <li><a>Contact</a></li>
+                    <li><a th:href="@{/account/edit}">My Account</a></li>
+                    <li><a th:href="@{/logout}" style="color: rgb(211, 38, 38);">Logout</a></li>
+                </ul>
+            </nav>
+
+            <a th:href="@{/cart}"><img th:src="@{/img/cart.png}" width="30px" height="30px"></a>
+            <img th:src="@{/img/menu.png}" class="menu-icon" onclick="menutoggle()">
+        </div>
     </div>
-    <nav>
-        <ul id="MenuItems">
-            <li><a th:href="@{/home}">Home</a></li>
-            <li><a th:href="@{/order/history}">Order History</a></li>
-            <li><a href="">Contact</a></li>
-            <li><a th:href="@{/account/edit}"> My Account</a></li>
-            <li><a th:href="@{/logout}" style="color: rgb(211, 38, 38);">Logout</a></li>
-        </ul>
-    </nav>
-    <a th:href="@{/cart}">
-        <img th:src="@{/img/cart.png}" width="30px" height="30px">
-    </a>
 </div>
 
 <div class="container">
@@ -82,9 +84,10 @@
         </form>
     </div>
 </div>
+
 <!-- Footer -->
 <div class="footer">
-    <div class="container-1">
+    <div class="container-header">
         <div class="row">
             <div class="footer-col-1">
                 <h3>Download Our App</h3>
@@ -95,8 +98,8 @@
                 </div>
             </div>
             <div class="footer-col-2">
-                <img th:src="@{/img/logo-white.png}">
-                <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many.
+                <img th:src="@{/img/logo.png}">
+                <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Technology Accessible to the Many.
                 </p>
             </div>
             <div class="footer-col-3">
@@ -119,7 +122,7 @@
             </div>
         </div>
         <hr>
-        <p class="copyright">Copyright 2020 - Samwit Adhikary</p>
+        <p class="copyright">Copyright 2023 - Team 7 Web</p>
     </div>
 </div>
 </body>
