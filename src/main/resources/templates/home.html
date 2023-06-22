@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page | MyStore</title>
+    <title>Home Page | TechShop </title>
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css}" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" th:href="@{/css/home.css}">
 
@@ -13,7 +13,9 @@
     <script src="https://code.jquery.com/jquery-3.6.4.js"
             integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
             crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>-->
 
 
 </head>
@@ -167,13 +169,10 @@
                 <button class="button-add-product-to-cart" onclick="addProductToCart(this)"  th:data-product-id="${product.id}">Add to Cart</button>
             </div>
         </th:block>
-
-
     </div>
-
     <div class="slider-watch-btn">
-        <button class="prev">&#10094;</button>
-        <button class="next">&#10095;</button>
+        <button class="prev">Prev</button>
+        <button class="next">Next</button>
     </div>
 
     <script>
@@ -265,7 +264,7 @@
         <div class="testimonial-detail">
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
+                <p>Trang thương mại điện tử của các bạn rất tiện ích, giúp các bạn dễ dàng mua sắm trực tuyến từ nhà. Tất cả các sản phẩm đều được tổ chức gọn gàng và dễ dàng tìm kiếm, mang lại trải nghiệm mua sắm trực tuyến dễ dàng và thoải mái.</p>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -273,12 +272,12 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                 </div>
-                <img th:src="@{/img/user-1.png}" style="margin-left: 95px;"><br>
+                <img th:src="@{/img/user-1.png}" style="margin-left: 125px;"><br>
                 <h3>Hung Tran </h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
+                <p>Với nhiều tính năng thông minh, trang thương mại điện tử của các bạn đáp ứng đầy đủ nhu cầu của các bạn. Từ tính năng lưu trữ yêu thích, phản hồi từ người dùng, đánh giá sản phẩm đến khả năng tìm kiếm nhanh chóng và giao diện thân thiện, các bạn đảm bảo các bạn có trải nghiệm tuyệt vời mỗi lần mua sắm.</p>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -286,12 +285,12 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                 </div>
-                <img th:src="@{/img/user-2.png}" style="margin-left: 95px;"><br>
+                <img th:src="@{/img/user-2.png}" style="margin-left: 125px;"><br>
                 <h3>Le Hai Dang</h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
+                <p> Giao diện trực quan và hướng dẫn rõ ràng, các bạn có thể dễ dàng duyệt qua các danh mục sản phẩm, thêm vào giỏ hàng và hoàn tất thanh toán chỉ trong vài bước đơn giản.</p>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -299,12 +298,12 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                 </div>
-                <img th:src="@{/img/user-3.png}" style="margin-left: 95px;"><br>
+                <img th:src="@{/img/user-3.png}" style="margin-left: 125px;"><br>
                 <h3>Cuong Minh</h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
+                <p>Trang thương mại điện tử của các bạn được thiết kế để mang lại sự tiện lợi tối đa cho khách hàng. Với tính năng đặt hàng nhanh chóng, thông tin sản phẩm chi tiết và khả năng tương tác linh hoạt, các bạn có thể mua sắm một cách dễ dàng và thoải mái từ bất kỳ đâu và bất kỳ thiết bị nào.</p>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -312,12 +311,12 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                 </div>
-                <img th:src="@{/img/user-1.png}" style="margin-left: 95px;"><br>
+                <img th:src="@{/img/user-4.png}" style="margin-left: 125px;"><br>
                 <h3>Bui Dung</h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
+                <p>Trang thương mại điện tử của các bạn thật đa dạng với các kiểu sản phẩm phong phú. Từ thời trang, đồ điện tử đến đồ gia dụng và nhiều hơn nữa, các bạn có thể tìm thấy mọi thứ mình cần trong một nơi duy nhất. Bạn sẽ khám phá được một kho báu sản phẩm đáng kinh ngạc ngay tại đầu ngón tay.</p>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -325,12 +324,12 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                 </div>
-                <img th:src="@{/img/user-1.png}" style="margin-left: 95px;"><br>
+                <img th:src="@{/img/user-5.png}" style="margin-left: 125px;"><br>
                 <h3>Vuong Doan</h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Trang Thuong mai dien tu Vip pro VCL !!!!!!!!!.</p>
+                <p>Khám phá trang thương mại điện tử của các bạn và trải nghiệm một thế giới mua sắm trực tuyến không giới hạn. Với một bộ sưu tập đa dạng, tính năng tùy chỉnh, và khả năng tư vấn, các</p>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -338,7 +337,7 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                 </div>
-                <img th:src="@{/img/user-1.png}" style="margin-left: 95px;"><br>
+                <img th:src="@{/img/user-6.png}" style="margin-left: 125px;"><br>
                 <h3>Chu Manh</h3>
             </div>
         </div>
