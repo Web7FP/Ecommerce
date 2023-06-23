@@ -8,10 +8,7 @@ import com.springboot.ecommerce.model.tag.Tag;
 import com.springboot.ecommerce.model.tag.TagServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -99,69 +96,64 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
 
 
     @Override
-    public Page<ProductElasticSearch> getAllByTitle(String title, Pageable pageable) {
+    public List<ProductElasticSearch> getAllByTitle(String title) {
         return productElasticSearchRepository.getAllByFuzzyQueryTitle(
-                title, pageable
+                title
         );
     }
 
     @Override
-    public Page<ProductElasticSearch> getAllByTitleAndPriceIsBetween(String title,
-                                                                     BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                                     Pageable pageable) {
+    public List<ProductElasticSearch> getAllByTitleAndPriceIsBetween(String title,
+                                                                     BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice) {
         return productElasticSearchRepository.getAllByFuzzyQueryTitleAndPriceIsBetween(
-                title, lowerBoundPrice, upperBoundPrice, pageable
+                title, lowerBoundPrice, upperBoundPrice
         );
     }
 
     @Override
-    public Page<ProductElasticSearch> getAllByTitleAndCategories(String title, List<String> categories, Pageable pageable) {
+    public List<ProductElasticSearch> getAllByTitleAndCategories(String title, List<String> categories) {
         return productElasticSearchRepository.getAllByFuzzyQueryTitleAndCategoriesContaining(
-                title, categories, pageable
+                title, categories
         );
     }
 
     @Override
-    public Page<ProductElasticSearch> getAllByTitleAndTags(String title, List<String> tags, Pageable pageable) {
+    public List<ProductElasticSearch> getAllByTitleAndTags(String title, List<String> tags) {
         return productElasticSearchRepository.getAllByFuzzyQueryTitleAndTags(
-                title, tags, pageable
+                title, tags
         );
     }
 
     @Override
-    public Page<ProductElasticSearch> getAllByTitleAndCategoriesAndPriceIsBetween(String title, List<String> categories,
-                                                                                  BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                                                  Pageable pageable) {
+    public List<ProductElasticSearch> getAllByTitleAndCategoriesAndPriceIsBetween(String title, List<String> categories,
+                                                                                  BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice) {
         return productElasticSearchRepository.getAllByFuzzyQueryTitleAndCategoriesContainingAndPriceIsBetween(
-                title, categories, lowerBoundPrice, upperBoundPrice, pageable
+                title, categories, lowerBoundPrice, upperBoundPrice
         );
     }
 
     @Override
-    public Page<ProductElasticSearch> getAllByTitleAndTagsAndPricesIsBetween(String title, List<String> tags,
-                                                                             BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                                             Pageable pageable) {
+    public List<ProductElasticSearch> getAllByTitleAndTagsAndPricesIsBetween(String title, List<String> tags,
+                                                                             BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice) {
         return productElasticSearchRepository.getAllByFuzzyQueryTitleAndTagsAndPriceIsBetween(
-                title, tags, lowerBoundPrice, upperBoundPrice, pageable
+                title, tags, lowerBoundPrice, upperBoundPrice
         );
     }
 
     @Override
-    public Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTags(String title,
-                                                                        List<String> categories, List<String> tags,
-                                                                        Pageable pageable) {
+    public List<ProductElasticSearch> getAllByTitleAndCategoriesAndTags(String title,
+                                                                        List<String> categories, List<String> tags) {
         return productElasticSearchRepository.getAllByFuzzyQueryTitleAndCategoriesAndTags(
-                title, categories, tags, pageable
+                title, categories, tags
         );
     }
 
     @Override
-    public Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(String title,
+    public List<ProductElasticSearch> getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(String title,
                                                                                          List<String> categories, List<String> tags,
-                                                                                         BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                                                         Pageable pageable) {
+                                                                                         BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice) {
         return productElasticSearchRepository.getAllByFuzzyQueryTitleAndCategoriesAndTagsAndPriceIsBetween(
-                title, categories, tags, lowerBoundPrice, upperBoundPrice, pageable
+                title, categories, tags, lowerBoundPrice, upperBoundPrice
         );
     }
 
@@ -177,41 +169,39 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
     }
 
     @Override
-    public Page<ProductElasticSearch> searchProduct(String title,
+    public List<ProductElasticSearch> searchProduct(String title,
                                                     List<String> categories, List<String> tags,
-                                                    BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                    int pageNo, int pageSize, String sortField, String sortDirection) {
+                                                    BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice) {
 
-        Pageable pageable = this.findPaginated(pageNo, pageSize, sortField, sortDirection);
 
         if (categories == null && tags == null && lowerBoundPrice == null && upperBoundPrice == null){
-            return this.getAllByTitle(title, pageable);
+            return this.getAllByTitle(title);
         } else if (tags == null && lowerBoundPrice == null && upperBoundPrice == null) {
-            return this.getAllByTitleAndCategories(title, categories, pageable);
+            return this.getAllByTitleAndCategories(title, categories);
         } else if (categories == null && lowerBoundPrice == null && upperBoundPrice == null) {
-            return this.getAllByTitleAndTags(title, tags, pageable);
+            return this.getAllByTitleAndTags(title, tags);
         } else if (categories == null && tags == null) {
-            return this.getAllByTitleAndPriceIsBetween(title, lowerBoundPrice, upperBoundPrice, pageable);
+            return this.getAllByTitleAndPriceIsBetween(title, lowerBoundPrice, upperBoundPrice);
         } else if (categories == null) {
-            return this.getAllByTitleAndTagsAndPricesIsBetween(title, tags, lowerBoundPrice, upperBoundPrice, pageable);
+            return this.getAllByTitleAndTagsAndPricesIsBetween(title, tags, lowerBoundPrice, upperBoundPrice);
         } else if (tags == null) {
-            return this.getAllByTitleAndCategoriesAndPriceIsBetween(title, categories, lowerBoundPrice, upperBoundPrice, pageable);
+            return this.getAllByTitleAndCategoriesAndPriceIsBetween(title, categories, lowerBoundPrice, upperBoundPrice);
         } else if (lowerBoundPrice == null && upperBoundPrice == null) {
-            return this.getAllByTitleAndCategoriesAndTags(title,categories, tags, pageable);
+            return this.getAllByTitleAndCategoriesAndTags(title,categories, tags);
         }
-        return this.getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(title, categories, tags, lowerBoundPrice, upperBoundPrice, pageable);
+        return this.getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(title, categories, tags, lowerBoundPrice, upperBoundPrice);
     }
 
 
     @Override
-    public List<String> getAllCategoriesFromResultSearch(Page<ProductElasticSearch> productElasticSearches) {
+    public List<String> getAllCategoriesFromResultSearch(List<ProductElasticSearch> productElasticSearches) {
         return productElasticSearches.stream()
                 .flatMap(productElasticSearch -> productElasticSearch.getCategories().stream())
                 .distinct().toList();
     }
 
     @Override
-    public List<String> getAllTagsFromResultSearch(Page<ProductElasticSearch> productElasticSearches) {
+    public List<String> getAllTagsFromResultSearch(List<ProductElasticSearch> productElasticSearches) {
         return productElasticSearches.stream()
                 .flatMap(productElasticSearch -> productElasticSearch.getTags().stream())
                 .distinct().toList();
@@ -219,12 +209,12 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
 
 
     @Override
-    public void setFilterAttributeSession(HttpSession session, Page<ProductElasticSearch> productElasticSearches, String keyword) {
+    public void setFilterAttributeSession(HttpSession session, List<ProductElasticSearch> resultSearch, String keyword) {
         String oldKeyword = (String) session.getAttribute("keywordSearch");
         if (!keyword.equals(oldKeyword)){
             session.setAttribute("keywordSearch", keyword);
-            session.setAttribute("categoriesFilter", this.getAllCategoriesFromResultSearch(productElasticSearches));
-            session.setAttribute("tagsFilter", this.getAllTagsFromResultSearch(productElasticSearches));
+            session.setAttribute("categoriesFilter", this.getAllCategoriesFromResultSearch(resultSearch));
+            session.setAttribute("tagsFilter", this.getAllTagsFromResultSearch(resultSearch));
         }
     }
 
@@ -238,5 +228,11 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         return (List<String>) session.getAttribute("tagsFilter");
     }
 
+    @Override
+    public Page<ProductElasticSearch> getPageFromList(List<ProductElasticSearch> productElasticSearches, Pageable pageable) {
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), productElasticSearches.size());
+        return new PageImpl<>(productElasticSearches.subList(start, end), pageable, productElasticSearches.size());
+    }
 }
 

@@ -27,37 +27,36 @@ public interface ProductElasticSearchService {
 
     Pageable findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 
-    Page<ProductElasticSearch> searchProduct(String title,
+    List<ProductElasticSearch> searchProduct(String title,
                                              List<String>  categories, List<String> tags,
-                                             BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                             int pageNo, int pageSize,
-                                             String sortField, String sortDirection);
+                                             BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice);
 
-    Page<ProductElasticSearch> getAllByTitle(String title, Pageable pageable);
+    List<ProductElasticSearch> getAllByTitle(String title);
 
-    Page<ProductElasticSearch> getAllByTitleAndPriceIsBetween(String title, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice, Pageable pageable);
+    List<ProductElasticSearch> getAllByTitleAndPriceIsBetween(String title, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice);
 
-    Page<ProductElasticSearch> getAllByTitleAndCategories(String title, List<String> categories, Pageable pageable);
+    List<ProductElasticSearch> getAllByTitleAndCategories(String title, List<String> categories);
 
-    Page<ProductElasticSearch> getAllByTitleAndTags(String title, List<String> tags,Pageable pageable);
+    List<ProductElasticSearch> getAllByTitleAndTags(String title, List<String> tags);
 
-    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndPriceIsBetween(String title, List<String> categories, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable);
+    List<ProductElasticSearch> getAllByTitleAndCategoriesAndPriceIsBetween(String title, List<String> categories, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice);
 
-    Page<ProductElasticSearch> getAllByTitleAndTagsAndPricesIsBetween(String title, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable);
+    List<ProductElasticSearch> getAllByTitleAndTagsAndPricesIsBetween(String title, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice);
 
-    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTags(String title, List<String> categories, List<String> tags,Pageable pageable);
+    List<ProductElasticSearch> getAllByTitleAndCategoriesAndTags(String title, List<String> categories, List<String> tags);
 
-    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(String title, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable);
+    List<ProductElasticSearch> getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(String title, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice);
 
-    List<String> getAllCategoriesFromResultSearch(Page<ProductElasticSearch> productElasticSearches);
+    List<String> getAllCategoriesFromResultSearch(List<ProductElasticSearch> productElasticSearches);
 
-    List<String> getAllTagsFromResultSearch(Page<ProductElasticSearch> productElasticSearches);
+    List<String> getAllTagsFromResultSearch(List<ProductElasticSearch> productElasticSearches);
 
-    void setFilterAttributeSession(HttpSession session, Page<ProductElasticSearch> productElasticSearches, String keyword);
+    void setFilterAttributeSession(HttpSession session, List<ProductElasticSearch> resultSearch, String keyword);
 
     List<String> getCategoriesFilterFromSession(HttpSession session);
 
     List<String> getTagsFilterFromSession(HttpSession session);
 
+    Page<ProductElasticSearch> getPageFromList(List<ProductElasticSearch> productElasticSearches, Pageable pageable);
 
 }

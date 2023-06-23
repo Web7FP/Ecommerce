@@ -9,6 +9,7 @@ import com.springboot.ecommerce.search.model.product.ProductElasticSearchService
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,16 +40,17 @@ public class ElasticSearchController {
             Model model, HttpSession session
     ){
         int pageSize = 4;
-        Page<ProductElasticSearch> page = productElasticSearchService
+        List<ProductElasticSearch> resultSearch = productElasticSearchService
                 .searchProduct(
                         keyword, categories, tags,
-                        lowerBoundPrice, upperBoundPrice,
-                        pageNo, pageSize, sortField, sortDir
+                        lowerBoundPrice, upperBoundPrice
                 );
-        if (page.isEmpty()){
+        if (resultSearch.isEmpty()){
             throw new ProductNotFoundException();
         }
-        productElasticSearchService.setFilterAttributeSession(session, page, keyword);
+        Pageable pageable = productElasticSearchService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        Page<ProductElasticSearch> page = productElasticSearchService.getPageFromList(resultSearch, pageable);
+        productElasticSearchService.setFilterAttributeSession(session, resultSearch, keyword);
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
