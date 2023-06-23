@@ -48,7 +48,21 @@ public class HomeController {
 
     @GetMapping("/home")
     public String getHomePage(Model model){
-        return findPaginatedProduct(1, "title", "asc",model);
+        model.addAttribute("phoneProducts",
+                productService.getAllProductByCategoryName(
+                        "Smart Phone",
+                        productService.findPaginated(1, 10, "title", "asc")).getContent()
+        );
+        model.addAttribute("laptopProducts",
+                productService.getAllProductByCategoryName(
+                        "Laptop",
+                        productService.findPaginated(1, 10, "title", "asc")).getContent()
+        );
+        model.addAttribute("watchProducts",
+                productService.getAllProductByCategoryName(
+                        "Watch",
+                        productService.findPaginated(1,10, "title", "asc")).getContent());
+        return "home";
     }
 
     @GetMapping("/login")
@@ -67,79 +81,6 @@ public class HomeController {
                         product, productService.findPaginated(1,10, "title", "asc")).getContent()
         );
         return "product-detail";
-    }
-
-    @GetMapping("/home/product-list/page/{pageNo}")
-    public String findPaginatedProduct(
-            @PathVariable("pageNo") int pageNo,
-            @RequestParam("sortField") String sortField,
-            @RequestParam("sortDir") String sortDir,
-            Model model
-    ){
-        int pageSize = 5;
-        Page<Product> page = productService.getAllProducts(pageNo, pageSize, sortField, sortDir);
-
-
-        model.addAttribute("listProducts", page.getContent());
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        model.addAttribute("phoneProducts",
-                productService.getAllProductByCategoryName(
-                        "Smart Phone",
-                        productService.findPaginated(1, 10, "title", "asc")).getContent()
-        );
-        model.addAttribute("laptopProducts",
-                productService.getAllProductByCategoryName(
-                        "Laptop",
-                        productService.findPaginated(1, 10, "title", "asc")).getContent()
-        );
-        model.addAttribute("watchProducts",
-                productService.getAllProductByCategoryName(
-                        "Watch",
-                        productService.findPaginated(1,10, "title", "asc")).getContent());
-        return "home";
-    }
-
-    @GetMapping("/category/{slugCategory}")
-    public String getProductsByCategory(@PathVariable("slugCategory") String categorySlug,
-                                        @RequestParam(value = "sortField", defaultValue = "title") String sortField,
-                                        @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection,
-                                        @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
-                                        Model model){
-        int pageSize = 5;
-        Page<Product> productPage  = productService.getAllProductByCategorySlug(
-                categorySlug, productService.findPaginated(pageNo, pageSize, sortField, sortDirection)
-        );
-        model.addAttribute("productsList", productPage.getContent());
-        model.addAttribute("totalItems", productPage.getTotalElements());
-        model.addAttribute("totalPages", productPage.getTotalPages());
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("sortDir", sortDirection);
-        model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
-        return "products-category-tag";
-    }
-
-
-    @GetMapping("/tag/{slugTag}")
-    public String getProductsByTag(@PathVariable("slugTag") String tagSlug,
-                                   @RequestParam(value = "sortField", defaultValue = "title") String sortField,
-                                   @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection,
-                                   @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
-                                   Model model
-    ){
-        int pageSize = 10;
-        model.addAttribute("productsList",
-                productService.getAllProductByTagSlug(
-                        tagSlug,
-                        productService.findPaginated(pageNo, pageSize, sortField, sortDirection)
-                ).getContent());
-
-        return "products-category-tag";
     }
 
 

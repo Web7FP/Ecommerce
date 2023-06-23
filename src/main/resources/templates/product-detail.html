@@ -54,10 +54,10 @@
                  style="height: 400px; width: 400px">
         </div>
         <div class="next-to-img">
-            <a th:href="@{/home}" id="back">Home page/</a><br><br>
+<!--            <a th:href="@{/home}" id="back">Home page/</a><br><br>-->
             <h1 th:text="${product.title}"></h1><br>
-            <p th:text="'Price: ' + ${product.price} + ' VND'" style="font-size: 25px;font-weight:500 "></p><br>
-            <p th:text="'Discount: '+ ${product.discount} + ' VND' "></p><br><br>
+            <p th:text="'Price: ' + ${product.price} + ' $'" style="font-size: 25px;font-weight:500 "></p><br>
+            <p th:text="'Discount: '+ ${product.discount} + ' %' "></p><br><br>
 
             <th:block th:if="${product.shop == false}">
                 <p>Product no longer available</p>
@@ -127,7 +127,7 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-o"></i>
                 </div>
-                <p><span th:text="${product.price}"></span><sup>đ</sup></p>
+                <p><span th:text="${reProduct.price}"></span><sup>$</sup></p>
             </div>
         </th:block>
     </div>

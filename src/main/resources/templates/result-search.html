@@ -103,7 +103,7 @@
                                th:value="${categorySe}"
                                th:text="${categorySe}"
                                th:checked="${selectedCategories != null ? #lists.contains(selectedCategories, categorySe) : false}"
-                               onchange="updateCategoriesSelection(this)">
+                               onchange="updateCategoriesSelection(this)"><br>
                     </th:block>
                 </div>
 
@@ -114,7 +114,7 @@
                                th:value="${tagSe}"
                                th:text="${tagSe}"
                                th:checked="${selectedTags != null ? #lists.contains(selectedTags, tagSe) : false}"
-                               onchange="updateTagsSelection(this)">
+                               onchange="updateTagsSelection(this)"><br>
                     </th:block>
                 </div>
 
@@ -174,7 +174,7 @@
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-o"></i>
                                     </div>
-                                    <p><span th:text="${product.price}"></span><sup>đ</sup></p>
+                                    <p><span th:text="${product.price}"></span><sup>$</sup></p>
                                     <button class="button-add-product-to-cart" onclick="addProductToCart(this)"  th:data-product-id="${product.id}">Add to Cart</button>
                                 </div>
 
