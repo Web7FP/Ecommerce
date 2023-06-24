@@ -45,12 +45,12 @@ public class ElasticSearchController {
                 .searchProduct(
                         keyword, categories, tags,
                         lowerBoundPrice, upperBoundPrice,
-                        pageable
-                );
+                        pageable);
         if (page.isEmpty()){
             throw new ProductNotFoundException();
         }
         productElasticSearchService.setFilterAttributeSession(session,keyword, categories, tags, lowerBoundPrice, upperBoundPrice);
+
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());

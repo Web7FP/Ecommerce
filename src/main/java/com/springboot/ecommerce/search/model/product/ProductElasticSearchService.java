@@ -32,21 +32,22 @@ public interface ProductElasticSearchService {
                                              BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
                                              Pageable pageable);
 
+
     Page<ProductElasticSearch> getAllByTitle(String title, Pageable pageable);
 
     Page<ProductElasticSearch> getAllByTitleAndPriceIsBetween(String title, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice, Pageable pageable);
 
     Page<ProductElasticSearch> getAllByTitleAndCategories(String title, List<String> categories, Pageable pageable);
 
-    Page<ProductElasticSearch> getAllByTitleAndTags(String title, List<String> tags,Pageable pageable);
+    Page<ProductElasticSearch> getAllByTitleAndTags(String title, List<String> tags, Pageable pageable);
 
-    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndPriceIsBetween(String title, List<String> categories, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable);
+    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndPriceIsBetween(String title, List<String> categories, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice, Pageable pageable);
 
-    Page<ProductElasticSearch> getAllByTitleAndTagsAndPricesIsBetween(String title, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable);
+    Page<ProductElasticSearch> getAllByTitleAndTagsAndPricesIsBetween(String title, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice, Pageable pageable);
 
-    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTags(String title, List<String> categories, List<String> tags,Pageable pageable);
+    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTags(String title, List<String> categories, List<String> tags, Pageable pageable);
 
-    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(String title, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable);
+    Page<ProductElasticSearch> getAllByTitleAndCategoriesAndTagsAndPriceIsBetween(String title, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice, Pageable pageable);
 
     List<String> getAllCategoriesFromResultSearch(Page<ProductElasticSearch> productElasticSearches);
 
@@ -59,5 +60,6 @@ public interface ProductElasticSearchService {
     List<String> getTagsFilterFromSession(HttpSession session);
 
     Page<ProductElasticSearch> getAllProductsFromResultSearch(String title, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice);
+
 
 }

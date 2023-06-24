@@ -63,16 +63,14 @@ public interface ProductElasticSearchRepository extends ElasticsearchRepository<
             "}}")
     Page<ProductElasticSearch> getAllByFuzzyQueryTitleAndPriceIsBetween(String title,
                                                                         BigDecimal lowerBoundPrice,
-                                                                        BigDecimal upperBoundPrice,
-                                                                        Pageable pageable);
+                                                                        BigDecimal upperBoundPrice, Pageable pageable);
 
 
     /**
      * Tìm kiếm dựa trên tên sản phẩm và có chứa tất cả category đầu vào.
      * @param titleProduct (tên sp)
      * @param categoriesTitle (tên các category đầu vào)
-     * @param pageable (object chứa các thuộc tính liên quan đến sort và pagination)
-     * @return Products
+     * @param pageable (object chứa các thuộc tính liên quan đến sort và pagination)     * @return Products
      */
     @Query("{ \"bool\" : { " +
             "   \"filter\" : [{" +
@@ -209,8 +207,8 @@ public interface ProductElasticSearchRepository extends ElasticsearchRepository<
             "   ]" +
             "}}")
     Page<ProductElasticSearch> getAllByFuzzyQueryTitleAndCategoriesContainingAndPriceIsBetween(String titleProduct, List<String> categoriesTitle,
-                                                                                               BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                                                               Pageable pageable);
+                                                                                               BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice
+                                                                                               , Pageable pageable);
 
     /**
      * Tìm kiếm dựa trên tên sản phẩm với điều kiện price và tags.
@@ -264,8 +262,7 @@ public interface ProductElasticSearchRepository extends ElasticsearchRepository<
             "   ]" +
             "}}")
     Page<ProductElasticSearch> getAllByFuzzyQueryTitleAndTagsAndPriceIsBetween(String titleProduct, List<String> tagsTitle,
-                                                                               BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                                               Pageable pageable);
+                                                                               BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice, Pageable pageable);
 
     /**
      * Tìm kiếm dựa trên tên sản phẩm với điều kiện tags và categories.
@@ -334,8 +331,7 @@ public interface ProductElasticSearchRepository extends ElasticsearchRepository<
             "}}")
     Page<ProductElasticSearch> getAllByFuzzyQueryTitleAndCategoriesAndTags(String titleProduct,
                                                                            List<String> categoriesTitle,
-                                                                           List<String> tagsTitle,
-                                                                           Pageable pageable);
+                                                                           List<String> tagsTitle, Pageable pageable);
 
 
 
@@ -414,8 +410,7 @@ public interface ProductElasticSearchRepository extends ElasticsearchRepository<
             "}}")
     Page<ProductElasticSearch> getAllByFuzzyQueryTitleAndCategoriesAndTagsAndPriceIsBetween(String titleProduct,
                                                                                             List<String> categoriesTitle, List<String> tagsTitle,
-                                                                                            BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                                                            Pageable pageable);
+                                                                                            BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice, Pageable pageable);
 
 
 }
