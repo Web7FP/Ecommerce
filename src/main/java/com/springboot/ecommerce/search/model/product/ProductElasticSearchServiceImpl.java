@@ -179,10 +179,8 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
     @Override
     public Page<ProductElasticSearch> searchProduct(String title,
                                                     List<String> categories, List<String> tags,
-                                                    BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                                    int pageNo, int pageSize, String sortField, String sortDirection) {
+                                                    BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,Pageable pageable) {
 
-        Pageable pageable = this.findPaginated(pageNo, pageSize, sortField, sortDirection);
 
         if (categories == null && tags == null && lowerBoundPrice == null && upperBoundPrice == null){
             return this.getAllByTitle(title, pageable);
@@ -219,12 +217,13 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
 
 
     @Override
-    public void setFilterAttributeSession(HttpSession session, Page<ProductElasticSearch> productElasticSearches, String keyword) {
+    public void setFilterAttributeSession(HttpSession session, String keyword, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice) {
         String oldKeyword = (String) session.getAttribute("keywordSearch");
         if (!keyword.equals(oldKeyword)){
+            Page<ProductElasticSearch> productElasticSearchPage = this.getAllProductsFromResultSearch(keyword, categories, tags, lowerBoundPrice, upperBoundPrice);
             session.setAttribute("keywordSearch", keyword);
-            session.setAttribute("categoriesFilter", this.getAllCategoriesFromResultSearch(productElasticSearches));
-            session.setAttribute("tagsFilter", this.getAllTagsFromResultSearch(productElasticSearches));
+            session.setAttribute("categoriesFilter", this.getAllCategoriesFromResultSearch(productElasticSearchPage));
+            session.setAttribute("tagsFilter", this.getAllTagsFromResultSearch(productElasticSearchPage));
         }
     }
 
@@ -238,5 +237,11 @@ public class ProductElasticSearchServiceImpl implements ProductElasticSearchServ
         return (List<String>) session.getAttribute("tagsFilter");
     }
 
+    @Override
+    public Page<ProductElasticSearch> getAllProductsFromResultSearch(String title, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice) {
+        Pageable wholePage = Pageable.unpaged();
+        return this.searchProduct(title, categories, tags, lowerBoundPrice, upperBoundPrice, wholePage);
+
+    }
 }
 

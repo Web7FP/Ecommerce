@@ -30,8 +30,7 @@ public interface ProductElasticSearchService {
     Page<ProductElasticSearch> searchProduct(String title,
                                              List<String>  categories, List<String> tags,
                                              BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice,
-                                             int pageNo, int pageSize,
-                                             String sortField, String sortDirection);
+                                             Pageable pageable);
 
     Page<ProductElasticSearch> getAllByTitle(String title, Pageable pageable);
 
@@ -53,11 +52,12 @@ public interface ProductElasticSearchService {
 
     List<String> getAllTagsFromResultSearch(Page<ProductElasticSearch> productElasticSearches);
 
-    void setFilterAttributeSession(HttpSession session, Page<ProductElasticSearch> productElasticSearches, String keyword);
+    void setFilterAttributeSession(HttpSession session,  String keyword, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice);
 
     List<String> getCategoriesFilterFromSession(HttpSession session);
 
     List<String> getTagsFilterFromSession(HttpSession session);
 
+    Page<ProductElasticSearch> getAllProductsFromResultSearch(String title, List<String> categories, List<String> tags, BigDecimal lowerBoundPrice, BigDecimal upperBoundPrice);
 
 }
